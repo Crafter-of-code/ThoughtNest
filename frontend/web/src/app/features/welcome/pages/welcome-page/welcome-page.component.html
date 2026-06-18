@@ -1,0 +1,132 @@
+<main>
+  <section class="h-full">
+    <app-landing-page class="h-screen flex p-10">
+      <app-glass-background>
+        <div class="w-[50vw] max-sm:w-[70vw] max-xl:w-[40vw] flex flex-col">
+          <div class="flex">
+            <h1 title="Welcome to ThoughNest">Welcome To ThoughNest</h1>
+          </div>
+          <div class="pl-2 opacity-50">
+            <p>A place to express your thought</p>
+          </div>
+          <!--spacer here-->
+          <div class="py-2" aria-label="spacer"></div>
+          <!--spacer here-->
+          <div class="flex gap-2 flex-wrap">
+            <a routerLink="login">
+              <app-solid-button title="Login">
+                <p class="px-4 py-2 font-bold">Login</p>
+              </app-solid-button></a
+            >
+            <a routerLink="signin"
+              ><app-outline-button>
+                <p class="px-4 py-2 font-bold">Signin</p>
+              </app-outline-button>
+            </a>
+          </div>
+        </div>
+      </app-glass-background>
+      <button class="cursor-pointer" (click)="clickScroll()">
+        <div
+          class="flex justify-center items-center bg-transparent absolute bottom-2 right-[50%] animate-bounce"
+        >
+          <img
+            src="assets/icons/arrow-down.png"
+            alt="Arrow"
+            height="50"
+            width="50"
+            title="scroll down"
+            aria-label="click to scroll"
+          />
+        </div>
+      </button>
+    </app-landing-page>
+  </section>
+  <section class="min-h-screen flex flex-col" #to_scroll_section>
+    <div class="p-10 flex-2">
+      <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+        <app-usp-container>
+          <h2
+            class="font-semibold mb-2 bg-linear-to-br from-indigo-100 via-pink-100 to-blue-100 bg-clip-text text-transparent"
+          >
+            Open for Everyone
+          </h2>
+          <p class="opacity-90 leading-6 text-white">
+            Join a growing community where ideas, knowledge, and creativity are
+            shared without barriers.
+          </p>
+        </app-usp-container>
+        <app-usp-container>
+          <h2
+            class="font-semibold mb-2 bg-linear-to-br from-indigo-100 via-pink-100 to-blue-100 bg-clip-text text-transparent"
+          >
+            Share Your Thoughts
+          </h2>
+          <p class="opacity-90 leading-6 text-white">
+            Publish articles, stories, and insights that inspire and help others
+            learn something new.
+          </p>
+        </app-usp-container>
+        <app-usp-container>
+          <h2
+            class="font-semibold mb-2 bg-linear-to-br from-indigo-100 via-pink-100 to-blue-100 bg-clip-text text-transparent"
+          >
+            Connect & Grow
+          </h2>
+          <p class="opacity-90 leading-6 text-white">
+            Discover creators, explore ideas, and build meaningful connections
+            in the community.
+          </p>
+        </app-usp-container>
+        <app-usp-container>
+          <h2
+            class="font-semibold mb-2 bg-linear-to-br from-indigo-100 via-pink-100 to-blue-100 bg-clip-text text-transparent"
+          >
+            Modern Experience
+          </h2>
+          <p class="opacity-90 leading-6 text-white">
+            Clean, responsive, and distraction-free UI designed for smooth
+            reading on all devices.
+          </p>
+        </app-usp-container>
+        <app-usp-container>
+          <h2
+            class="font-semibold mb-2 bg-linear-to-br from-indigo-100 via-pink-100 to-blue-100 bg-clip-text text-transparent"
+          >
+            Powerful Tools
+          </h2>
+          <p class="opacity-90 leading-6 text-white">
+            Create and manage content easily with intuitive,
+            productivity-focused tools.
+          </p>
+        </app-usp-container>
+        <app-usp-container>
+          <h2
+            class="font-semibold mb-2 bg-linear-to-br from-indigo-100 via-pink-100 to-blue-100 bg-clip-text text-transparent"
+          >
+            Secure Platform
+          </h2>
+          <p class="opacity-90 leading-6 text-white">
+            Built with performance, security, and scalability in mind for
+            long-term growth.
+          </p>
+        </app-usp-container>
+      </div>
+    </div>
+    <app-landing-page class="flex-1 h-full">
+      <div class="py-20 px-10">
+        <app-usp-container class="w-[50vw] flex">
+          <div class="flex w-full flex-col justify-center h-[100% !important]">
+            <h3 class="text-white">Join the community</h3>
+            <!--spacer here-->
+            <div class="py-2" aria-label="spacer"></div>
+            <!--spacer here-->
+            <app-solid-button>
+              <p class="p-3 text-white font-extrabold">Login</p>
+            </app-solid-button>
+          </div>
+        </app-usp-container>
+      </div>
+    </app-landing-page>
+  </section>
+</main>
