@@ -1,0 +1,31 @@
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  /* padding: 10px 22px; */
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  letter-spacing: 0.1px;
+  transition: all 0.15s ease;
+  font-family: inherit;
+}
+
+/* Solid — uses your accent amber as the fill */
+.btn-solid {
+  background: var(--accent-color);
+  color: var(--primary-color);
+  border: 1.5px solid var(--accent-color);
+  box-shadow: 0 1px 2px rgba(245, 158, 11, 0.15),
+    0 4px 12px rgba(245, 158, 11, 0.2);
+}
+.btn-solid:hover {
+  background: #e08d00;
+  border-color: #e08d00;
+  box-shadow: 0 2px 8px rgba(245, 158, 11, 0.35);
+  transform: translateY(-1px);
+}
+.btn-solid:active {
+  transform: scale(0.97);
+}

@@ -1,0 +1,161 @@
+<main
+  class="min-h-screen w-full flex items-center justify-center px-4 bg-linear-to-br from-slate-50 via-white to-slate-100"
+  aria-label="signin page"
+>
+  <section
+    class="w-full max-w-4xl rounded-3xl border border-slate-200/80 bg-white/90 backdrop-blur-sm p-8 md:p-10 shadow-xl"
+  >
+    <!-- Heading -->
+    <div class="mb-8">
+      <h1
+        title="Want to join the Community"
+        aria-label="signin page heading"
+        class="select-none text-4xl font-bold tracking-tight text-slate-900"
+      >
+        Want to join the Community
+      </h1>
+
+      <p
+        title="New Here..!"
+        aria-label="signin page paragraph"
+        class="mt-2 ml-1 select-none text-sm text-slate-500"
+      >
+        New Here..!
+      </p>
+    </div>
+
+    <!-- Form -->
+    <form
+      class="flex flex-col gap-6"
+      [formGroup]="signinData"
+      (ngSubmit)="signinHandler()"
+    >
+      <!-- Name Fields -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+        <div class="flex flex-col">
+          <label
+            for="firstName"
+            class="mb-2 text-sm font-medium text-slate-700"
+          >
+            First Name
+          </label>
+          <app-global-input
+            inputPlaceHolder="Enter your first name"
+            inputType="text"
+            inputId="firstName"
+            formControlName="firstName"
+          />
+          <p
+            *ngIf="
+              signinData.get('firstName')?.hasError('required') &&
+              signinData.get('firstName')?.touched
+            "
+            class="text-red-500 text-xs! mt-2 ml-3"
+          >
+            First Name is required
+          </p>
+        </div>
+
+        <div class="flex flex-col">
+          <label
+            for="middleName"
+            class="mb-2 text-sm font-medium text-slate-700"
+          >
+            Middle Name
+          </label>
+          <app-global-input
+            inputPlaceHolder="Enter your middle name"
+            inputType="text"
+            inputId="middleName"
+            formControlName="middleName"
+          />
+          <p
+            *ngIf="
+              signinData.get('middleName')?.hasError('required') &&
+              signinData.get('middleName')?.touched
+            "
+            class="text-red-500 text-xs! mt-2 ml-3"
+          >
+            Middle Name is required
+          </p>
+        </div>
+
+        <div class="flex flex-col">
+          <label for="lastName" class="mb-2 text-sm font-medium text-slate-700">
+            Last Name
+          </label>
+
+          <app-global-input
+            inputPlaceHolder="Enter your last name"
+            inputType="text"
+            inputId="lastName"
+            formControlName="lastName"
+          />
+          <p
+            *ngIf="
+              signinData.get('lastName')?.hasError('required') &&
+              signinData.get('lastName')?.touched
+            "
+            class="text-red-500 text-xs! mt-2 ml-3"
+          >
+            Last Name is required
+          </p>
+        </div>
+      </div>
+
+      <!-- Email -->
+      <div class="flex flex-col">
+        <label for="userEmail" class="mb-2 text-sm font-medium text-slate-700">
+          User Email
+        </label>
+        <app-global-input
+          inputPlaceHolder="Enter your last name"
+          inputType="email"
+          inputId="userEmail"
+          formControlName="userEmail"
+        />
+        <p
+          *ngIf="
+            signinData.get('userEmail')?.hasError('required') &&
+            signinData.get('userEmail')?.touched
+          "
+          class="text-red-500 text-xs! mt-2 ml-3"
+        >
+          Email is required
+        </p>
+      </div>
+
+      <!-- Password -->
+      <div class="flex flex-col">
+        <label
+          for="userPassword"
+          class="mb-2 text-sm font-medium text-slate-700"
+        >
+          User Password
+        </label>
+        <app-global-input
+          inputPlaceHolder="Enter your last name"
+          inputType="password"
+          inputId="userPassword"
+          formControlName="userPassword"
+        />
+        <p
+          *ngIf="
+            signinData.get('userPassword')?.hasError('required') &&
+            signinData.get('userPassword')?.touched
+          "
+          class="text-red-500 text-xs! mt-2 ml-3"
+        >
+          Password is required
+        </p>
+      </div>
+
+      <!-- Button -->
+      <div class="pt-2">
+        <app-solid-button type="submit">
+          <p class="px-6 py-2 font-medium">Join Community</p>
+        </app-solid-button>
+      </div>
+    </form>
+  </section>
+</main>
