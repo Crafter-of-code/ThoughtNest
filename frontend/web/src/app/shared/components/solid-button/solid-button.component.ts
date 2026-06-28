@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 enum buttonType {
   button = 'button',
   submit = 'submit',
@@ -12,4 +12,8 @@ enum buttonType {
 export class SolidButtonComponent {
   @Input() type: string = buttonType.button;
   @Input() title: string = '';
+  @Output() clicked = new EventEmitter();
+  onClick(event: Event) {
+    this.clicked.emit(event);
+  }
 }

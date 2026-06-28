@@ -12,4 +12,5 @@ import org.springframework.stereotype.Component;
 public class ResponseDto {
     private boolean status;
     private String message;
+    private String token;
 }

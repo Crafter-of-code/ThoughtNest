@@ -1,0 +1,41 @@
+<div
+  *ngIf="notification.message() != ''"
+  class="fixed top-6 right-6 z-50 w-80 overflow-hidden rounded-3xl border bg-white/95 backdrop-blur-md shadow-xl animate-in slide-in-from-right duration-300"
+  [ngClass]="{
+    'border-amber-200': !notification.status(),
+    'border-red-200': notification.status()
+  }"
+>
+  <!-- Top Accent Bar -->
+  <div
+    class="h-1"
+    [ngClass]="{
+      'bg-amber-500': notification.status(),
+      'bg-red-500': !notification.status()
+    }"
+  ></div>
+
+  <div class="flex items-start gap-3 p-4">
+    <!-- Icon -->
+    <div
+      class="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl text-sm font-bold"
+      [ngClass]="{
+        'bg-amber-100 text-amber-700': notification.status(),
+        'bg-red-100 text-red-700': !notification.status()
+      }"
+    >
+      {{ notification.status() ? "✓" : "!" }}
+    </div>
+
+    <!-- Content -->
+    <div class="flex-1">
+      <h6 class="text-sm text-slate-900">
+        {{ notification.status() ? "Success" : "Error" }}
+      </h6>
+
+      <p class="mt-1 text-xs text-slate-500 leading-relaxed">
+        {{ notification.message() }}
+      </p>
+    </div>
+  </div>
+</div>

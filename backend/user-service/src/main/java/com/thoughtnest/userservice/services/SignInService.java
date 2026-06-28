@@ -4,6 +4,7 @@ import com.thoughtnest.userservice.entity.UserEntity;
 import com.thoughtnest.userservice.responseDto.ResponseDto;
 import com.thoughtnest.userservice.respository.UserRepository;
 import lombok.AllArgsConstructor;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -22,8 +23,15 @@ public class SignInService {
                 System.out.println("Encoded user password");
                 userData.setUserPassword(encodedPassword);
                 userRepository.save(userData);
+                responseDto.setStatus(true);
+                responseDto.setMessage("Your Credential has been registered successfully");
+            }catch (DataIntegrityViolationException e) {
+//                throw new RuntimeException("Email already exists");
+                responseDto.setStatus(false);
+                responseDto.setMessage("Email already exists");
             }
             catch (Exception e){
+                System.out.println(e);
                 responseDto.setStatus(false);
                 responseDto.setMessage("Facing error while registering the user");
             }

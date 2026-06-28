@@ -43,7 +43,7 @@
             inputPlaceHolder="Enter your first name"
             inputType="text"
             inputId="firstName"
-            formControlName="firstName"
+            formControlName="userFirstName"
           />
           <p
             *ngIf="
@@ -67,7 +67,7 @@
             inputPlaceHolder="Enter your middle name"
             inputType="text"
             inputId="middleName"
-            formControlName="middleName"
+            formControlName="userMiddleName"
           />
           <p
             *ngIf="
@@ -89,7 +89,7 @@
             inputPlaceHolder="Enter your last name"
             inputType="text"
             inputId="lastName"
-            formControlName="lastName"
+            formControlName="userLastName"
           />
           <p
             *ngIf="
@@ -152,10 +152,11 @@
 
       <!-- Button -->
       <div class="pt-2">
-        <app-solid-button type="submit">
+        <app-solid-button type="submit" *ngIf="signinData.valid">
           <p class="px-6 py-2 font-medium">Join Community</p>
         </app-solid-button>
       </div>
     </form>
   </section>
 </main>
+<router-outlet />

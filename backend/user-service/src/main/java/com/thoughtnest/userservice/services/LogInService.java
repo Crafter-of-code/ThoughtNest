@@ -29,7 +29,7 @@ public class LogInService {
         }catch (Exception e){
             System.out.println(e.getMessage());
             responseDto.setStatus(false);
-            responseDto.setMessage("");
+            responseDto.setMessage("We are facing some problem while login you in");
         }
         return responseDto;
     }
