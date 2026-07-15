@@ -43,12 +43,21 @@ export class LoginPageComponent {
         next: (response) => {
           console.log(response);
           this.notification.setNotification(response.status, response.message);
+          console.log(response.token);
+          localStorage.setItem('token', response.token);
           if (response.status) {
             this.router.navigate(['home']);
           }
         },
         error: (error) => {
-          console.log(error);
+          if (error.message) {
+            this.notification.setNotification(
+              error.error.status,
+              error.error.message
+            );
+          } else {
+            console.log(error);
+          }
         },
       });
     } else {

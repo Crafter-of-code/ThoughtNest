@@ -9,7 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/auth/login")
+@RequestMapping("/api/auth/login")
 @AllArgsConstructor
 public class LoginController {
     private LoginService loginService;
@@ -29,7 +29,7 @@ public class LoginController {
         if(loginResponseDto.isStatus()){
             return ResponseEntity.status(HttpStatus.OK).body(loginResponseDto);
         }else{
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(loginResponseDto);
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(loginResponseDto);
         }
     }
 }
