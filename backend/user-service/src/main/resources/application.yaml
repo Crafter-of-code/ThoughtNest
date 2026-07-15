@@ -1,12 +1,29 @@
+jwt:
+  secret-key: nW8kM5QzT1l6h2rP9JxKc4YvLm8FsR7Ua3DeV1QiZwN=
 spring:
   application:
-    name: user-service
+    name: User-Service
   datasource:
-    url: jdbc:mysql://localhost:3306/ThoughtNest_User_Service
+    url: jdbc:mysql://localhost:3306/microservicetesting?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
     username: root
     password: root
-
+    driver-class-name: com.mysql.cj.jdbc.Driver
   jpa:
     hibernate:
       ddl-auto: update
     show-sql: true
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQLDialect
+        format_sql: true
+  security:
+    user:
+      name: User-Service
+      password: User-Service
+server:
+  port: 8082
+
+eureka:
+  client:
+    register-with-eureka: true
+    fetch-registry: true

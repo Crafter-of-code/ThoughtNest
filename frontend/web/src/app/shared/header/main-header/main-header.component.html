@@ -1,0 +1,26 @@
+<header class="lg:mx-10! my-5! flex max-lg:mx-4 justify-between">
+  <div>
+    <a routerLink="/home"><h1 class="select-none">ThoughtNest</h1></a>
+  </div>
+  <!--bit screen notification-->
+  <div class="max-lg:hidden flex gap-3">
+    <a
+      routerLink="/home"
+      class="text-lg flex items-center fontl-bold capitalize px-3 py-2 hover:bg-red-400 rounded-full hover:text-white"
+      >home</a
+    >
+    <a
+      routerLink="/post"
+      class="text-lg flex items-center fontl-bold capitalize px-3 py-2 hover:bg-red-400 rounded-full hover:text-white"
+      >post</a
+    >
+    <a
+      routerLink="/myaccount"
+      class="text-lg flex items-center fontl-bold capitalize px-3 py-2 hover:bg-red-400 rounded-full hover:text-white"
+      >category</a
+    >
+  </div>
+  <div class="flex-1 justify-end flex lg:hidden items-center">
+    <div class="w-8 h-8"><app-hamburger /></div>
+  </div>
+</header>

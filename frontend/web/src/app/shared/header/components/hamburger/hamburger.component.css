@@ -1,0 +1,26 @@
+.hamburger_menue {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  gap: 0.5rem;
+  align-items: center;
+  justify-content: center;
+}
+.hamburger_span {
+  height: 0.2rem;
+  width: 100%;
+  background-color: black;
+  border-radius: 10px;
+}
+.line {
+  transition: all 0.3s ease;
+}
+
+.active-first-line {
+  transform: translateY(4px) rotate(45deg);
+}
+
+.active-second-line {
+  transform: translateY(-4px) rotate(-45deg);
+}

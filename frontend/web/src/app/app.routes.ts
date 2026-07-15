@@ -22,4 +22,18 @@ export const routes: Routes = [
         (page) => page.LoginPageComponent
       ),
   },
+  {
+    path: 'home',
+    loadComponent: () =>
+      import('./features/pages/home-page/home-page.component').then(
+        (page) => page.HomePageComponent
+      ),
+  },
+  {
+    path: '**',
+    loadComponent: () =>
+      import('./features/not-found-page/not-found-page.component').then(
+        (page) => page.NotFoundPageComponent
+      ),
+  },
 ];
