@@ -9,9 +9,15 @@ import ServerUrl from '../DefaultUrl';
 export class AuthService {
   constructor(private http: HttpClient) {}
   signIn(signinData: signinDataType): Observable<AuthResponseType> {
-    return this.http.post<AuthResponseType>(`${ServerUrl}signin`, signinData);
+    return this.http.post<AuthResponseType>(
+      `${ServerUrl}auth/signin`,
+      signinData
+    );
   }
   login(loginData: loginDataType): Observable<AuthResponseType> {
-    return this.http.post<AuthResponseType>(`${ServerUrl}login`, loginData);
+    return this.http.post<AuthResponseType>(
+      `${ServerUrl}auth/login`,
+      loginData
+    );
   }
 }

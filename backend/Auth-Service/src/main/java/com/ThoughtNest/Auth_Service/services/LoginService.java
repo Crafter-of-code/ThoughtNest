@@ -30,9 +30,10 @@ public class LoginService {
             loginResponseDto.setMessage("Welcome");
             String jwtToken = jwtUtility.getToken(userCredentialDetail.getUserEmail());
             loginResponseDto.setToken(jwtToken);
+            System.out.println("Every thing looks great from login service");
         }else{
             loginResponseDto.setStatus(false);
-            loginResponseDto.setMessage("Problem with you credentials");
+            loginResponseDto.setMessage("Please check you credential again");
         }
         return loginResponseDto;
     }

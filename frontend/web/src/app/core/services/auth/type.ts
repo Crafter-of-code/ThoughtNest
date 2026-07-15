@@ -1,6 +1,7 @@
 export type AuthResponseType = {
   status: boolean;
   message: string;
+  token: string;
 };
 export type signinDataType = {
   userFirstName: string | null;

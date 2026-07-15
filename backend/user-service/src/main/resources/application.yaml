@@ -2,7 +2,7 @@ jwt:
   secret-key: nW8kM5QzT1l6h2rP9JxKc4YvLm8FsR7Ua3DeV1QiZwN=
 spring:
   application:
-    name: User-Service
+    name: USER-SERVICE
   datasource:
     url: jdbc:mysql://localhost:3306/microservicetesting?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
     username: root

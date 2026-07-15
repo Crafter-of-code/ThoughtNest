@@ -10,12 +10,13 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/auth/signin")
+@RequestMapping("/api/auth/signin")
 @AllArgsConstructor
 public class SigninController {
     private SigninService signinService;
     @PostMapping
     public ResponseEntity<SigninResponseDto> createUserAccount(@RequestBody SigninRequestDto userData){
+        System.out.println("Request reaches to signin controller");
         System.out.println(userData.getUserEmail());
         SigninResponseDto signinResponseDto = signinService.createUserAccount(userData);
         if(signinResponseDto.isStatus()){
