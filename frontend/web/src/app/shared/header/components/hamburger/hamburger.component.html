@@ -1,0 +1,19 @@
+<button
+  class="h-full w-full flex flex-col justify-center gap-2"
+  (click)="onBurgerClick()"
+>
+  <span
+    class="block h-0.5 w-full rounded-full bg-black transition-all duration-300"
+    [ngClass]="hamburgerActive ? 'translate-y-[10px] rotate-45' : ''"
+  ></span>
+
+  <span
+    class="block h-0.5 w-full rounded-full bg-black transition-all duration-300"
+    [ngClass]="hamburgerActive ? 'opacity-0' : 'opacity-100'"
+  ></span>
+
+  <span
+    class="block h-0.5 w-full rounded-full bg-black transition-all duration-300"
+    [ngClass]="hamburgerActive ? '-translate-y-[10px] -rotate-45' : ''"
+  ></span>
+</button>

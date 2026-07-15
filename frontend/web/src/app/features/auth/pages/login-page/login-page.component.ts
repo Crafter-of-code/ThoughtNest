@@ -8,7 +8,7 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { AuthService } from '../../../../core/services/auth/auth.service';
 import { NotificationService } from '../../../../core/services/notification/notification.service';
@@ -29,7 +29,8 @@ import { NotificationService } from '../../../../core/services/notification/noti
 export class LoginPageComponent {
   constructor(
     private auth: AuthService,
-    private notification: NotificationService
+    private notification: NotificationService,
+    private router: Router
   ) {}
   loginData = new FormGroup({
     userEmail: new FormControl('', [Validators.required]),
@@ -42,6 +43,9 @@ export class LoginPageComponent {
         next: (response) => {
           console.log(response);
           this.notification.setNotification(response.status, response.message);
+          if (response.status) {
+            this.router.navigate(['home']);
+          }
         },
         error: (error) => {
           console.log(error);

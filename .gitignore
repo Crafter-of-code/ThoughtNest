@@ -1,1 +1,67 @@
+# ==========================
+# macOS
+# ==========================
 .DS_Store
+
+# ==========================
+# Windows
+# ==========================
+Thumbs.db
+
+# ==========================
+# IntelliJ IDEA
+# ==========================
+.idea/
+*.iml
+
+# ==========================
+# VS Code
+# ==========================
+.vscode/
+
+# ==========================
+# Eclipse
+# ==========================
+.project
+.classpath
+.settings/
+
+# ==========================
+# Maven
+# ==========================
+**/target/
+
+# Java
+**/*.class
+
+# Logs
+**/*.log
+logs/
+
+# Temporary files
+*.tmp
+*.swp
+
+# Environment variables
+.env
+.env.*
+
+# ==========================
+# Angular
+# ==========================
+frontend/web/node_modules/
+frontend/web/dist/
+frontend/web/.angular/
+frontend/web/coverage/
+
+# npm logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+package-lock.json
+
+# ==========================
+# Build output
+# ==========================
+out/
+bin/

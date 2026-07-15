@@ -1,0 +1,54 @@
+<app-landing-page class="h-screen flex p-10">
+  <app-glass-background>
+    <div
+      class="w-[60vw] max-md:w-[80vw] flex flex-col justify-center items-start"
+    >
+      <p
+        class="text-8xl md:text-9xl font-extrabold bg-linear-to-r from-indigo-100 via-pink-100 to-blue-100 bg-clip-text text-transparent"
+      >
+        404
+      </p>
+
+      <!-- spacer -->
+      <div class="py-2"></div>
+
+      <h1 title="Page Not Found">Oops! Page Not Found</h1>
+
+      <div class="pl-2 opacity-60">
+        <p>
+          The page you're looking for seems to have flown away from the nest.
+          Let's get you back to discovering amazing thoughts and stories.
+        </p>
+      </div>
+
+      <!-- spacer -->
+      <div class="py-4"></div>
+
+      <div class="flex gap-2 flex-wrap">
+        <a routerLink="/">
+          <app-solid-button>
+            <p class="px-4 py-2 font-bold">Go Home</p>
+          </app-solid-button>
+        </a>
+
+        <button onclick="history.back()">
+          <app-outline-button>
+            <p class="px-4 py-2 font-bold">Go Back</p>
+          </app-outline-button>
+        </button>
+      </div>
+
+      <!-- spacer -->
+      <div class="py-4"></div>
+
+      <div
+        class="border-l-2 border-indigo-400/40 pl-4 text-sm opacity-50 max-w-lg"
+      >
+        <p>
+          Error Code: 404 • The requested resource does not exist or may have
+          been moved to another location.
+        </p>
+      </div>
+    </div>
+  </app-glass-background>
+</app-landing-page>

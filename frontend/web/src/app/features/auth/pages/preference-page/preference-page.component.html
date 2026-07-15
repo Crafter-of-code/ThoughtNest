@@ -1,0 +1,56 @@
+<main class="h-full w-full flex justify-center items-center py-15">
+  <div class="max-w-1/2 max-h-1/2 min-h-fit min-w-fit">
+    <app-glass-background>
+      <div class="px-6 py-2">
+        <section class="h-fit">
+          <h1 class="text-center">Choose Your type</h1>
+          <h2 class="text-center text-sm! font-bold! opacity-40 mt-2">
+            According to your mood
+          </h2>
+        </section>
+        <section *ngIf="loadingStatus; else contentLoaded" class="py-4">
+          <div class="h-6 w-full flex justify-center">
+            <app-loading-spinner
+              class="w-full h-full flex justify-center items-center"
+            />
+          </div>
+        </section>
+        <ng-template #contentLoaded>
+          <section class="mt-5">
+            <div
+              *ngIf="userSelectedGenre.length != 0"
+              class="flex flex-row flex-wrap justify-center mb-2"
+              [ngClass]="{
+                'justify-start': userSelectedGenre.length < 10,
+                'justify-center': userSelectedGenre.length >= 10
+              }"
+            >
+              @for(userGenre of userSelectedGenre; track userGenre.genreId){
+              <app-genre-container>
+                {{ userGenre.genreName }}
+              </app-genre-container>
+              }
+            </div>
+            <div
+              class="flex justify-center flex-wrap"
+              (click)="onClickedOnChoice($event)"
+            >
+              @for(genre of genreData; track genre.genreId){
+              <app-genre-container>
+                <button class="text-xs text-white" value="{{ genre.genreId }}">
+                  {{ genre.genreName }}
+                </button>
+              </app-genre-container>
+              }
+            </div>
+            <div class="flex justify-center mt-4">
+              <app-solid-button (onClick)="sendUserChoice($event)">
+                <h3 class="text-white text-sm! mx-4 capitalize">Done</h3>
+              </app-solid-button>
+            </div>
+          </section>
+        </ng-template>
+      </div>
+    </app-glass-background>
+  </div>
+</main>
