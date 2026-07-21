@@ -53,13 +53,9 @@ export class SigninPageComponent {
     }),
   });
   signinHandler() {
-    console.log();
     if (this.signinData.valid) {
-      console.log('you form is valid');
-      console.log(this.signinData.value);
       this.authService.signIn(this.signinData.getRawValue()).subscribe({
         next: (response) => {
-          console.log(response);
           this.notification.status.set(response.status);
           this.notification.message.set(response.message);
           if (response.status) {
@@ -73,7 +69,6 @@ export class SigninPageComponent {
         },
       });
     } else {
-      console.log('form is not valid');
       this.notification.status.set(false);
       this.notification.message.set('Please check your detail correctly');
     }

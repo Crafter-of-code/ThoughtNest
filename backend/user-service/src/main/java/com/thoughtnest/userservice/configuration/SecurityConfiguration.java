@@ -20,12 +20,11 @@ public class SecurityConfiguration {
                 .csrf(csrf -> csrf.disable())
 
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/login", "/register")
+                        .requestMatchers("/login", "/register","/ask/**")
                         .permitAll()
                         .anyRequest()
                         .authenticated()
                 )
-
                 .addFilterBefore(
                         jwtAuthenticationFilter,
                         UsernamePasswordAuthenticationFilter.class

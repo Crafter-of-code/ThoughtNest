@@ -1,0 +1,43 @@
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnChanges,
+  OnInit,
+  Output,
+  Signal,
+  SimpleChanges,
+} from '@angular/core';
+import { HomeSkeletonUiComponent } from '../home-skeleton-ui/home-skeleton-ui.component';
+import { CommonModule } from '@angular/common';
+type latestBlogDataType = {
+  blogTitle: string;
+  blogContent: string;
+  userName: string;
+  userId: number;
+  userEmail: string;
+  createdAt: Date;
+  blogId: string;
+};
+@Component({
+  selector: 'app-short-blog-container',
+  imports: [HomeSkeletonUiComponent, CommonModule],
+  templateUrl: './short-blog-container.component.html',
+  styleUrl: './short-blog-container.component.css',
+  standalone: true,
+})
+export class ShortBlogContainerComponent implements OnInit, OnChanges {
+  @Input() containerHeading: string = '';
+  @Input() skeletonRendering: number[] = [];
+  @Input() blogData?: latestBlogDataType[] | undefined = [];
+  @Input() skeletonLoading: boolean | undefined = true;
+  @Output() blogIdSender = new EventEmitter<string>();
+  constructor() {}
+  ngOnInit(): void {}
+  ngOnChanges(changes: SimpleChanges): void {
+    console.log(this.blogData);
+  }
+  sendBlogId(blogId: string) {
+    this.blogIdSender.emit(blogId);
+  }
+}

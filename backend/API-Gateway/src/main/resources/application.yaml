@@ -19,8 +19,17 @@ spring:
             - id: blog-service
               uri: lb://BLOG-SERVICE
               predicates:
-                - Path=/blogs/**
+                - Path=/api/blog/**
 
+            - id: blog-service
+              uri: lb://BLOG-SERVICE
+              predicates:
+                - Path=/api/blogs/**
+
+            - id: user-service
+              uri: lb://USER-SERVICE
+              predicates:
+                - Path=/api/user/**
 eureka:
   client:
     register-with-eureka: true

@@ -10,7 +10,6 @@ import { Component } from '@angular/core';
 export class HamburgerComponent {
   hamburgerActive: boolean = false;
   onBurgerClick() {
-    console.log('hamburger clicked');
     this.hamburgerActive = !this.hamburgerActive;
   }
 }

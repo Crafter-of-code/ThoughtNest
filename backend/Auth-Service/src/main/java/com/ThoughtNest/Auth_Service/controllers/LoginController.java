@@ -24,6 +24,7 @@ public class LoginController {
     }
     @PostMapping
     public ResponseEntity<LoginResponseDto> postLogin(@RequestBody LoginRequestDto userData){
+        // debugging sentence
         System.out.println("Request is reached at login controller");
         LoginResponseDto loginResponseDto = loginService.postLogin(userData);
         if(loginResponseDto.isStatus()){

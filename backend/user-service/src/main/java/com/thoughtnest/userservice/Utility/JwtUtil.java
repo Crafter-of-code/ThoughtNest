@@ -12,7 +12,6 @@ public class JwtUtil {
     @Value("${jwt.secret-key}")
     private String secretKey;
     private SecretKey getSigninKey(){
-        System.out.println(secretKey);
         byte[] keyByte = Decoders.BASE64.decode(secretKey);
         return Keys.hmacShaKeyFor(keyByte);
     }

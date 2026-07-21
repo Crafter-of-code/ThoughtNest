@@ -3,7 +3,6 @@ import { SolidButtonComponent } from '../../../../shared/components/solid-button
 import { GlobalInputComponent } from '../../../../shared/components/global-input/global-input.component';
 import {
   FormControl,
-  FormControlName,
   FormGroup,
   ReactiveFormsModule,
   Validators,
@@ -50,18 +49,31 @@ export class LoginPageComponent {
           }
         },
         error: (error) => {
-          if (error.message) {
+          console.log(error);
+          if (error.status == 401) {
+            this.notification.setNotification(
+              false,
+              'Unable to communicate to backend'
+            );
+          } else if (error.message) {
             this.notification.setNotification(
               error.error.status,
               error.error.message
             );
           } else {
             console.log(error);
+            this.notification.setNotification(
+              false,
+              'Unable to communicate to backend'
+            );
           }
         },
       });
     } else {
-      this.notification.setNotification(false, 'You input is not correct');
+      this.notification.setNotification(
+        false,
+        'Please check your detail carefully'
+      );
     }
   }
 }
