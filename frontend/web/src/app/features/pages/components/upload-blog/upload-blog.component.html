@@ -1,0 +1,84 @@
+<app-main-container (closeButtonClicked)="showBlogUploadContainer($event)">
+  <form
+    class="mx-auto flex w-full max-w-3xl flex-col gap-6"
+    [formGroup]="uploadBlogInfo"
+    (ngSubmit)="getBlogData()"
+  >
+    <!-- Blog Title -->
+    <div class="space-y-2">
+      <label class="text-sm font-medium text-(--text-color)">
+        Blog Title
+      </label>
+
+      <app-global-input
+        formControlName="blogTitle"
+        inputPlaceHolder="Enter an engaging blog title"
+        [error]="
+          uploadBlogInfo.get('blogTitle')?.touched &&
+          uploadBlogInfo.get('blogTitle')?.hasError('required')
+            ? 'Blog title is required'
+            : ''
+        "
+      >
+      </app-global-input>
+    </div>
+
+    <!-- Blog Content -->
+    <div class="space-y-2">
+      <label class="text-sm font-medium text-(--text-color)">
+        Blog Content
+      </label>
+
+      <app-global-input
+        formControlName="blogContent"
+        inputPlaceHolder="Write your thoughts here..."
+        [error]="
+          uploadBlogInfo.get('blogContent')?.touched &&
+          uploadBlogInfo.get('blogContent')?.hasError('required')
+            ? 'Blog description is required'
+            : ''
+        "
+      >
+      </app-global-input>
+    </div>
+
+    <!-- Cover Image -->
+    <div class="space-y-2">
+      <label class="text-sm font-medium text-(--text-color)">
+        Cover Image
+      </label>
+
+      <label
+        for="coverImage"
+        class="group flex h-52 w-full cursor-pointer flex-col items-center justify-center rounded-3xl border-2 border-dashed border-slate-300 bg-slate-50 transition-all duration-300 hover:border-(--accent-color) hover:bg-(--accent-color)/5"
+      >
+        <div
+          class="mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-white shadow-sm transition-all duration-300 group-hover:scale-105"
+        >
+          📷
+        </div>
+
+        <p class="font-medium text-(--text-color)">
+          {{ FileSelected?.name ?? "Choose a cover image" }}
+        </p>
+
+        <p class="mt-2 text-sm text-slate-500">PNG, JPG or WEBP</p>
+      </label>
+
+      <input
+        id="coverImage"
+        type="file"
+        accept="image/*"
+        class="hidden"
+        (change)="onFileSelected($event)"
+      />
+    </div>
+
+    <!-- Submit Button -->
+    <div class="pt-2">
+      <app-solid-button type="submit" class="w-full">
+        <p class="px-5 py-1 text-white font-medium">Publish Blog</p>
+      </app-solid-button>
+    </div>
+  </form>
+</app-main-container>

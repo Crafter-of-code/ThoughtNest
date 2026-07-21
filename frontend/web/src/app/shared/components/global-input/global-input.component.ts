@@ -20,7 +20,7 @@ export class GlobalInputComponent implements ControlValueAccessor {
   @Input() inputId: string = '';
   @Input() inputPlaceHolder: string = '';
   @Input() inputType: string = 'text';
-
+  @Input() error = '';
   value: string = '';
   isDisabled: boolean = false;
 

@@ -23,7 +23,6 @@ export class WelcomePageComponent {
   @ViewChild('to_scroll_section') to_scroll_section!: ElementRef;
   clickScroll() {
     if (!this.to_scroll_section) return;
-    console.log('hello world');
     this.to_scroll_section.nativeElement.scrollIntoView({
       behavior: 'smooth',
       block: 'start',

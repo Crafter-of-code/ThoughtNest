@@ -2,8 +2,8 @@
   *ngIf="notification.message() != ''"
   class="fixed top-6 right-6 z-50 w-80 overflow-hidden rounded-3xl border bg-white/95 backdrop-blur-md shadow-xl animate-in slide-in-from-right duration-300"
   [ngClass]="{
-    'border-amber-200': !notification.status(),
-    'border-red-200': notification.status()
+    'border-amber-200': notification.status(),
+    'border-red-300': !notification.status()
   }"
 >
   <!-- Top Accent Bar -->

@@ -1,3 +1,24 @@
+jwt:
+  secret-key: nW8kM5QzT1l6h2rP9JxKc4YvLm8FsR7Ua3DeV1QiZwN=
+server:
+  port: ${SERVER_PORT}
+
 spring:
   application:
     name: Blog-Service
+  mongodb:
+    uri: ${MONGODB_URI}
+  servlet:
+    multipart:
+      max-file-size: 20MB
+      max-request-size: 20MB
+
+eureka:
+  client:
+    fetch-registry: true
+    register-with-eureka: true
+
+cloudinary:
+  cloud-name: ${CLOUDINARY_CLOUD_NAME}
+  api-key: ${CLOUDINARY_API_NAME}
+  api-secret: ${CLOUDINARY_API_SECRET}

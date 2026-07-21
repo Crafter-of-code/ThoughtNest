@@ -18,6 +18,7 @@ public class SigninService {
         userData.setUserPassword(encryptedPassword);
         SigninResponseDto signinResponseDto = authFeignClient.registerUser(userData);
         if(signinResponseDto.isStatus()){
+            System.out.println("login successfull");
              signinResponseDto.setStatus(true);
                     signinResponseDto.setMessage("Account created successfully");
             return signinResponseDto;
