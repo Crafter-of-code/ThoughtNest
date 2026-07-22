@@ -28,23 +28,23 @@
           <!-- Top -->
           <div class="space-y-4">
             <!-- Category Badge -->
-            <div>
+            <!-- <div>
               <span
                 class="rounded-full bg-(--accent-color)/10 px-3 py-1 text-xs font-medium text-(--accent-color)"
               >
                 Latest
               </span>
-            </div>
+            </div> -->
 
             <!-- Title -->
             <h3
-              class="text-xl font-semibold leading-7 text-(--text-color) transition-colors duration-300 group-hover:text-(--accent-color)"
+              class="text-xl font-semibold leading-7 text-(--text-color) transition-colors duration-300 group-hover:text-(--accent-color) select-none"
             >
               {{ blogInfo.blogTitle }}
             </h3>
 
             <!-- Content -->
-            <p class="text-sm leading-7 text-gray-600 line-clamp-4">
+            <p class="text-sm leading-7 text-gray-600 line-clamp-4 select-none">
               {{ blogInfo.blogContent }}
             </p>
           </div>
@@ -63,11 +63,13 @@
               />
 
               <div>
-                <p class="text-sm font-semibold text-(--text-color)">
+                <p
+                  class="text-sm font-semibold text-(--text-color) select-none"
+                >
                   {{ blogInfo.userName }}
                 </p>
 
-                <p class="text-xs text-gray-500">
+                <p class="text-xs text-gray-500 select-none">
                   {{ blogInfo.createdAt | date : "dd MMM yyyy" }}
                 </p>
               </div>

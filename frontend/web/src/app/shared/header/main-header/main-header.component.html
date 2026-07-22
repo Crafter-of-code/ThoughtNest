@@ -1,26 +1,41 @@
-<header class="lg:mx-10! my-5! flex max-lg:mx-4 justify-between">
+<header
+  class="lg:px-10! py-5! flex max-lg:px-4 justify-between sticky top-0 bg-gray-100"
+>
   <div>
-    <a routerLink="/home"><h1 class="select-none">ThoughtNest</h1></a>
+    <a routerLink="/home"
+      ><h1 class="select-none text-(--accent-color)">ThoughtNest</h1></a
+    >
   </div>
   <!--bit screen notification-->
-  <div class="max-lg:hidden flex gap-3">
-    <a
-      routerLink="/home"
-      class="text-lg flex items-center fontl-bold capitalize px-3 py-2 hover:bg-red-400 rounded-full hover:text-white"
-      >home</a
-    >
-    <a
-      routerLink="/post"
-      class="text-lg flex items-center fontl-bold capitalize px-3 py-2 hover:bg-red-400 rounded-full hover:text-white"
-      >post</a
-    >
-    <a
-      routerLink="/myaccount"
-      class="text-lg flex items-center fontl-bold capitalize px-3 py-2 hover:bg-red-400 rounded-full hover:text-white"
-      >category</a
-    >
+  <div class="max-lg:hidden flex gap-5">
+    <ng-container *ngFor="let navData of navigationData; let i = index">
+      <a
+        [routerLink]="navData.pageUrl"
+        routerLinkActive="border-b border-solid border-(--accent-color) text-(--accent-color)"
+        class="text-lg flex items-center justify-center font-bold capitalize px-1 py-1 rounded-none text-center border-b-2 border-solid hover:border-(--accent-color) p-0! flex-1"
+        >{{ navData.pageName }}</a
+      >
+    </ng-container>
   </div>
   <div class="flex-1 justify-end flex lg:hidden items-center">
-    <div class="w-8 h-8"><app-hamburger /></div>
+    <div class="w-8 h-8">
+      <app-hamburger (hamburgerClicked)="hamburgerClicked($event)" />
+    </div>
   </div>
 </header>
+<!--Mobile screen notification
+top-15
+-->
+<!-- *ngIf="showMobileMenue" -->
+<div
+  class="lg:hidden absolute right-0 my-5! flex max-lg:mx-4 mobile_menue"
+  [class.mobile_menue_active]="showMobileMenue"
+>
+  <app-glass-background [padding]="'p-2!'" [rounded]="'rounded-xl'">
+    <a
+      routerLink="/home"
+      class="hover:bg-(--accent-color)/70 rounded-lg p-2 px-3! my-1"
+      >Home</a
+    >
+  </app-glass-background>
+</div>

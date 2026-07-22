@@ -1,11 +1,10 @@
 <!--
-
-
 max-w-sm
 relative
 -->
 <div
-  class="overflow-hidden w-full p-8 rounded-4xl bg-white/55 backdrop-blur-2xl border border-white/75 shadow-[0_2px_0_rgba(255,255,255,0.9)_inset,0_-1px_0_rgba(0,0,0,0.04)_inset,0_20px_60px_rgba(0,0,0,0.12),0_4px_16px_rgba(0,0,0,0.08)]"
+  class="overflow-hidden w-full bg-white/55 backdrop-blur-2xl border border-white/75 shadow-[0_2px_0_rgba(255,255,255,0.9)_inset,0_-1px_0_rgba(0,0,0,0.04)_inset,0_20px_60px_rgba(0,0,0,0.12),0_4px_16px_rgba(0,0,0,0.08)]"
+  [ngClass]="[padding, rounded]"
 >
   <ng-content />
   <!-- <div

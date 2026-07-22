@@ -1,7 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { LandingPageComponent } from '../../welcome/components/landing-page/landing-page.component';
-import { MainHeaderComponent } from '../../../shared/header/main-header/main-header.component';
-import { HomeSkeletonUiComponent } from '../components/home-skeleton-ui/home-skeleton-ui.component';
 import { CommonModule } from '@angular/common';
 import { AddBlogButtonComponent } from '../components/add-blog-button/add-blog-button.component';
 import { UploadBlogComponent } from '../components/upload-blog/upload-blog.component';
@@ -45,7 +42,6 @@ type completePageDataType = {
 @Component({
   selector: 'app-home-page',
   imports: [
-    MainHeaderComponent,
     CommonModule,
     AddBlogButtonComponent,
     UploadBlogComponent,
