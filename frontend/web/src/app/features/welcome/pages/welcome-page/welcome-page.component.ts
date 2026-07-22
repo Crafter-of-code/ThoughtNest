@@ -1,4 +1,10 @@
-import { Component, ElementRef, ViewChild } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  OnDestroy,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
 import { SolidButtonComponent } from '../../../../shared/components/solid-button/solid-button.component';
 import { OutlineButtonComponent } from '../../../../shared/components/outline-button/outline-button.component';
 import { GlassBackgroundComponent } from '../../../../shared/components/glass-background/glass-background.component';
@@ -19,7 +25,7 @@ import { RouterLink } from '@angular/router';
   templateUrl: './welcome-page.component.html',
   styleUrl: './welcome-page.component.css',
 })
-export class WelcomePageComponent {
+export class WelcomePageComponent implements OnDestroy, OnInit {
   @ViewChild('to_scroll_section') to_scroll_section!: ElementRef;
   clickScroll() {
     if (!this.to_scroll_section) return;
@@ -27,5 +33,11 @@ export class WelcomePageComponent {
       behavior: 'smooth',
       block: 'start',
     });
+  }
+  ngOnInit(): void {
+    console.log('Welcome page initialize');
+  }
+  ngOnDestroy(): void {
+    console.log('website destory');
   }
 }

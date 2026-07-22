@@ -9,6 +9,30 @@ export const routes: Routes = [
       ).then((page) => page.WelcomePageComponent),
   },
   {
+    path: '',
+    loadComponent: () =>
+      import('./features/pages/layout-page/layout-page.component').then(
+        (page) => page.LayoutPageComponent
+      ),
+    children: [
+      {
+        path: 'home',
+        loadComponent: () =>
+          import('./features/pages/home-page/home-page.component').then(
+            (page) => page.HomePageComponent
+          ),
+      },
+      {
+        path: 'setting',
+        loadComponent: () =>
+          import('./features/pages/setting-page/setting-page.component').then(
+            (page) => page.SettingPageComponent
+          ),
+      },
+    ],
+  },
+
+  {
     path: 'signin',
     loadComponent: () =>
       import('./features/auth/pages/signin-page/signin-page.component').then(
@@ -22,13 +46,13 @@ export const routes: Routes = [
         (page) => page.LoginPageComponent
       ),
   },
-  {
-    path: 'home',
-    loadComponent: () =>
-      import('./features/pages/home-page/home-page.component').then(
-        (page) => page.HomePageComponent
-      ),
-  },
+  // {
+  //   path: 'home',
+  //   loadComponent: () =>
+  //     import('./features/pages/home-page/home-page.component').then(
+  //       (page) => page.HomePageComponent
+  //     ),
+  // },
   {
     path: '**',
     loadComponent: () =>

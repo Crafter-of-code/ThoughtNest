@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 
 @Component({
   selector: 'app-hamburger',
@@ -9,7 +9,9 @@ import { Component } from '@angular/core';
 })
 export class HamburgerComponent {
   hamburgerActive: boolean = false;
+  @Output() hamburgerClicked = new EventEmitter<Event>();
   onBurgerClick() {
     this.hamburgerActive = !this.hamburgerActive;
+    this.hamburgerClicked.emit();
   }
 }

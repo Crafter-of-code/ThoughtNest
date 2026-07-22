@@ -1,0 +1,21 @@
+.mobile_menue {
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-20px);
+  transition: all 0.3s ease;
+}
+
+.mobile_menue_active {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+  animation: mobileMenueActiveAnimation s ease-in-out 1s forwards;
+}
+@keyframes mobileMenueActiveAnimation {
+  from {
+    top: 0px;
+  }
+  to {
+    top: 60px;
+  }
+}
