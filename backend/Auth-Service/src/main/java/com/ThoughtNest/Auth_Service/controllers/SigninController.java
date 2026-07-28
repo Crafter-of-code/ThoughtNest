@@ -17,7 +17,6 @@ public class SigninController {
     @PostMapping
     public ResponseEntity<SigninResponseDto> createUserAccount(@RequestBody SigninRequestDto userData){
         System.out.println("Request reaches to signin controller");
-        System.out.println(userData.getUserEmail());
         SigninResponseDto signinResponseDto = signinService.createUserAccount(userData);
         if(signinResponseDto.isStatus()){
             return ResponseEntity.status(HttpStatus.CREATED).body(signinResponseDto);

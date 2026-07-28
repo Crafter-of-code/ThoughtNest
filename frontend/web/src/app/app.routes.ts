@@ -1,4 +1,5 @@
 import { Routes } from '@angular/router';
+import { MyProfilePageComponent } from './features/pages/my-profile-page/my-profile-page.component';
 
 export const routes: Routes = [
   {
@@ -23,11 +24,24 @@ export const routes: Routes = [
           ),
       },
       {
-        path: 'setting',
+        path: 'members',
         loadComponent: () =>
-          import('./features/pages/setting-page/setting-page.component').then(
-            (page) => page.SettingPageComponent
+          import('./features/pages/members-page/members-page.component').then(
+            (page) => page.MembersPageComponent
           ),
+        children: [
+          {
+            path: ':id',
+            loadComponent: () =>
+              import(
+                './features/pages/public-profile/public-profile.component'
+              ).then((page) => page.PublicProfileComponent),
+          },
+        ],
+      },
+      {
+        path: 'myprofile',
+        component: MyProfilePageComponent,
       },
     ],
   },

@@ -1,6 +1,7 @@
 package com.ThoughtNest.Auth_Service.services;
 
 import com.ThoughtNest.Auth_Service.clientConfig.AuthFeignClient;
+import com.ThoughtNest.Auth_Service.dto.AskSigninRequestDto;
 import com.ThoughtNest.Auth_Service.dto.SigninRequestDto;
 import com.ThoughtNest.Auth_Service.dto.SigninResponseDto;
 import lombok.AllArgsConstructor;
@@ -13,20 +14,21 @@ public class SigninService {
     private AuthFeignClient authFeignClient;
     private PasswordEncoder passwordEncoder;
     public SigninResponseDto createUserAccount(SigninRequestDto userData){
-        System.out.println("Request reach to signin service");
+        AskSigninRequestDto askSigninRequestDto = new AskSigninRequestDto();
         String encryptedPassword = passwordEncoder.encode(userData.getUserPassword());
-        userData.setUserPassword(encryptedPassword);
-        SigninResponseDto signinResponseDto = authFeignClient.registerUser(userData);
+        askSigninRequestDto.setUserPassword(encryptedPassword);
+        askSigninRequestDto.setUserName(userData.getUserFirstName()+" "+userData.getUserLastName());
+        askSigninRequestDto.setUserEmail(userData.getUserEmail());
+        SigninResponseDto signinResponseDto = authFeignClient.registerUser(askSigninRequestDto);
         if(signinResponseDto.isStatus()){
             System.out.println("login successfull");
              signinResponseDto.setStatus(true);
-                    signinResponseDto.setMessage("Account created successfully");
+             signinResponseDto.setMessage("Account created successfully");
             return signinResponseDto;
         }else{
             signinResponseDto.setStatus(false);
             signinResponseDto.setMessage("Facing some problem while creating the account");
             return signinResponseDto;
         }
-
     }
 }

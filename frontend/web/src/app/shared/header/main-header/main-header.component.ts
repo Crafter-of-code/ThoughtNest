@@ -3,6 +3,7 @@ import { HamburgerComponent } from '../components/hamburger/hamburger.component'
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { GlassBackgroundComponent } from '../../components/glass-background/glass-background.component';
+import { LogoutButtonComponent } from '../../components/logout-button/logout-button.component';
 type navigationDataType = {
   pageName: string;
   pageUrl: string;
@@ -15,6 +16,8 @@ type navigationDataType = {
     CommonModule,
     GlassBackgroundComponent,
     RouterLinkActive,
+    LogoutButtonComponent,
+    LogoutButtonComponent,
   ],
   templateUrl: './main-header.component.html',
   styleUrl: './main-header.component.css',
@@ -26,8 +29,16 @@ export class MainHeaderComponent {
       pageUrl: '/home',
     },
     {
-      pageName: 'Setting',
-      pageUrl: '/setting',
+      pageName: 'Memebers',
+      pageUrl: '/members',
+    },
+    // {
+    //   pageName: 'Setting',
+    //   pageUrl: '/setting',
+    // },
+    {
+      pageName: 'My Profile',
+      pageUrl: '/myprofile',
     },
   ];
   showMobileMenue: boolean = false;

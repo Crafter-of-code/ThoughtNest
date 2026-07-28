@@ -15,4 +15,8 @@ public interface BlogRepository extends MongoRepository<BlogEntity,String> {
     Optional<List<BlogEntity>> findByUserId(Long userId);
     Optional<List<ShortBlogResponseDto>> findTop20ByOrderByCreatedAtDesc();
     Optional<BlogDetailResponseDto> findByBlogId(String id);
+    Optional<Long> countByUserId(Long userId);
+    Optional<Long> deleteAllByUserEmail(String email);
+    Optional<BlogEntity> findByBlogIdAndUserEmail(String id, String userEmail);
+    List<BlogEntity> findTop3ByUserEmailOrderByCreatedAtDesc(String userEmail);
 }

@@ -11,7 +11,5 @@ export class GlassBackgroundComponent implements OnChanges {
   @Input() padding: string | undefined = 'p-8';
   @Input() rounded: string = 'rounded-4xl';
   // @Input()
-  ngOnChanges(changes: SimpleChanges): void {
-    console.log(this.padding);
-  }
+  ngOnChanges(changes: SimpleChanges): void {}
 }

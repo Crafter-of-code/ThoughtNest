@@ -1,0 +1,138 @@
+<app-main-container (closeButtonClicked)="closeSettingComponent($event)">
+  <!--bg-gray-50 rounded-2xl shadow-sm border border-gray-200 p-6 flex-1 max-w-360 h-max-->
+  <section class="">
+    <!-- Heading -->
+    <div class="flex items-center justify-between mb-8">
+      <div>
+        <h2 class="text-2xl font-bold text-gray-800">Profile Settings</h2>
+        <p class="text-sm text-gray-500 mt-1">
+          Manage your public profile information.
+        </p>
+      </div>
+      <app-solid-button (clicked)="uploadSendToServer()">
+        <p class="text-white">Save Changes</p>
+      </app-solid-button>
+    </div>
+
+    <!-- Profile Image -->
+    <div class="flex flex-col items-center">
+      <img
+        src="https://placehold.co/120x120"
+        class="w-28 h-28 rounded-full border-4 border-(--accent-color) object-cover"
+      />
+
+      <label
+        class="mt-4 px-4 py-2 rounded-lg bg-white border border-gray-300 text-sm hover:bg-gray-100 transition"
+        for="file"
+      >
+        {{ fileData?.name ?? "Change Photo" }}
+      </label>
+      <input
+        type="file"
+        id="file"
+        (change)="fileUploade($event)"
+        class="hidden"
+      />
+    </div>
+
+    <!-- Form -->
+    <!--grid grid-cols-1 md:grid-cols-2-->
+    <form
+      class="gap-5 flex flex-col flex-wrap mt-10"
+      [formGroup]="userUpdatedDataForm"
+    >
+      <div>
+        <label class="text-sm font-medium text-gray-700" for="userName">
+          Full Name
+        </label>
+
+        <app-global-input
+          inputId="userName"
+          formControlName="userName"
+          [inputPlaceHolder]="ownerData.userName"
+          inputType="text"
+        />
+      </div>
+
+      <!-- <div>
+        <label class="text-sm font-medium text-gray-700"> Last Name </label>
+
+        <input
+          type="text"
+          value="Craft"
+          class="w-full mt-2 rounded-xl border border-gray-300 bg-white px-4 py-3 outline-none focus:border-(--accent-color)"
+        />
+      </div> -->
+
+      <!-- <div>
+        <label class="text-sm font-medium text-gray-700"> Username </label>
+
+        <input
+          type="text"
+          value="codecraft"
+          class="w-full mt-2 rounded-xl border border-gray-300 bg-white px-4 py-3 outline-none focus:border-(--accent-color)"
+        />
+      </div> -->
+
+      <div>
+        <label class="text-sm font-medium text-gray-700"> Location </label>
+
+        <app-global-input
+          inputId="userName"
+          formControlName="userLocation"
+          [inputPlaceHolder]="ownerData.userLocation ?? 'Enter location'"
+          inputType="text"
+        />
+      </div>
+      <!-- Bio -->
+      <div class="mt-0 w-full">
+        <label class="text-sm font-medium text-gray-700"> Bio </label>
+
+        <!--
+			class="w-full mt-2 rounded-xl border border-gray-300 bg-white px-4 py-3 resize-none outline-none focus:border-(--accent-color)"
+			-->
+        <textarea
+          rows="5"
+          placeholder="Write your bio"
+          formControlName="userBio"
+          class="w-full rounded-2xl border border-slate-200 bg-slate-50/80 px-4 py-3 text-slate-800 placeholder:text-slate-400 resize-none outline-none transition-all duration-200 hover:border-slate-300 hover:bg-white focus:border-slate-400 focus:bg-white focus:shadow-md focus:ring-4 focus:ring-slate-200/70"
+        ></textarea>
+      </div>
+    </form>
+
+    <!-- Topics -->
+    <div class="mt-8">
+      <div class="flex items-center justify-between mb-3">
+        <h3 class="font-semibold text-gray-800">Topics</h3>
+
+        <button class="text-sm text-(--accent-color) font-medium">
+          + Add Topic
+        </button>
+      </div>
+
+      <div class="flex flex-wrap gap-3">
+        @for(data of userTopics;track $index;let i = $index){
+        <div
+          class="flex items-center gap-2 px-4 py-2 rounded-full bg-gray-200 text-sm"
+        >
+          {{ data }}
+
+          <button (click)="removeTopicHandler(i)">✕</button>
+        </div>
+        }
+      </div>
+      <div class="flex gap-2 items-center mt-2">
+        <input
+          type="text"
+          placeholder="Enter you topic"
+          class="w-full rounded-xl border border-gray-300 bg-white px-4 py-3 outline-none focus:border-(--accent-color)"
+          (input)="onChange($event)"
+          [value]="userSingleTopic()"
+        />
+        <app-solid-button (clicked)="pushToArray()">
+          <p class="text-white my-2 mx-4">Add</p>
+        </app-solid-button>
+      </div>
+    </div>
+  </section>
+</app-main-container>

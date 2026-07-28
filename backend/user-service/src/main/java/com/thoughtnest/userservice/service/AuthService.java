@@ -2,6 +2,7 @@ package com.ThoughtNest.UserService.service;
 
 import com.ThoughtNest.UserService.dto.LoginRequestDto;
 import com.ThoughtNest.UserService.dto.LoginResponseDto;
+import com.ThoughtNest.UserService.dto.LogoutResponseDto;
 import com.ThoughtNest.UserService.dto.SigninRepsonseDto;
 import com.ThoughtNest.UserService.entity.UserEntity;
 import com.ThoughtNest.UserService.repository.UserRepository;
@@ -48,7 +49,15 @@ public class AuthService {
         if(userDetail.isPresent()){
             userCredentailDetail.setUserEmail(userDetail.get().getUserEmail());
             userCredentailDetail.setUserPassword(userDetail.get().getUserPassword());
+            userCredentailDetail.setPublicId(userDetail.get().getPublicId());
+            System.out.println(userCredentailDetail.getPublicId());
         }
         return  userCredentailDetail;
+    }
+    public LogoutResponseDto logoutService(){
+        LogoutResponseDto logoutResponseDto = new LogoutResponseDto();
+        logoutResponseDto.setStatus(true);
+        logoutResponseDto.setMessage("Logged out successfully");
+        return  logoutResponseDto;
     }
 }

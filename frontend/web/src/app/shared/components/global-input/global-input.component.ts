@@ -1,11 +1,15 @@
 import { CommonModule } from '@angular/common';
 import { Component, forwardRef, Input } from '@angular/core';
-import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+import {
+  ControlValueAccessor,
+  NG_VALUE_ACCESSOR,
+  ReactiveFormsModule,
+} from '@angular/forms';
 
 @Component({
   selector: 'app-global-input',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, ReactiveFormsModule],
   templateUrl: './global-input.component.html',
   styleUrl: './global-input.component.css',
   providers: [

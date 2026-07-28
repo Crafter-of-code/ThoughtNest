@@ -30,12 +30,10 @@ export class SigninPageComponent {
     private notification: NotificationService,
     private route: Router
   ) {}
+  disabled: boolean = false;
+  loadingSpinner: boolean = false;
   signinData = new FormGroup({
     userFirstName: new FormControl<string>('', {
-      validators: [Validators.required],
-      nonNullable: true,
-    }),
-    userMiddleName: new FormControl<string>('', {
       validators: [Validators.required],
       nonNullable: true,
     }),
@@ -53,6 +51,21 @@ export class SigninPageComponent {
     }),
   });
   signinHandler() {
+    console.log('signin handler is running');
+    this.loadingSpinner = true;
+    this.disabled = true;
+    const payload = {
+      userFirstName: (
+        this.signinData.getRawValue().userFirstName ?? ''
+      ).toLowerCase(),
+      userLastName: (
+        this.signinData.getRawValue().userLastName ?? ''
+      ).toLowerCase(),
+      userEmail: (this.signinData.getRawValue().userEmail ?? '').toLowerCase(),
+      userPassword: (
+        this.signinData.getRawValue().userPassword ?? ''
+      ).toLowerCase(),
+    };
     if (this.signinData.valid) {
       this.authService.signIn(this.signinData.getRawValue()).subscribe({
         next: (response) => {
@@ -61,16 +74,30 @@ export class SigninPageComponent {
           if (response.status) {
             this.route.navigate(['login']);
           }
+          this.loadingSpinner = false;
+          this.disabled = false;
         },
         error: (err) => {
           console.log(err);
-          this.notification.status.set(false);
-          this.notification.message.set(err.error.message);
+          if ((err.status = 400)) {
+            this.notification.status.set(false);
+            this.notification.message.set(
+              'We already found an account with this email address'
+            );
+          } else {
+            this.notification.status.set(false);
+            this.notification.message.set(err.error.message);
+          }
+
+          this.loadingSpinner = false;
+          this.disabled = false;
         },
       });
     } else {
       this.notification.status.set(false);
       this.notification.message.set('Please check your detail correctly');
+      this.loadingSpinner = false;
+      this.disabled = false;
     }
   }
 }

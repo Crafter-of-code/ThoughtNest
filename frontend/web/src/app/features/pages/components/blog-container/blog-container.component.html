@@ -1,7 +1,7 @@
 <app-main-container (closeButtonClicked)="clicked($event)">
   <div class="mx-auto flex h-full max-w-5xl flex-col gap-6">
     <!-- Cover Image -->
-    <div class="h-72 w-full overflow-hidden rounded-3xl bg-slate-100">
+    <div class="h-100 w-full overflow-hidden rounded-3xl bg-slate-100">
       <img
         [src]="singleBlogData?.coverImage"
         class="h-full w-full object-cover"
@@ -45,9 +45,11 @@
       <div class="flex gap-6 text-sm text-slate-500">
         <span>👁 {{ singleBlogData?.blogViews }}</span>
 
-        <span>❤️ {{ singleBlogData?.blogLikes }}</span>
+        <button (click)="sendLikesToBlog(singleBlogData?.blogId ?? '')">
+          ❤️ {{ singleBlogData?.blogLikes }}
+        </button>
 
-        <span>💬 {{ singleBlogData?.blogComments }}</span>
+        <button>💬 {{ singleBlogData?.blogComments }}</button>
       </div>
     </div>
 

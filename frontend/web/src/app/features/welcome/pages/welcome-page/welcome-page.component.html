@@ -13,14 +13,21 @@
           <div class="py-2" aria-label="spacer"></div>
           <!--spacer here-->
           <div class="flex gap-2 flex-wrap">
-            <a routerLink="login">
-              <app-solid-button title="Login">
-                <p class="px-4 py-2 font-bold">Login</p>
+            <a [routerLink]="buttonDisable ? null : '/login'" class="flex">
+              <app-solid-button
+                title="Login"
+                [disabled]="buttonDisable"
+                [loadingSpinner]="loadingSpinner"
+              >
+                <p class="px-4 py-2 font-bold select-none">Login</p>
               </app-solid-button></a
             >
-            <a routerLink="signin"
-              ><app-outline-button>
-                <p class="px-4 py-2 font-bold">Signin</p>
+            <a [routerLink]="buttonDisable ? null : '/signin'"
+              ><app-outline-button
+                [disabled]="buttonDisable"
+                [loadingSpinner]="loadingSpinner"
+              >
+                <p class="px-4 py-2 font-bold select-none">Signin</p>
               </app-outline-button>
             </a>
           </div>
@@ -28,7 +35,7 @@
       </app-glass-background>
       <button class="cursor-pointer" (click)="clickScroll()">
         <div
-          class="flex justify-center items-center bg-transparent absolute bottom-2 right-[50%] animate-bounce"
+          class="flex justify-center items-center bg-transparent absolute bottom-2 right-[50%] animate-bounce select-none"
         >
           <img
             src="assets/icons/arrow-down.png"

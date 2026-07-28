@@ -26,6 +26,8 @@ import { NotificationService } from '../../../../core/services/notification/noti
   styleUrl: './login-page.component.css',
 })
 export class LoginPageComponent {
+  buttonDisabled: boolean = false;
+  buttonLoadingSpinner: boolean = false;
   constructor(
     private auth: AuthService,
     private notification: NotificationService,
@@ -37,14 +39,20 @@ export class LoginPageComponent {
   });
   loginHandler() {
     if (this.loginData.valid) {
-      console.log(this.loginData.getRawValue());
-      this.auth.login(this.loginData.getRawValue()).subscribe({
+      const payload = {
+        userEmail: (this.loginData.getRawValue().userEmail ?? '').toLowerCase(),
+        userPassword: (
+          this.loginData.getRawValue().userPassword ?? ''
+        ).toLowerCase(),
+      };
+      this.auth.login(payload).subscribe({
         next: (response) => {
           console.log(response);
           this.notification.setNotification(response.status, response.message);
-          console.log(response.token);
-          localStorage.setItem('token', response.token);
-          if (response.status) {
+          console.log(response.publicId);
+          if (response.token && response.publicId && response.status) {
+            localStorage.setItem('token', response.token);
+            localStorage.setItem('publicId', response.publicId);
             this.router.navigate(['home']);
           }
         },
@@ -53,8 +61,9 @@ export class LoginPageComponent {
           if (error.status == 401) {
             this.notification.setNotification(
               false,
-              'Unable to communicate to backend'
+              'You are not a memeber of \n throughtNest '
             );
+            this.router.navigate(['/', 'signin']);
           } else if (error.message) {
             this.notification.setNotification(
               error.error.status,

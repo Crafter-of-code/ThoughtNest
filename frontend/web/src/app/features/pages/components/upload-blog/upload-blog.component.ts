@@ -30,6 +30,8 @@ export class UploadBlogComponent {
   @Output() showMainContainerOnScreen = new EventEmitter<Event>();
   imagePreview: string | null = null;
   FileSelected: File | null = null;
+  buttonLoadingSpinner: boolean = false;
+  buttonDisabled: boolean = false;
   uploadBlogInfo = new FormGroup({
     blogTitle: new FormControl<string>('', {
       validators: [Validators.required],
@@ -62,7 +64,9 @@ export class UploadBlogComponent {
     reader.readAsDataURL(file);
     */
   }
-  getBlogData() {
+  uploadBlogData() {
+    this.buttonLoadingSpinner = true;
+    this.buttonDisabled = true;
     const formData = new FormData();
 
     formData.append('blogTitle', this.uploadBlogInfo.value.blogTitle ?? '');
@@ -74,8 +78,14 @@ export class UploadBlogComponent {
       next: (response) => {
         if (response.status) {
           this.notification.setNotification(response.status, response.message);
+          this.uploadBlogInfo.reset();
+          this.FileSelected = null;
+          this.buttonLoadingSpinner = false;
+          this.buttonDisabled = false;
         } else {
           this.notification.setNotification(response.status, response.message);
+          this.buttonLoadingSpinner = false;
+          this.buttonDisabled = false;
         }
       },
       error: (err) => {
@@ -84,6 +94,8 @@ export class UploadBlogComponent {
           false,
           'We are facing some error while uploading you blog'
         );
+        this.buttonLoadingSpinner = false;
+        this.buttonDisabled = false;
       },
     });
   }

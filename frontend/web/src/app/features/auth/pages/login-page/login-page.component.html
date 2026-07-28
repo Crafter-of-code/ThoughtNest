@@ -113,7 +113,11 @@
 
       <!-- Submit Button -->
       <div class="">
-        <app-solid-button type="submit">
+        <app-solid-button
+          type="submit"
+          [disabled]="buttonDisabled"
+          [loadingSpinner]="buttonLoadingSpinner"
+        >
           <p class="px-6 py-2 font-medium">Sign In</p>
         </app-solid-button>
       </div>

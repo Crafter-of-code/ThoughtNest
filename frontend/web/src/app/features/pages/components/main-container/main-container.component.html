@@ -1,5 +1,6 @@
+<!--overflow-hidden-->
 <div
-  class="relative h-full w-full overflow-hidden rounded-3xl border border-white/20 bg-white shadow-2xl backdrop-blur-sm"
+  class="relative w-full rounded-3xl border border-white/20 bg-white shadow-2xl backdrop-blur-sm overflow-scroll h-150"
 >
   <!-- Close Button -->
   <button
@@ -23,7 +24,7 @@
   </button>
 
   <!-- Dynamic Content -->
-  <div class="h-full overflow-y-auto p-8 pt-16">
+  <div class="h-full overflow-y-scroll p-8 pt-16">
     <ng-content></ng-content>
   </div>
 </div>
