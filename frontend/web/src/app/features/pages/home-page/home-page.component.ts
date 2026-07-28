@@ -9,7 +9,7 @@ type latestBlogDataType = {
   blogTitle: string;
   blogContent: string;
   userName: string;
-  userId: number;
+  publicId: string;
   userEmail: string;
   createdAt: Date;
   blogId: string;
@@ -72,7 +72,6 @@ export class HomePageComponent implements OnInit {
         (_, i) => i
       );
     });
-    // this.skeletonRendering = Array.from({ length: numberOfCards }, (_, i) => i);
     this.getLatestBlog();
   }
   UploadBlogContainerShower(event: Event) {

@@ -6,6 +6,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.math.BigInteger;
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Data
 @Document(collection = "blogs")
@@ -16,6 +17,7 @@ public class BlogEntity {
 
     // author
     private Long userId;
+    private UUID publicId;
     private String userName;
     private String userEmail;
 
@@ -25,11 +27,12 @@ public class BlogEntity {
     private String blogContent;
     // interaction
     private long blogViews;
-    private Long blogLikes;
+    private long blogLikes;
     private long blogComment;
     private long blogInteractionScore;
     // cover image
     private String coverImage;
+    private String coverImagePublicUrl;
 
     // creation time
     @CreatedDate

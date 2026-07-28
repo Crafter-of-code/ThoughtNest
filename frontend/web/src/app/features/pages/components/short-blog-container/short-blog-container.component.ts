@@ -14,7 +14,7 @@ type latestBlogDataType = {
   blogTitle: string;
   blogContent: string;
   userName: string;
-  userId: number;
+  publicId: string;
   userEmail: string;
   createdAt: Date;
   blogId: string;

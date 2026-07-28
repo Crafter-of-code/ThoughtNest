@@ -6,7 +6,6 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
   const isPublic = publicEndpoints.some((endpoint) =>
     req.url.includes(endpoint)
   );
-
   if (token && !isPublic) {
     req = req.clone({
       setHeaders: {

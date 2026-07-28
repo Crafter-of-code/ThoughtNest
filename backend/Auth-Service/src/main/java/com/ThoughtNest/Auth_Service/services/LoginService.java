@@ -30,6 +30,8 @@ public class LoginService {
             loginResponseDto.setMessage("Welcome");
             String jwtToken = jwtUtility.getToken(userCredentialDetail.getUserEmail());
             loginResponseDto.setToken(jwtToken);
+            loginResponseDto.setPublicId(userCredentialDetail.getPublicId());
+            System.out.println(loginResponseDto.getPublicId());
             System.out.println("Every thing looks great from login service");
         }else{
             loginResponseDto.setStatus(false);

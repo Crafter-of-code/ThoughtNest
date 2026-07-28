@@ -42,4 +42,9 @@ export class BlogContainerComponent implements OnChanges {
   clicked(event: Event) {
     this.closeBlogContainer.emit();
   }
+  async sendLikesToBlog(blogId: string) {
+    let publicIdOfUser = await localStorage.getItem('publicId');
+    console.log(publicIdOfUser);
+    console.log(blogId);
+  }
 }

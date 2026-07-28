@@ -9,19 +9,19 @@ export type blogUploadResponseFromServer = {
   status: boolean;
   message: string;
 };
-type latestBlogDataType = {
+type shortBlogDataType = {
   blogTitle: string;
   blogContent: string;
   userName: string;
-  userId: number;
+  publicId: string;
   userEmail: string;
   createdAt: Date;
   blogId: string;
 };
-export type latestBlogResponseDataType = {
+export type shortBlogResponseDataType = {
   status: boolean;
   message: string;
-  data: latestBlogDataType[];
+  data: shortBlogDataType[];
 };
 export type singleBlogResponseType = {
   status: boolean;
@@ -45,4 +45,8 @@ export type singleBlogResponseType = {
     // Publish Date
     createdAt: Date;
   };
+};
+export type ResponseDataType = {
+  status: boolean;
+  message: string;
 };

@@ -12,27 +12,30 @@
 <!-- <app-main-header class="flex-9"> -->
 <!-- </app-main-header> -->
 <!--parent container-->
-<div
-  class="lg:mx-10! my-5! flex max-lg:mx-4 flex-col gap-5"
-  [ngClass]="
-    showUploadBlogContainer && showBlogContainer
-      ? 'overflow-hidden'
-      : 'overflow-auto'
-  "
->
-  <ng-container *ngFor="let sectionData of completePageData; let i = index">
-    <app-short-blog-container
-      [containerHeading]="sectionData.containerName"
-      [skeletonRendering]="sectionData.numberOfSkeletonRender"
-      [blogData]="sectionData.blogData"
-      [skeletonLoading]="sectionData.skeletonLoading"
-      (blogIdSender)="getBlogById($event)"
-    />
-  </ng-container>
-</div>
+<main class="w-full flex justify-center">
+  <div
+    class="lg:mx-10! my-5! flex max-lg:mx-4 flex-col gap-5 max-w-360 flex-1"
+    [ngClass]="
+      showUploadBlogContainer && showBlogContainer
+        ? 'overflow-hidden'
+        : 'overflow-auto'
+    "
+  >
+    <ng-container *ngFor="let sectionData of completePageData; let i = index">
+      <app-short-blog-container
+        [containerHeading]="sectionData.containerName"
+        [skeletonRendering]="sectionData.numberOfSkeletonRender"
+        [blogData]="sectionData.blogData"
+        [skeletonLoading]="sectionData.skeletonLoading"
+        (blogIdSender)="getBlogById($event)"
+      />
+    </ng-container>
+  </div>
+</main>
+
 <div
   *ngIf="showBlogContainer"
-  class="p-15 h-screen w-screen bg-(--text-color)/70 fixed top-0 left-0 max-sm:p-3 max-sm:py-5"
+  class="p-15 h-full w-screen bg-(--text-color)/70 fixed lg:top-10! top-11! left-0 max-sm:p-3 max-sm:py-20"
 >
   <app-blog-container
     [singleBlogData]="singleBlogData"

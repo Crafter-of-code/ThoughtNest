@@ -4,13 +4,14 @@ import lombok.Data;
 import org.springframework.scheduling.quartz.LocalDataSourceJobStore;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Data
 public class ShortBlogResponseDto {
     private String blogId;
     private String blogTitle;
     private String blogContent;
-    private String userId;
+    private UUID publicId;
     private String userName;
     private LocalDateTime createdAt;
 }

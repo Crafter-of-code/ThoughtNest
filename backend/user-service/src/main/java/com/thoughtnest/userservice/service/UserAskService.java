@@ -23,10 +23,9 @@ public class UserAskService {
         try{
             Optional<UserEntity> userDetail = userRepository.findByUserEmail(userData.getSubject());
             userAskDto.setUserId(userDetail.get().getUserId());
-            userAskDto.setUserName(userDetail.get()
-                    .getUserMiddleName()+" "+userDetail.get()
-                    .getUserLastName());
+            userAskDto.setUserName(userDetail.get().getUserName());
             userAskDto.setUserEmail(userDetail.get().getUserEmail());
+            userAskDto.setPublicId(userDetail.get().getPublicId());
         }catch (Exception e){
             System.out.println(e.getMessage());
         }

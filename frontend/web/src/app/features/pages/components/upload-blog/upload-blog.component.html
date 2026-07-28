@@ -2,7 +2,7 @@
   <form
     class="mx-auto flex w-full max-w-3xl flex-col gap-6"
     [formGroup]="uploadBlogInfo"
-    (ngSubmit)="getBlogData()"
+    (ngSubmit)="uploadBlogData()"
   >
     <!-- Blog Title -->
     <div class="space-y-2">
@@ -76,7 +76,12 @@
 
     <!-- Submit Button -->
     <div class="pt-2">
-      <app-solid-button type="submit" class="w-full">
+      <app-solid-button
+        type="submit"
+        class="w-full"
+        [disabled]="uploadBlogInfo.invalid || buttonDisabled"
+        [loadingSpinner]="buttonLoadingSpinner"
+      >
         <p class="px-5 py-1 text-white font-medium">Publish Blog</p>
       </app-solid-button>
     </div>

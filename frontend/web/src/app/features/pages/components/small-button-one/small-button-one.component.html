@@ -1,0 +1,17 @@
+<button
+  class="rounded-full bg-(--accent-color)/10 px-4 py-2 text-xs font-semibold text-(--accent-color) transition-all duration-300 hover:bg-(--accent-color) hover:text-white"
+  (click)="sendBlogId(id)"
+  [ngClass]="class"
+  [disabled]="disabled"
+  [class.opacity-50]="disabled"
+  [class.cursor-not-allowed]="disabled"
+  [class.pointer-events-none]="disabled"
+  [attr.aria-label]="label"
+  [title]="label"
+>
+  @if(loadingSpinner){
+  <div class="mx-3"><app-loading-spinner /></div>
+  } @else{
+  <ng-content />
+  }
+</button>

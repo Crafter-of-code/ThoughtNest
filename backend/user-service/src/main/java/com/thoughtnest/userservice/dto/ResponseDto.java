@@ -1,4 +1,13 @@
 package com.ThoughtNest.UserService.dto;
 
-public class ResponseDto {
+import lombok.Data;
+
+import java.util.List;
+
+@Data
+public class ResponseDto<T> {
+    private boolean status;
+    private String message;
+    private T data;
+
 }

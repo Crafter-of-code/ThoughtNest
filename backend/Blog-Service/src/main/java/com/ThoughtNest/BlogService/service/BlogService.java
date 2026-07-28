@@ -1,18 +1,19 @@
 package com.ThoughtNest.BlogService.service;
 
 import com.ThoughtNest.BlogService.client.UserFeignClient;
-import com.ThoughtNest.BlogService.dto.BlogDetailResponseDto;
-import com.ThoughtNest.BlogService.dto.BlogRequestDto;
-import com.ThoughtNest.BlogService.dto.ResponseDto;
-import com.ThoughtNest.BlogService.dto.UserDto;
+import com.ThoughtNest.BlogService.dto.*;
 import com.ThoughtNest.BlogService.entity.BlogEntity;
 import com.ThoughtNest.BlogService.repository.BlogRepository;
+import com.ThoughtNest.BlogService.utility.JwtUtil;
 import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
 import com.sun.tools.jconsole.JConsoleContext;
 import lombok.AllArgsConstructor;
+import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -22,6 +23,7 @@ public class BlogService {
     private BlogRepository blogRepository;
     private UserFeignClient userFeignClient;
     private Cloudinary cloudinary;
+    private JwtUtil jwtUtil;
     public ResponseDto uploadUserBlog(BlogRequestDto userBlog, String token){
         BlogEntity blogEntity = new BlogEntity();
         ResponseDto responseDto = new ResponseDto();
@@ -35,11 +37,15 @@ public class BlogService {
                 blogEntity.setBlogContent(userBlog.getBlogContent());
                 try{
                    Map uploadUrl = cloudinary.uploader().upload(userBlog.getCoverImage().getBytes(), ObjectUtils.emptyMap());
-                   String url = uploadUrl.get("secure_url").toString();
-                   blogEntity.setCoverImage(url);
+
+                   String secureUrl = uploadUrl.get("secure_url").toString();
+                   String publicUrl = uploadUrl.get("public_id").toString();
+                   blogEntity.setCoverImage(secureUrl);
+                   blogEntity.setCoverImagePublicUrl(publicUrl);
                 }catch (Exception e){
                     System.out.println(e.getMessage());
                     blogEntity.setCoverImage(null);
+                    blogEntity.setCoverImagePublicUrl(null);
                 }
                 blogRepository.save(blogEntity);
                 responseDto.setStatus(true);
@@ -70,4 +76,59 @@ public class BlogService {
        }
         return responseDto;
     }
+    public ResponseDto blogLikeService(){
+        return null;
+    }
+    public ResponseDto blogDeleteService(String token,String blogId){
+        ResponseDto responseDto = new ResponseDto();
+        Optional<BlogEntity> blogEntity = blogRepository.findByBlogIdAndUserEmail(blogId
+                ,jwtUtil.extractUsername(token));
+        if(blogEntity.isPresent()){
+            try{
+                Map result = cloudinary.uploader().destroy(blogEntity.get().getCoverImagePublicUrl()
+                        ,ObjectUtils.emptyMap());
+                blogRepository.deleteById(blogId);
+                responseDto.setStatus(true);
+                responseDto.setMessage("Successfully deleted");
+            }catch (Exception e){
+                responseDto.setStatus(false);
+                responseDto.setMessage("unable to find the user blog");
+            }
+        }else{
+                responseDto.setStatus(false);
+                responseDto.setMessage("you are unauthrized to delete it");
+        }
+        return  responseDto;
+    }
+     public ResponseDto getMy3BlogService(String token){
+        ResponseDto responseDto = new ResponseDto();
+        List<ShortBlogResponseDto> shortBlogResponseDtos = new ArrayList<ShortBlogResponseDto>();
+        String userEmail = jwtUtil.extractUsername(token);
+        try{
+            List<BlogEntity> blogEntityList = blogRepository.findTop3ByUserEmailOrderByCreatedAtDesc(userEmail);
+            if(blogEntityList.isEmpty()){
+                responseDto.setStatus(true);
+            responseDto.setMessage("Unable to find you blog");
+            }else{
+                blogEntityList.stream().forEach(item->{
+                    ShortBlogResponseDto shortBlogResponseDto = new ShortBlogResponseDto();
+                    shortBlogResponseDto.setBlogId(item.getBlogId());
+                    shortBlogResponseDto.setBlogTitle(item.getBlogTitle());
+                    shortBlogResponseDto.setBlogContent(item.getBlogContent());
+                    shortBlogResponseDto.setPublicId(item.getPublicId());
+                    shortBlogResponseDto.setUserName(item.getUserName());
+                    shortBlogResponseDto.setCreatedAt(item.getCreatedAt());
+                    shortBlogResponseDto.setPublicId(item.getPublicId());
+                    shortBlogResponseDtos.add(shortBlogResponseDto);
+                });
+                responseDto.setStatus(true);
+                responseDto.setMessage("We found you blog");
+                responseDto.setData(shortBlogResponseDtos);
+            }
+        }catch (Exception e){
+            responseDto.setStatus(false);
+            responseDto.setMessage("unable wo find with that user name");
+        }
+        return  responseDto;
+     }
 }
