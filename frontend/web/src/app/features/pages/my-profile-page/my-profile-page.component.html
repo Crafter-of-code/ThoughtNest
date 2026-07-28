@@ -4,7 +4,10 @@
       class="flex flex-col md:flex-row gap-6 items-start max-lg:gap-3 max-lg:items-start"
     >
       <img
-        src="https://placehold.co/160x160?text=Profile"
+        [src]="
+          ownerDetail.userProfile?.userImageUrl ??
+          'https://placehold.co/160x160?text=Profile'
+        "
         class="w-40 h-40 rounded-full border-4 border-(--accent-color) object-cover"
       />
       <div class="flex-1">

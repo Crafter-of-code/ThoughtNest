@@ -1,2 +1,2 @@
-const ServerUrl = 'http://localhost:8080/api/';
+const ServerUrl = 'http://192.168.0.103:8080/api/';
 export default ServerUrl;
