@@ -35,7 +35,7 @@ export class MyProfilePageComponent implements OnInit {
     private notification: NotificationService
   ) {}
   deletingBlogId: string | number | null = null;
-  showProfileContainer: boolean = true;
+  showProfileContainer: boolean = false;
 
   ownerDetail: OwnerDetailType = {
     userId: 0,
@@ -65,6 +65,7 @@ export class MyProfilePageComponent implements OnInit {
   ngOnInit(): void {
     this.userService.getOwnerCompleteDetail().subscribe({
       next: (response) => {
+        console.log(response);
         this.ownerDetail = response.data;
         this.profileSettingDetail = {
           userName: response.data?.userName,

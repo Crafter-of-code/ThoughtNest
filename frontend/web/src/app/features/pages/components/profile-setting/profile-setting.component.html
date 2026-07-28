@@ -1,4 +1,4 @@
-<app-main-container (closeButtonClicked)="closeSettingComponent($event)">
+<app-main-container (closeButtonClicked)="closeSettingComponent()">
   <!--bg-gray-50 rounded-2xl shadow-sm border border-gray-200 p-6 flex-1 max-w-360 h-max-->
   <section class="">
     <!-- Heading -->
@@ -80,7 +80,9 @@
         <app-global-input
           inputId="userName"
           formControlName="userLocation"
-          [inputPlaceHolder]="ownerData.userLocation ?? 'Enter location'"
+          [inputPlaceHolder]="
+            ownerData.userLocation ? ownerData.userLocation : 'Enter location'
+          "
           inputType="text"
         />
       </div>

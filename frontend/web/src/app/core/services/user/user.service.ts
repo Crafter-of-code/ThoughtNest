@@ -3,6 +3,10 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import ServerUrl from '../DefaultUrl';
 import { genreDataType } from './type';
+type normalResponseType = {
+  status: boolean;
+  message: string;
+};
 type userNameType = {
   status: boolean;
   message: string;
@@ -11,6 +15,13 @@ type userNameType = {
     publicId: string;
     userName: string;
   }[];
+};
+export type updatedUserDetailType = {
+  userName: string;
+  userBio: string;
+  userLocation: string;
+  userProfileData: File | null;
+  userTopic: string[];
 };
 type getCompleteUserDetailType = {
   message: string;
@@ -70,5 +81,10 @@ export class UserService {
   }
   getOwnerCompleteDetail(): Observable<getOwnerDetailType> {
     return this.http.get<getOwnerDetailType>(`${ServerUrl}user/me`);
+  }
+  patchUpdatedDetail(
+    data: updatedUserDetailType
+  ): Observable<normalResponseType> {
+    return this.http.patch<normalResponseType>(`${ServerUrl}user`, data);
   }
 }
