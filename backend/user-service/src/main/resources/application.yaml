@@ -1,3 +1,5 @@
+server:
+  port: ${PORT}
 jwt:
   secret-key: nW8kM5QzT1l6h2rP9JxKc4YvLm8FsR7Ua3DeV1QiZwN=
 spring:
@@ -20,10 +22,14 @@ spring:
     user:
       name: User-Service
       password: User-Service
-server:
-  port: 8082
+
 
 eureka:
   client:
     register-with-eureka: true
     fetch-registry: true
+
+cloudinary:
+  cloud-name: ${CLOUDINARY_CLOUD_NAME}
+  api-key: ${CLOUDINARY_API_NAME}
+  api-secret: ${CLOUDINARY_API_SECRET}

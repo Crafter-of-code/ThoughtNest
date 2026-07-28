@@ -6,7 +6,9 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "user_profile")
@@ -38,11 +40,13 @@ public class UserProfile {
     private Long userTotalLikes = 0L;
     @Column(name = "user_image_url", length = 500)
     private String userImageUrl;
+    @Column(name = "user_image_public_url")
+    private String userImagePublicUrl;
     @ElementCollection(fetch = FetchType.LAZY)
     @CollectionTable(
             name = "user_topics",
             joinColumns = @JoinColumn(name = "profile_id")
     )
     @Column(name = "topic")
-    private List<String> userTopic = new ArrayList<>();
+    private Set<String> userTopic = new HashSet<>();
 }

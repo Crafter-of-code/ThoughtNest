@@ -1,6 +1,7 @@
 package com.ThoughtNest.UserService.dto;
 
 import com.ThoughtNest.UserService.entity.UserProfile;
+import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -16,9 +17,11 @@ public class OwnerDataDto {
     private Long noOfFollower;
     private Long noOfFollowing;
     private LocalDateTime createdAt;
+    private UserProfileDto userProfile;
+    @Data
     @Getter
     @Setter
-    public static class userProfileDto{
+    public static class UserProfileDto{
         private String userLocation;
         private String userBio;
         private Long userPublished = 0L;
