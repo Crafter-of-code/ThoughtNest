@@ -1,5 +1,6 @@
 package com.ThoughtNest.UserService.controllers;
 
+import com.ThoughtNest.UserService.dto.PatchUserDetailRequestDto;
 import com.ThoughtNest.UserService.dto.ResponseDto;
 import com.ThoughtNest.UserService.entity.UserEntity;
 import com.ThoughtNest.UserService.service.UserService;
@@ -47,5 +48,23 @@ public class UserController {
         ResponseDto responseDto = userService.getOwnDetailsService(token.substring(7));
         return  ResponseEntity.status(HttpStatus.OK).body(responseDto);
     }
+    @PatchMapping("/user")
+    public ResponseEntity<ResponseDto> patchUpdatedUserDataController(@RequestHeader("Authorization") String token
+            ,@ModelAttribute PatchUserDetailRequestDto updatedUserDetail){
+        try{
+            ResponseDto responseDto = userService.updateOwnerDetail(token.substring(7),updatedUserDetail);
+            if(responseDto.isStatus()){
+                return  ResponseEntity.status(HttpStatus.ACCEPTED).body(responseDto);
+            }else{
+                return  ResponseEntity.status(HttpStatus.BAD_REQUEST).body(responseDto);
+            }
+        }catch (Exception e){
+            System.out.println(e.getMessage());
+            ResponseDto responseDto = new ResponseDto();
+            responseDto.setStatus(false);
+            responseDto.setMessage("We are facing some problem while uploading you image to our server");
+            return  ResponseEntity.status(HttpStatus.ACCEPTED).body(responseDto);
+        }
 
+    }
 }
