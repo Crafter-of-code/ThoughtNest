@@ -1,3 +1,4 @@
+<!-- outline button -->
 <button
   type="button"
   class="btn btn-outline p-1 w-full"
@@ -7,10 +8,11 @@
   [class.pointer-events-none]="disabled"
   [attr.aria-label]="label"
   [title]="label"
+  (click)="clickEvent($event)"
 >
   <!-- [aria-label]="label" -->
   @if(loadingSpinner){
-  <div class="mx-3"><app-loading-spinner /></div>
+  <div class="mx-3 h-5 w-5"><app-loading-spinner /></div>
   } @else{
   <ng-content />
   }

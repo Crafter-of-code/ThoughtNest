@@ -2,17 +2,12 @@ package com.ThoughtNest.UserService.controllers;
 
 import com.ThoughtNest.UserService.dto.PatchUserDetailRequestDto;
 import com.ThoughtNest.UserService.dto.ResponseDto;
-import com.ThoughtNest.UserService.entity.UserEntity;
 import com.ThoughtNest.UserService.service.UserService;
-import jakarta.ws.rs.core.Response;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 import java.util.UUID;
 
 @RestController
@@ -45,7 +40,7 @@ public class UserController {
     }
     @GetMapping("/user/me")
     public ResponseEntity<ResponseDto> getOwnDetailsController(@RequestHeader("Authorization") String token){
-        ResponseDto responseDto = userService.getOwnDetailsService(token.substring(7));
+        ResponseDto responseDto = userService.getOwnDetailsService(token);
         return  ResponseEntity.status(HttpStatus.OK).body(responseDto);
     }
     @PatchMapping("/user")
@@ -67,4 +62,12 @@ public class UserController {
         }
 
     }
+    @DeleteMapping("/user")
+    public ResponseEntity<ResponseDto> deleteOwnerAccount(@RequestHeader("Authorization") String token){
+        System.out.println("deleteOwnerAccount controller start running");
+        ResponseDto resposneDto = userService.deleteOwnerAccount(token);
+        if(resposneDto.isStatus())return ResponseEntity.status(HttpStatus.OK).body(resposneDto);
+        return  ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(resposneDto);
+    }
+
 }

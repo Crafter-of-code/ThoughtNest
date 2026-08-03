@@ -1,5 +1,6 @@
 package com.ThoughtNest.BlogService.controllers;
 
+import com.ThoughtNest.BlogService.dto.BlogDetailResponseDto;
 import com.ThoughtNest.BlogService.dto.BlogRequestDto;
 import com.ThoughtNest.BlogService.dto.ResponseDto;
 import com.ThoughtNest.BlogService.service.BlogService;
@@ -11,6 +12,7 @@ import com.ThoughtNest.BlogService.dto.ResponseDto;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/api")
@@ -27,9 +29,10 @@ public class BlogController {
             return  ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(responseDto);
         }
     }
-    @GetMapping("/blog")
-    public ResponseEntity<ResponseDto> getSingleBlogController(@RequestParam String blogId){
-        ResponseDto responseDto = blogService.getSingleBlogService(blogId);
+    @GetMapping("/blog/{id}")
+    public ResponseEntity<ResponseDto<BlogDetailResponseDto>> getSingleBlogController(@RequestHeader("Authorization") String token
+            ,@PathVariable("id") String blogId){
+        ResponseDto<BlogDetailResponseDto> responseDto = blogService.getSingleBlogService(token,blogId);
         if(responseDto.isStatus()){
             return ResponseEntity.status(HttpStatus.OK).body(responseDto);
         }else{
@@ -40,6 +43,7 @@ public class BlogController {
     public ResponseEntity<ResponseDto> blogLikeController(){
         return  null;
     }
+    /*get single blog*/
     @DeleteMapping("/blog/{id}")
     public ResponseEntity<ResponseDto> blogDeleteControler(@RequestHeader("Authorization") String token,
                                                            @PathVariable("id") String id){
@@ -54,9 +58,10 @@ public class BlogController {
         }
 
     }
-    @GetMapping("/blog/me")
-    public ResponseEntity<ResponseDto> getMy3BlogController(@RequestHeader("Authorization") String token){
-        com.ThoughtNest.BlogService.dto.ResponseDto responseDto = blogService.getMy3BlogService(token.substring(7));
+    @GetMapping("/blogs")
+    public ResponseEntity<ResponseDto> get3BlogController(@RequestHeader("Authorization") String token
+            ,@RequestParam("publicId") UUID id){
+        com.ThoughtNest.BlogService.dto.ResponseDto responseDto = blogService.getTop3Blogs(token.substring(7),id);
         if(responseDto.isStatus()){
             return  ResponseEntity.status(HttpStatus.OK).body(responseDto);
         }else{
@@ -64,5 +69,4 @@ public class BlogController {
             return  ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(responseDto);
         }
     }
-
 }

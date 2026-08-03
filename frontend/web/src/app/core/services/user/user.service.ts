@@ -3,6 +3,11 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import ServerUrl from '../DefaultUrl';
 import { genreDataType } from './type';
+import { universalResponseType } from '../../../types/UniversalTypes';
+import {
+  getOwnerDetailResponseType,
+  getUserDetailResponseType,
+} from '../../../types/UserTypes';
 type normalResponseType = {
   status: boolean;
   message: string;
@@ -23,47 +28,6 @@ export type updatedUserDetailType = {
   userProfileData: File | null;
   userTopic: string[];
 };
-type getCompleteUserDetailType = {
-  message: string;
-  status: boolean;
-  data: {
-    publicId: string;
-    userName: string;
-    noOfFollowing: number;
-    noOfFollower: number;
-    noOfBlog: number;
-    createAt: Date;
-    userProfile: {
-      userBio: string;
-      userLocation: string;
-      userImageUrl: string;
-      userTotalLike: number;
-      userProfileView: number;
-      userPublished: number;
-    };
-  };
-};
-type getOwnerDetailType = {
-  message: string;
-  status: boolean;
-  data: {
-    userId: number;
-    publicId: string;
-    userEmail: string;
-    userName: string;
-    noOfFollower: number;
-    noOfFollowing: number;
-    createdAt: Date;
-    userProfile: {
-      userLocation: string;
-      userBio: string;
-      userPublished: number;
-      userProfileView: number;
-      userTotalLikes: number;
-      userImageUrl: string;
-    };
-  };
-};
 @Injectable({
   providedIn: 'root',
 })
@@ -76,15 +40,37 @@ export class UserService {
       params: userNameParams,
     });
   }
-  getCompleteUserDetail(id: string): Observable<getCompleteUserDetailType> {
-    return this.http.get<getCompleteUserDetailType>(`${ServerUrl}user/${id}`);
+  getCompleteUserDetail(
+    id: string
+  ): Observable<universalResponseType<getUserDetailResponseType>> {
+    return this.http.get<universalResponseType<getUserDetailResponseType>>(
+      `${ServerUrl}user/${id}`
+    );
   }
-  getOwnerCompleteDetail(): Observable<getOwnerDetailType> {
-    return this.http.get<getOwnerDetailType>(`${ServerUrl}user/me`);
+  getOwnerCompleteDetail(): Observable<
+    universalResponseType<getOwnerDetailResponseType>
+  > {
+    return this.http.get<universalResponseType<getOwnerDetailResponseType>>(
+      `${ServerUrl}user/me`
+    );
   }
   patchUpdatedDetail(
     data: updatedUserDetailType
   ): Observable<normalResponseType> {
     return this.http.patch<normalResponseType>(`${ServerUrl}user`, data);
+  }
+  deleteAccount() {
+    return this.http.delete(`${ServerUrl}user`);
+  }
+  followUser(id: string): Observable<universalResponseType<null>> {
+    return this.http.post<universalResponseType<null>>(
+      `${ServerUrl}user/follow/${id}`,
+      null
+    );
+  }
+  unfollowUser(id: string): Observable<universalResponseType<null>> {
+    return this.http.delete<universalResponseType<null>>(
+      `${ServerUrl}user/unfollow/${id}`
+    );
   }
 }

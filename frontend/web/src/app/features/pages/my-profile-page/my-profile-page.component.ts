@@ -7,13 +7,15 @@ import { BlogService } from '../../../core/services/blog/blog.service';
 import { NotificationService } from '../../../core/services/notification/notification.service';
 import { SmallButtonOneComponent } from '../components/small-button-one/small-button-one.component';
 import { finalize } from 'rxjs';
-import {
-  OwnerDetailType,
-  profileSettingDetailType,
-  shortBlogDataType,
-  shortBlogResponseDataType,
-} from './type';
+import { profileSettingDetailType, shortBlogDataType } from './type';
 import { ProfileSettingComponent } from '../components/profile-setting/profile-setting.component';
+import {
+  shortBlogResponseType,
+  universalResponseDataType,
+} from '../../../types/BlogTypes';
+import { getOwnerDetailResponseType } from '../../../types/UserTypes';
+import { Router } from '@angular/router';
+import { LoadingSpinnerComponent } from '../../../shared/components/loading-spinner/loading-spinner.component';
 
 @Component({
   selector: 'app-my-profile-page',
@@ -24,6 +26,7 @@ import { ProfileSettingComponent } from '../components/profile-setting/profile-s
     SmallButtonOneComponent,
     ProfileSettingComponent,
     CommonModule,
+    LoadingSpinnerComponent,
   ],
   templateUrl: './my-profile-page.component.html',
   styleUrl: './my-profile-page.component.css',
@@ -32,59 +35,54 @@ export class MyProfilePageComponent implements OnInit {
   constructor(
     private userService: UserService,
     private blogService: BlogService,
-    private notification: NotificationService
+    private notification: NotificationService,
+    private nav: Router
   ) {}
+  loadingSpinner: boolean = true;
   deletingBlogId: string | number | null = null;
   showProfileContainer: boolean = false;
 
-  ownerDetail: OwnerDetailType = {
-    userId: 0,
-    userName: '',
-    userEmail: '',
-    publicId: '',
-    noOfFollower: 0,
-    noOfFollowing: 0,
-    createdAt: new Date(),
-    userProfile: {
-      userPublished: 0,
-      userBio: '',
-      userImageUrl: '',
-      userLocation: '',
-      userProfileView: 0,
-      userTotalLikes: 0,
-    },
-  };
+  ownerDetail: getOwnerDetailResponseType | null = null;
   ownerShortBlogData: shortBlogDataType[] | any = [];
   profileSettingDetail: profileSettingDetailType = {
     userName: '',
     userBio: '',
     userLocation: '',
-    userProfileUrl: '',
+    userImageUrl: '',
     userTopic: [],
   };
   ngOnInit(): void {
-    this.userService.getOwnerCompleteDetail().subscribe({
-      next: (response) => {
-        console.log(response);
-        this.ownerDetail = response.data;
-        this.profileSettingDetail = {
-          userName: response.data?.userName,
-          userLocation: response.data.userProfile?.userLocation,
-          userProfileUrl: response.data.userProfile?.userImageUrl,
-          userBio: response.data.userProfile?.userBio,
-          userTopic: [],
-        };
-      },
-      error: (err) => {
-        console.log(err.error);
-      },
-    });
+    this.userService
+      .getOwnerCompleteDetail()
+      .pipe(
+        finalize(() => {
+          this.loadingSpinner = false;
+        })
+      )
+      .subscribe({
+        next: (response) => {
+          console.log(response);
+          console.log(response.data);
+          this.ownerDetail = response.data;
+          this.profileSettingDetail = {
+            userName: response.data?.userName ?? '',
+            userLocation: response.data?.userProfile?.userLocation ?? '',
+            userBio: response.data?.userProfile?.userBio ?? '',
+            userImageUrl: response.data?.userProfile?.userImageUrl ?? '',
+            userTopic: [],
+          };
+        },
+        error: (err) => {
+          console.log(err.error);
+        },
+      });
     this.getMyShortBlogs();
   }
   getMyShortBlogs() {
-    this.blogService.getOwner3Blog().subscribe({
-      next: (response: shortBlogResponseDataType) => {
+    this.blogService.get3Blog().subscribe({
+      next: (response: universalResponseDataType<shortBlogResponseType>) => {
         this.ownerShortBlogData = response.data;
+        console.log('recent blog');
         console.log(response.data);
         console.log(Array.isArray(response.data));
       },
@@ -126,5 +124,21 @@ export class MyProfilePageComponent implements OnInit {
   }
   showProfileSetting(event: boolean) {
     this.showProfileContainer = event;
+  }
+  deleteAccount() {
+    this.userService.deleteAccount().subscribe({
+      next: (response: any) => {
+        console.log(response);
+        this.notification.setNotification(response.status, response.message);
+        this.nav.navigate(['/login']);
+      },
+
+      error: (err) => {
+        this.notification.setNotification(
+          false,
+          'We are unable to delete account right now'
+        );
+      },
+    });
   }
 }

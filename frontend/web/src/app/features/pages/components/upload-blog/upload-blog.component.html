@@ -28,18 +28,12 @@
       <label class="text-sm font-medium text-(--text-color)">
         Blog Content
       </label>
-
-      <app-global-input
+      <textarea
         formControlName="blogContent"
-        inputPlaceHolder="Write your thoughts here..."
-        [error]="
-          uploadBlogInfo.get('blogContent')?.touched &&
-          uploadBlogInfo.get('blogContent')?.hasError('required')
-            ? 'Blog description is required'
-            : ''
-        "
-      >
-      </app-global-input>
+        placeholder="Write your thoughts here..."
+        rows="8"
+        class="w-full rounded-2xl border border-slate-200 bg-slate-50/80 px-4 py-3 text-slate-800 transition-all duration-200 outline-none hover:border-slate-300 hover:bg-white focus:border-slate-400 focus:bg-white focus:shadow-md focus:ring-4 focus:ring-slate-200/70 resize-none"
+      ></textarea>
     </div>
 
     <!-- Cover Image -->
@@ -75,7 +69,7 @@
     </div>
 
     <!-- Submit Button -->
-    <div class="pt-2">
+    <div class="pt-2 h-full">
       <app-solid-button
         type="submit"
         class="w-full"

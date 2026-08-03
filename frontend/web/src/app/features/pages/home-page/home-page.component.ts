@@ -5,39 +5,26 @@ import { UploadBlogComponent } from '../components/upload-blog/upload-blog.compo
 import { BlogService } from '../../../core/services/blog/blog.service';
 import { ShortBlogContainerComponent } from '../components/short-blog-container/short-blog-container.component';
 import { BlogContainerComponent } from '../components/blog-container/blog-container.component';
+import {
+  shortBlogResponseType,
+  singleBlogResponseType,
+  universalResponseDataType,
+} from '../../../types/BlogTypes';
 type latestBlogDataType = {
   blogTitle: string;
   blogContent: string;
   userName: string;
   publicId: string;
   userEmail: string;
+  userImageUrl: string;
   createdAt: Date;
   blogId: string;
-};
-type singleBlogDataType = {
-  blogId: string;
-  blogTitle: string;
-  blogSummary: string;
-  blogContent: string;
-  coverImage: string;
-
-  // Author
-  userId: string;
-  userName: string;
-
-  // Statistics
-  blogViews: number;
-  blogLikes: number;
-  blogComments: number;
-
-  // Publish Date
-  createdAt: Date;
 };
 type completePageDataType = {
   containerName: string;
   numberOfSkeletonRender: number[];
   skeletonLoading: boolean | undefined;
-  blogData?: latestBlogDataType[] | undefined;
+  blogData?: shortBlogResponseType | null;
 };
 @Component({
   selector: 'app-home-page',
@@ -55,12 +42,17 @@ export class HomePageComponent implements OnInit {
   constructor(private blogSerivce: BlogService) {}
   showUploadBlogContainer: boolean = false;
   showBlogContainer: boolean = false;
-  singleBlogData: singleBlogDataType | undefined;
+  singleBlogData: universalResponseDataType<singleBlogResponseType> = {
+    status: false,
+    message: '',
+    data: null,
+  };
   completePageData: completePageDataType[] = [
     {
       containerName: 'Latest Blog',
       numberOfSkeletonRender: [],
       skeletonLoading: true,
+      blogData: null,
     },
   ];
   ngOnInit(): void {
@@ -79,7 +71,7 @@ export class HomePageComponent implements OnInit {
   }
   getLatestBlog() {
     this.blogSerivce.getLatestBlog().subscribe({
-      next: (response) => {
+      next: (response: universalResponseDataType<shortBlogResponseType>) => {
         const blogData = response.data;
         const sectionData = this.completePageData.find(
           (item) => item.containerName == 'Latest Blog'
@@ -96,9 +88,9 @@ export class HomePageComponent implements OnInit {
   }
   getBlogById(data: string) {
     this.blogSerivce.getSingleBlog(data).subscribe({
-      next: (Response) => {
+      next: (Response: universalResponseDataType<singleBlogResponseType>) => {
         console.log(Response.data);
-        this.singleBlogData = Response.data;
+        this.singleBlogData.data = Response.data;
         this.showBlogContainer = true;
         document.body.style.overflow = 'hidden';
         console.log(document.body.style.overflow);

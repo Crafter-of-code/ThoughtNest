@@ -10,4 +10,5 @@ public class UserAskDto {
     private String userName;
     private String userEmail;
     private UUID publicId;
+    private String userImageUrl;
 }

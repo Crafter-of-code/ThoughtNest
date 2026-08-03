@@ -17,7 +17,11 @@
     <!-- Profile Image -->
     <div class="flex flex-col items-center">
       <img
-        src="https://placehold.co/120x120"
+        [src]="
+          ownerData.userImageUrl == ''
+            ? 'https://placehold.co/120x120'
+            : ownerData.userImageUrl
+        "
         class="w-28 h-28 rounded-full border-4 border-(--accent-color) object-cover"
       />
 

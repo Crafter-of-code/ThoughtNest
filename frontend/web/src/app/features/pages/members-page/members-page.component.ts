@@ -33,6 +33,7 @@ export class MembersPageComponent implements OnInit, OnChanges {
     private nav: Router,
     private location: Location
   ) {}
+  myPublicId: string = localStorage.getItem('publicId') ?? '';
   userDetail: userDetailType[] = [];
   defaultProfileImageUrl = '/user.png';
   ngOnInit(): void {}

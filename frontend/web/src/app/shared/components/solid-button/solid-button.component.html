@@ -1,6 +1,7 @@
+<!--solid button-->
 <button
   [type]="type"
-  class="btn btn-solid p-1 w-full h-full"
+  class="btn btn-solid p-1 w-full"
   aria-label="button"
   [title]="title"
   (click)="onClick($event)"
@@ -12,7 +13,7 @@
   [title]="label"
 >
   @if(loadingSpinner){
-  <div class="mx-3"><app-loading-spinner /></div>
+  <div class="mx-3 h-5 w-5"><app-loading-spinner /></div>
   } @else{
   <ng-content />
   }
