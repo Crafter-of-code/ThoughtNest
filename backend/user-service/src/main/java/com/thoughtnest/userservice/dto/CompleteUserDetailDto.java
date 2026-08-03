@@ -4,6 +4,9 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 @Getter
@@ -16,6 +19,7 @@ public class CompleteUserDetailDto {
     private Long noOfBlog;
     private LocalDateTime createAt;
     private UserProfileDto userProfile;
+    private boolean following = false;
     @Getter
     @Setter
     public static class UserProfileDto {
@@ -25,5 +29,7 @@ public class CompleteUserDetailDto {
         private Long userTotalLike;
         private Long userProfileView;
         private Long userPublished;
+        private Set<String> userTopics;
+        private LocalDateTime userJoinedOn;
     }
 }

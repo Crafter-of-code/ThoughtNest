@@ -6,6 +6,9 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.math.BigInteger;
 import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 @Data
@@ -17,7 +20,7 @@ public class BlogEntity {
 
     // author
     private Long userId;
-    private UUID publicId;
+    private UUID userPublicId;
     private String userName;
     private String userEmail;
 
@@ -26,9 +29,9 @@ public class BlogEntity {
     private String blogSummary;
     private String blogContent;
     // interaction
-    private long blogViews;
-    private long blogLikes;
-    private long blogComment;
+    private List<UUID> blogViews;
+    private List<UUID> blogLikes;
+    private List<Map<String,String>> blogComment;
     private long blogInteractionScore;
     // cover image
     private String coverImage;

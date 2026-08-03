@@ -26,20 +26,12 @@ public class UserFollow {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "follow_id")
     private Long followId;
-
-    /**
-     * User who initiated the follow.
-     */
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(
             name = "follower_id",
             nullable = false
     )
     private UserEntity follower;
-
-    /**
-     * User being followed.
-     */
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(
             name = "following_id",

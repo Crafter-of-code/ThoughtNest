@@ -4,6 +4,7 @@ import com.ThoughtNest.BlogService.repository.BlogRepository;
 import com.ThoughtNest.BlogService.utility.JwtUtil;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.security.Provider;
 import java.util.Optional;
@@ -35,5 +36,15 @@ public class AskBlogService {
             return  false;
         }
         return  true;
+    }
+    @Transactional
+    public boolean deleteUserAllBlog(String token){
+        try{
+            blogRepository.deleteAllByUserEmail(jwtUtil.extractUsername(token));
+            return  true;
+        }catch (Exception e){
+            return  true;
+        }
+
     }
 }

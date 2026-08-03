@@ -67,6 +67,7 @@ export class UploadBlogComponent {
   uploadBlogData() {
     this.buttonLoadingSpinner = true;
     this.buttonDisabled = true;
+    const publicId = localStorage.getItem('publicId');
     const formData = new FormData();
 
     formData.append('blogTitle', this.uploadBlogInfo.value.blogTitle ?? '');
@@ -74,6 +75,7 @@ export class UploadBlogComponent {
     formData.append('blogContent', this.uploadBlogInfo.value.blogContent ?? '');
 
     formData.append('coverImage', this.uploadBlogInfo.value.coverImage ?? '');
+    formData.append('userPublicId', publicId ?? '');
     this.blogService.postBlog(formData).subscribe({
       next: (response) => {
         if (response.status) {

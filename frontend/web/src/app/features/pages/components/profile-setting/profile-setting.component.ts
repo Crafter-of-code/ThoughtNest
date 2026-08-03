@@ -15,6 +15,7 @@ import { GlobalInputComponent } from '../../../../shared/components/global-input
 
 import { UserService } from '../../../../core/services/user/user.service';
 import { profileSettingDetailType } from './type';
+import { NotificationService } from '../../../../core/services/notification/notification.service';
 
 @Component({
   selector: 'app-profile-setting',
@@ -29,7 +30,10 @@ import { profileSettingDetailType } from './type';
   styleUrl: './profile-setting.component.css',
 })
 export class ProfileSettingComponent implements OnInit {
-  constructor(private userService: UserService) {}
+  constructor(
+    private userService: UserService,
+    private notification: NotificationService
+  ) {}
 
   @Output() showSettingComponent = new EventEmitter<boolean>();
 
@@ -38,7 +42,7 @@ export class ProfileSettingComponent implements OnInit {
     userLocation: '',
     userBio: '',
     userTopic: [],
-    userProfileUrl: '',
+    userImageUrl: '',
   };
 
   userSingleTopic: WritableSignal<string> = signal('');
@@ -127,9 +131,14 @@ export class ProfileSettingComponent implements OnInit {
     this.userService.patchUpdatedDetail(formData).subscribe({
       next: (response) => {
         console.log('Profile updated successfully', response);
+        this.notification.setNotification(response.status, response.message);
+        this.closeSettingComponent();
       },
       error: (error) => {
-        console.error('Update failed', error);
+        this.notification.setNotification(
+          error.error.status,
+          error.error.message
+        );
       },
     });
   }

@@ -34,18 +34,20 @@
             <!--infor container-->
             <div>
               <img
-                [src]="usrDetail.userProfileImage || defaultProfileImageUrl"
-                class="h-5 w-5"
+                [src]="usrDetail?.userProfileImage || defaultProfileImageUrl"
+                class="h-7 w-7 rounded-full"
               />
             </div>
             <!--Name container-->
             <div>
-              <p class="select-none">{{ usrDetail.userName }}</p>
+              <p class="select-none">{{ usrDetail?.userName }}</p>
             </div>
           </div>
           <div>
             <p class="select-none text-xs text-start">
-              {{ usrDetail.publicId }}
+              {{
+                usrDetail?.publicId == myPublicId ? "You" : usrDetail?.publicId
+              }}
             </p>
           </div>
         </button>

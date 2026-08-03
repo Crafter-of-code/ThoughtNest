@@ -12,10 +12,12 @@ import org.springframework.web.bind.annotation.*;
 public class AskBlogController {
     private AskBlogService askBlogService;
     @GetMapping("/blog/count")
-    public ResponseEntity<Object> getCountOfUserBlogController(@RequestHeader("Authorization") String token
+    public ResponseEntity<Long> getCountOfUserBlogController(@RequestHeader("Authorization") String token
             ,@RequestParam("userId") Long userId){
+        System.out.println("under blog ask count");
+        System.out.println(userId);
         System.out.println(token);
-        Long count = askBlogService.blogCountService(userId);
+        long count = askBlogService.blogCountService(userId);
         return  ResponseEntity.status(HttpStatus.OK).body(count);
     }
     /*

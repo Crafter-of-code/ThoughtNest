@@ -11,6 +11,7 @@ import { Router, RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { AuthService } from '../../../../core/services/auth/auth.service';
 import { NotificationService } from '../../../../core/services/notification/notification.service';
+import { finalize } from 'rxjs';
 
 @Component({
   selector: 'app-login-page',
@@ -38,6 +39,8 @@ export class LoginPageComponent {
     userPassword: new FormControl('', [Validators.required]),
   });
   loginHandler() {
+    this.buttonDisabled = true;
+    this.buttonLoadingSpinner = true;
     if (this.loginData.valid) {
       const payload = {
         userEmail: (this.loginData.getRawValue().userEmail ?? '').toLowerCase(),
@@ -45,39 +48,50 @@ export class LoginPageComponent {
           this.loginData.getRawValue().userPassword ?? ''
         ).toLowerCase(),
       };
-      this.auth.login(payload).subscribe({
-        next: (response) => {
-          console.log(response);
-          this.notification.setNotification(response.status, response.message);
-          console.log(response.publicId);
-          if (response.token && response.publicId && response.status) {
-            localStorage.setItem('token', response.token);
-            localStorage.setItem('publicId', response.publicId);
-            this.router.navigate(['home']);
-          }
-        },
-        error: (error) => {
-          console.log(error);
-          if (error.status == 401) {
+      this.auth
+        .login(payload)
+        .pipe(
+          finalize(() => {
+            this.buttonDisabled = false;
+            this.buttonLoadingSpinner = false;
+          })
+        )
+        .subscribe({
+          next: (response) => {
+            console.log(response);
             this.notification.setNotification(
-              false,
-              'You are not a memeber of \n throughtNest '
+              response.status,
+              response.message
             );
-            this.router.navigate(['/', 'signin']);
-          } else if (error.message) {
-            this.notification.setNotification(
-              error.error.status,
-              error.error.message
-            );
-          } else {
+            console.log(response.publicId);
+            if (response.token && response.publicId && response.status) {
+              localStorage.setItem('token', response.token);
+              localStorage.setItem('publicId', response.publicId);
+              this.router.navigate(['home']);
+            }
+          },
+          error: (error) => {
             console.log(error);
-            this.notification.setNotification(
-              false,
-              'Unable to communicate to backend'
-            );
-          }
-        },
-      });
+            if (error.status == 401) {
+              this.notification.setNotification(
+                false,
+                'You are not a memeber of \n throughtNest '
+              );
+              this.router.navigate(['/', 'signin']);
+            } else if (error.message) {
+              this.notification.setNotification(
+                error.error.status,
+                error.error.message
+              );
+            } else {
+              console.log(error);
+              this.notification.setNotification(
+                false,
+                'Unable to communicate to backend'
+              );
+            }
+          },
+        });
     } else {
       this.notification.setNotification(
         false,

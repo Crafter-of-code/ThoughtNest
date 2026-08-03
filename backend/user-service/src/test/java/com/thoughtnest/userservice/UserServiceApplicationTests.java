@@ -1,4 +1,4 @@
-package com.ThoughtNest.UserService;
+package com.thoughtnest.UserService;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

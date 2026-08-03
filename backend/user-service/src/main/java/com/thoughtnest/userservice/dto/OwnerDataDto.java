@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
+import java.util.Set;
 import java.util.UUID;
 @Getter
 @Setter
@@ -28,5 +29,6 @@ public class OwnerDataDto {
         private Long userProfileView = 0L;
         private Long userTotalLikes = 0L;
         private String userImageUrl;
+        private Set<String> userTopics;
     }
 }

@@ -1,38 +1,56 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import {
-  blogUploadResponseFromServer,
-  shortBlogResponseDataType,
-  postBlogDataType,
-  singleBlogResponseType,
-  ResponseDataType,
-} from './type';
 import ServerUrl from './../DefaultUrl';
 import { Observable } from 'rxjs';
+import {
+  shortBlogResponseType,
+  universalResponseDataType,
+  singleBlogResponseType,
+} from '../../../types/BlogTypes';
 @Injectable({
   providedIn: 'root',
 })
 export class BlogService {
   constructor(private http: HttpClient) {}
-  postBlog(blogData: FormData): Observable<blogUploadResponseFromServer> {
-    return this.http.post<blogUploadResponseFromServer>(
+
+  postBlog(blogData: FormData): Observable<universalResponseDataType<null>> {
+    return this.http.post<universalResponseDataType<null>>(
       `${ServerUrl}blog`,
       blogData
     );
   }
-  getLatestBlog(): Observable<shortBlogResponseDataType> {
-    return this.http.get<shortBlogResponseDataType>(`${ServerUrl}blog/latest`);
+  getLatestBlog(): Observable<
+    universalResponseDataType<shortBlogResponseType>
+  > {
+    return this.http.get<universalResponseDataType<shortBlogResponseType>>(
+      `${ServerUrl}blog/latest`
+    );
   }
-  getSingleBlog(blogId: string): Observable<singleBlogResponseType> {
-    const params = new HttpParams().set('blogId', blogId);
-    return this.http.get<singleBlogResponseType>(`${ServerUrl}blog`, {
-      params: params,
-    });
+  getSingleBlog(
+    blogId: string
+  ): Observable<universalResponseDataType<singleBlogResponseType>> {
+    console.log(blogId);
+    // const params = new HttpParams().set('blogId', blogId);
+    return this.http.get<universalResponseDataType<singleBlogResponseType>>(
+      `${ServerUrl}blog/${blogId}`,
+      {
+        // params: params,
+      }
+    );
   }
-  getOwner3Blog(): Observable<shortBlogResponseDataType> {
-    return this.http.get<shortBlogResponseDataType>(`${ServerUrl}blog/me`);
+  get3Blog(): Observable<universalResponseDataType<shortBlogResponseType>> {
+    const publicId: string = localStorage.getItem('publicId') ?? '';
+    const params = new HttpParams().set('publicId', publicId);
+    return this.http.get<universalResponseDataType<shortBlogResponseType>>(
+      `${ServerUrl}blogs`,
+      {
+        params: params,
+      }
+    );
   }
-  deleteBlog(id: string | number): Observable<ResponseDataType> {
-    return this.http.delete<ResponseDataType>(`${ServerUrl}blog/${id}`);
+  deleteBlog(id: string | number): Observable<universalResponseDataType<null>> {
+    return this.http.delete<universalResponseDataType<null>>(
+      `${ServerUrl}blog/${id}`
+    );
   }
 }

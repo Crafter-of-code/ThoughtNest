@@ -5,9 +5,9 @@ server:
 
 spring:
   application:
-    name: Blog-Service
+    name: BLOG-SERVICE
   mongodb:
-    uri: ${MONGODB_URI}
+    uri: ${MONGODB_URI}?uuidRepresentation=standard
   servlet:
     multipart:
       max-file-size: 20MB

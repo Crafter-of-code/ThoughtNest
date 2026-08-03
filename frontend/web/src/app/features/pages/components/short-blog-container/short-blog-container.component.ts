@@ -10,6 +10,8 @@ import {
 } from '@angular/core';
 import { HomeSkeletonUiComponent } from '../home-skeleton-ui/home-skeleton-ui.component';
 import { CommonModule } from '@angular/common';
+import { shortBlogResponseType } from '../../../../types/BlogTypes';
+import { RouterLink } from '@angular/router';
 type latestBlogDataType = {
   blogTitle: string;
   blogContent: string;
@@ -18,10 +20,12 @@ type latestBlogDataType = {
   userEmail: string;
   createdAt: Date;
   blogId: string;
+  userImageUrl: string;
 };
+//, RouterLink
 @Component({
   selector: 'app-short-blog-container',
-  imports: [HomeSkeletonUiComponent, CommonModule],
+  imports: [HomeSkeletonUiComponent, CommonModule, RouterLink],
   templateUrl: './short-blog-container.component.html',
   styleUrl: './short-blog-container.component.css',
   standalone: true,
@@ -29,13 +33,14 @@ type latestBlogDataType = {
 export class ShortBlogContainerComponent implements OnInit, OnChanges {
   @Input() containerHeading: string = '';
   @Input() skeletonRendering: number[] = [];
-  @Input() blogData?: latestBlogDataType[] | undefined = [];
+  @Input() blogData?: shortBlogResponseType | null = [];
   @Input() skeletonLoading: boolean | undefined = true;
   @Output() blogIdSender = new EventEmitter<string>();
   constructor() {}
   ngOnInit(): void {}
   ngOnChanges(changes: SimpleChanges): void {
     console.log(this.blogData);
+    console.log(this.blogData?.[0] ?? 'not present');
   }
   sendBlogId(blogId: string) {
     this.blogIdSender.emit(blogId);

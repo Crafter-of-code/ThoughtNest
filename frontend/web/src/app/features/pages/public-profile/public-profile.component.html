@@ -2,7 +2,7 @@
   class="bg-gray-50 p-6 rounded-2xl shadow-sm border border-gray-200 w-full"
 >
   <!-- Profile -->
-  <div class="flex flex-col items-center">
+  <div class="flex flex-col items-center mb-4">
     <img
       [src]="completeUserData?.userProfile?.userImageUrl || '/user.png'"
       alt="Profile"
@@ -13,20 +13,43 @@
       {{ completeUserData?.userName || "Unknown User" }}
     </h2>
 
-    <p class="text-gray-500 text-sm">
-      {{ completeUserData?.publicId || "No Public ID" }}
+    <p class="mt-2 text-gray-500 text-sm">
+      {{
+        completeUserData?.publicId == myPublicId
+          ? "You"
+          : completeUserData?.publicId
+      }}
     </p>
 
-    <p class="mt-4 text-center text-sm text-gray-600 leading-6">
+    <p class="mt-0 text-center text-sm text-gray-600 leading-6">
       {{
         completeUserData?.userProfile?.userBio ||
           "This user hasn't added a bio yet."
       }}
     </p>
   </div>
+  @if(completeUserData?.publicId !== myPublicId){ @if(following){
+  <app-outline-button
+    [disabled]="false"
+    [loadingSpinner]="false"
+    (clicked)="unfollowHandler(completeUserData?.publicId ?? '')"
+  >
+    <p class="text-center w-full">Unfollow</p>
+  </app-outline-button>
+  }@else{
+  <app-solid-button
+    type="button"
+    title="Follow"
+    label="follow"
+    class="w-full"
+    (clicked)="followHandler(completeUserData?.publicId ?? '')"
+  >
+    <p class="text-white w-full text-center">Follow</p>
+  </app-solid-button>
+  } }
 
   <!-- Follow Stats -->
-  <div class="grid grid-cols-3 gap-3 mt-8">
+  <div class="grid grid-cols-3 gap-3 mt-4">
     <div class="text-center">
       <h3 class="font-bold text-xl text-(--accent-color)">
         {{ completeUserData?.userProfile?.userPublished ?? 0 }}
@@ -61,14 +84,19 @@
     <div class="flex justify-between text-sm">
       <span class="text-gray-500">📅 Joined</span>
       <span class="font-medium">
-        {{ completeUserData?.createAt || "Not available" }}
+        {{
+          completeUserData?.userProfile?.userJoinedOn
+            ? (completeUserData?.userProfile?.userJoinedOn
+              | date : "dd MMM yyyy")
+            : "Not available"
+        }}
       </span>
     </div>
 
     <div class="flex justify-between text-sm">
       <span class="text-gray-500">📝 Published</span>
       <span class="font-medium">
-        {{ completeUserData?.noOfBlog ?? 0 }} Blogs
+        {{ completeUserData?.userProfile?.userPublished ?? 0 }} Blogs
       </span>
     </div>
 
@@ -82,7 +110,7 @@
     <div class="flex justify-between text-sm">
       <span class="text-gray-500">❤️ Total Likes</span>
       <span class="font-medium">
-        {{ completeUserData?.userProfile?.userTotalLike ?? 0 }}
+        {{ completeUserData?.userProfile?.userTotalLikes ?? 0 }}
       </span>
     </div>
   </div>
@@ -92,8 +120,8 @@
     <h3 class="font-semibold text-gray-800 mb-3">Topics</h3>
 
     <div class="flex flex-wrap gap-2">
-      @if (completeUserData?.userProfile?.userTopic?.length) { @for (topic of
-      completeUserData.userProfile.userTopic; track topic) {
+      @if (completeUserData?.userProfile?.userTopics) { @for (topic of
+      completeUserData?.userProfile?.userTopics; track $index) {
       <span class="px-3 py-1 rounded-full bg-gray-200 text-sm">
         {{ topic }}
       </span>

@@ -5,10 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Entity
 @Table(name = "user_profile")
@@ -33,9 +30,9 @@ public class UserProfile {
     @Column(name = "user_bio", length = 500)
     private String userBio;
     @Column(name = "user_published", nullable = false)
-    private Long userPublished = 0L;
+    private long userPublished;
     @Column(name = "profile_view", nullable = false)
-    private Long userProfileView = 0L;
+    private List<UUID> userProfileView = new ArrayList<>();
     @Column(name = "total_likes", nullable = false)
     private Long userTotalLikes = 0L;
     @Column(name = "user_image_url", length = 500)

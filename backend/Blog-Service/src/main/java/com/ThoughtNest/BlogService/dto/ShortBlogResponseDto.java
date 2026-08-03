@@ -11,7 +11,8 @@ public class ShortBlogResponseDto {
     private String blogId;
     private String blogTitle;
     private String blogContent;
+    private LocalDateTime createdAt;
     private UUID publicId;
     private String userName;
-    private LocalDateTime createdAt;
+    private String userImageUrl;
 }

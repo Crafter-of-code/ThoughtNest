@@ -3,6 +3,7 @@ package com.ThoughtNest.BlogService.dto;
 import lombok.Data;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Data
 public class BlogDetailResponseDto {
@@ -15,9 +16,9 @@ public class BlogDetailResponseDto {
     private String coverImage;
 
     // Author
-    private Long userId;
     private String userName;
-
+    private UUID userPublicId;
+    private String userImageUrl;
     // Statistics
     private long blogViews;
     private long blogLikes;

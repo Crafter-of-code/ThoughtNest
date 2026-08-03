@@ -1,46 +1,57 @@
 package com.ThoughtNest.UserService.service;
 
 import com.ThoughtNest.UserService.dto.LoginRequestDto;
-import com.ThoughtNest.UserService.dto.LoginResponseDto;
 import com.ThoughtNest.UserService.dto.LogoutResponseDto;
-import com.ThoughtNest.UserService.dto.SigninRepsonseDto;
+import com.ThoughtNest.UserService.dto.auth.SigninResponseDto;
+import com.ThoughtNest.UserService.dto.auth.SignupRequestDto;
 import com.ThoughtNest.UserService.entity.UserEntity;
+import com.ThoughtNest.UserService.entity.UserFollow;
+import com.ThoughtNest.UserService.entity.UserProfile;
+import com.ThoughtNest.UserService.exceptions.auth.EmailAlreadyExistsException;
+import com.ThoughtNest.UserService.repository.UserFollowRepository;
+import com.ThoughtNest.UserService.repository.UserProfileRepo;
 import com.ThoughtNest.UserService.repository.UserRepository;
+import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
-import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import javax.swing.text.html.Option;
 import java.util.Optional;
 
 @Service
 @AllArgsConstructor
 public class AuthService {
     private UserRepository userRepository;
-    public SigninRepsonseDto signinService(UserEntity userData){
-        SigninRepsonseDto signinRepsonseDto = new SigninRepsonseDto();
-        try{
-            UserEntity savedUserData = userRepository.save(userData);
-            if(savedUserData.getUserEmail() != null){
-                signinRepsonseDto.setStatus(true);
-                signinRepsonseDto.setMessage("Account Created");
-                return  signinRepsonseDto;
-            }else{
-                signinRepsonseDto.setStatus(false);
-                signinRepsonseDto.setMessage("Facing problem while creating the account");
-                return  signinRepsonseDto;
-            }
-        }catch (DataIntegrityViolationException e){
-            System.out.println(e.getMostSpecificCause().getMessage());
-            signinRepsonseDto.setStatus(false);
-            signinRepsonseDto.setMessage("The email address has already been registered");
-            return  signinRepsonseDto;
-        }catch(Exception e){
-            System.out.println(e.getMessage());
-            signinRepsonseDto.setStatus(false);
-            signinRepsonseDto.setMessage("Facing problem while creating the account");
-            return  signinRepsonseDto;
+    private UserProfileRepo profileRepository;
+    private UserFollowRepository userFollowRepository;
+    @Transactional
+    public SigninResponseDto signinService(SignupRequestDto request) {
+
+        if (userRepository.existsByUserEmail(request.getUserEmail())) {
+            throw new EmailAlreadyExistsException("The email address is already registered.");
         }
+
+        UserEntity user = new UserEntity();
+        user.setUserName(request.getUserName());
+        user.setUserEmail(request.getUserEmail());
+        user.setUserPassword(request.getUserPassword());
+
+        UserEntity savedUser = userRepository.save(user);
+        UserProfile profile = new UserProfile();
+        profile.setUserEntity(savedUser);
+        savedUser.setUserProfile(profile);
+        profileRepository.save(profile);
+//        UserFollow follow = new UserFollow();
+//        follow.setFollower(savedUser);
+//        follow.setFollowing(savedUser);
+//        userFollowRepository.save(follow);
+//        savedUser.getFollowers().add(follow);
+//        savedUser.getFollowing().add(follow);
+        SigninResponseDto response = new SigninResponseDto();
+        response.setStatus(true);
+        response.setMessage("Account created successfully.");
+
+        return response;
     }
     public LoginRequestDto loginService(LoginRequestDto userData){
         LoginRequestDto userCredentailDetail = new LoginRequestDto();

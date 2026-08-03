@@ -3,7 +3,7 @@
 </div>
 <div
   *ngIf="showUploadBlogContainer"
-  class="p-15 h-screen w-screen bg-(--text-color)/30 absolute top-0 left-0 max-sm:p-3 max-sm:py-10"
+  class="p-15 h-full w-screen bg-(--text-color)/70 fixed lg:top-10! top-11! left-0 max-sm:p-3 max-sm:py-20 max-h-screen overflow-scroll"
 >
   <app-upload-blog
     (showMainContainerOnScreen)="UploadBlogContainerShower($event)"
@@ -23,7 +23,7 @@
   >
     <ng-container *ngFor="let sectionData of completePageData; let i = index">
       <app-short-blog-container
-        [containerHeading]="sectionData.containerName"
+        [containerHeading]="''"
         [skeletonRendering]="sectionData.numberOfSkeletonRender"
         [blogData]="sectionData.blogData"
         [skeletonLoading]="sectionData.skeletonLoading"
@@ -32,13 +32,13 @@
     </ng-container>
   </div>
 </main>
-
+<!---->
 <div
   *ngIf="showBlogContainer"
-  class="p-15 h-full w-screen bg-(--text-color)/70 fixed lg:top-10! top-11! left-0 max-sm:p-3 max-sm:py-20"
+  class="p-15 h-full w-screen bg-(--text-color)/70 fixed lg:top-10! top-11! left-0 max-sm:p-3 max-sm:py-20 max-h-screen overflow-scroll"
 >
   <app-blog-container
-    [singleBlogData]="singleBlogData"
+    [singleBlogData]="singleBlogData.data"
     (closeBlogContainer)="closeBlogContainer1($event)"
   />
 </div>

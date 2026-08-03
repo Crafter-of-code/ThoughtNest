@@ -56,9 +56,14 @@
             class="mt-6 flex items-center justify-between border-t border-gray-100 pt-4"
           >
             <!-- User -->
-            <div class="flex items-center gap-3">
+            <a
+              class="flex items-center gap-3"
+              [routerLink]="['/members', blogInfo.publicId]"
+            >
               <img
-                src="user.png"
+                [src]="
+                  blogInfo?.userImageUrl ? blogInfo.userImageUrl : 'user.png'
+                "
                 loading="lazy"
                 alt="User"
                 class="h-11 w-11 rounded-full border-2 border-gray-200 object-cover"
@@ -75,7 +80,7 @@
                   {{ blogInfo.createdAt | date : "dd MMM yyyy" }}
                 </p>
               </div>
-            </div>
+            </a>
 
             <!-- Read More -->
             <button

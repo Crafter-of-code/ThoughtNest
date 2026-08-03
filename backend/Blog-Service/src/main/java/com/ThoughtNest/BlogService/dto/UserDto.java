@@ -10,4 +10,5 @@ public class UserDto {
     private UUID publicId;
     private String userName;
     private String userEmail;
+    private String userImageUrl;
 }
