@@ -58,8 +58,6 @@ export class WelcomePageComponent implements OnInit, OnDestroy {
       )
       .subscribe({
         next: (response) => {
-          console.log(response);
-
           this.buttonDisable = false;
           this.loadingSpinner = false;
 

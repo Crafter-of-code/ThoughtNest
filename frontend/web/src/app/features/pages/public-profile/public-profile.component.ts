@@ -37,7 +37,6 @@ export class PublicProfileComponent implements OnInit, OnChanges {
             this.completeUserData = respsonse.data;
           },
           error: (error) => {
-            console.log(error.error);
             this.notificatio.setNotification(
               false,
               'we are facing some data whiel gathering user detail'
@@ -52,12 +51,11 @@ export class PublicProfileComponent implements OnInit, OnChanges {
     if (id != '') {
       this.userService.followUser(id).subscribe({
         next: (response: { status: boolean; message: string }) => {
-          console.log(response);
           this.notificatio.setNotification(response.status, response.message);
           this.following = true;
         },
         error: (err) => {
-          console.log(err);
+          this.notificatio.setNotification(false, 'unable to follow the user');
         },
       });
     }
@@ -66,11 +64,10 @@ export class PublicProfileComponent implements OnInit, OnChanges {
     if (id == '') return;
     this.userService.unfollowUser(id).subscribe({
       next: (response) => {
-        console.log(response);
         this.following = false;
       },
       error: (err) => {
-        console.log(err);
+        this.notificatio.setNotification(false, 'unable to unfollow the user');
       },
     });
   }

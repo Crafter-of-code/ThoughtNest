@@ -1,15 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { AddBlogButtonComponent } from '../components/add-blog-button/add-blog-button.component';
-import { UploadBlogComponent } from '../components/upload-blog/upload-blog.component';
-import { BlogService } from '../../../core/services/blog/blog.service';
-import { ShortBlogContainerComponent } from '../components/short-blog-container/short-blog-container.component';
-import { BlogContainerComponent } from '../components/blog-container/blog-container.component';
+import { AddBlogButtonComponent } from '../../../components/add-blog-button/add-blog-button.component';
+import { UploadBlogComponent } from '../../../components/upload-blog/upload-blog.component';
+import { BlogService } from '../../../../../core/services/blog/blog.service';
+import { ShortBlogContainerComponent } from '../../../components/short-blog-container/short-blog-container.component';
+import { BlogContainerComponent } from '../../../components/blog-container/blog-container.component';
 import {
   shortBlogResponseType,
   singleBlogResponseType,
   universalResponseDataType,
-} from '../../../types/BlogTypes';
+} from '../../../../../types/BlogTypes';
+import { NotificationService } from '../../../../../core/services/notification/notification.service';
 type latestBlogDataType = {
   blogTitle: string;
   blogContent: string;
@@ -28,19 +29,16 @@ type completePageDataType = {
 };
 @Component({
   selector: 'app-home-page',
-  imports: [
-    CommonModule,
-    AddBlogButtonComponent,
-    UploadBlogComponent,
-    ShortBlogContainerComponent,
-    BlogContainerComponent,
-  ],
+  imports: [CommonModule, ShortBlogContainerComponent, BlogContainerComponent],
   templateUrl: './home-page.component.html',
   styleUrl: './home-page.component.css',
 })
 export class HomePageComponent implements OnInit {
-  constructor(private blogSerivce: BlogService) {}
-  showUploadBlogContainer: boolean = false;
+  constructor(
+    private blogSerivce: BlogService,
+    private notification: NotificationService
+  ) {}
+
   showBlogContainer: boolean = false;
   singleBlogData: universalResponseDataType<singleBlogResponseType> = {
     status: false,
@@ -66,9 +64,7 @@ export class HomePageComponent implements OnInit {
     });
     this.getLatestBlog();
   }
-  UploadBlogContainerShower(event: Event) {
-    this.showUploadBlogContainer = !this.showUploadBlogContainer;
-  }
+
   getLatestBlog() {
     this.blogSerivce.getLatestBlog().subscribe({
       next: (response: universalResponseDataType<shortBlogResponseType>) => {
@@ -82,21 +78,19 @@ export class HomePageComponent implements OnInit {
         }
       },
       error: (err) => {
-        console.log(err);
+        this.notification.setNotification(err.error.status, err.error.message);
       },
     });
   }
   getBlogById(data: string) {
     this.blogSerivce.getSingleBlog(data).subscribe({
       next: (Response: universalResponseDataType<singleBlogResponseType>) => {
-        console.log(Response.data);
         this.singleBlogData.data = Response.data;
         this.showBlogContainer = true;
         document.body.style.overflow = 'hidden';
-        console.log(document.body.style.overflow);
       },
       error: (err) => {
-        console.log(err);
+        this.notification.setNotification(err.error.status, err.error.message);
       },
     });
   }

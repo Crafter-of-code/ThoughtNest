@@ -1,26 +1,15 @@
-<div class="fixed bottom-5 right-5" *ngIf="showUploadBlogContainer == false">
-  <app-add-blog-button (clicked)="UploadBlogContainerShower($event)" />
-</div>
-<div
-  *ngIf="showUploadBlogContainer"
-  class="p-15 h-full w-screen bg-(--text-color)/70 fixed lg:top-10! top-11! left-0 max-sm:p-3 max-sm:py-20 max-h-screen overflow-scroll"
->
-  <app-upload-blog
-    (showMainContainerOnScreen)="UploadBlogContainerShower($event)"
-  />
-</div>
 <!-- <app-main-header class="flex-9"> -->
 <!-- </app-main-header> -->
 <!--parent container-->
 <main class="w-full flex justify-center">
-  <div
-    class="lg:mx-10! my-5! flex max-lg:mx-4 flex-col gap-5 max-w-360 flex-1"
-    [ngClass]="
+  <!--
+  [ngClass]="
       showUploadBlogContainer && showBlogContainer
         ? 'overflow-hidden'
         : 'overflow-auto'
     "
-  >
+  -->
+  <div class="lg:mx-10! my-5! flex max-lg:mx-4 flex-col gap-5 max-w-360 flex-1">
     <ng-container *ngFor="let sectionData of completePageData; let i = index">
       <app-short-blog-container
         [containerHeading]="''"

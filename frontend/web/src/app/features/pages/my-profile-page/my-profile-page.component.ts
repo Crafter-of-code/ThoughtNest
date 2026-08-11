@@ -61,8 +61,6 @@ export class MyProfilePageComponent implements OnInit {
       )
       .subscribe({
         next: (response) => {
-          console.log(response);
-          console.log(response.data);
           this.ownerDetail = response.data;
           this.profileSettingDetail = {
             userName: response.data?.userName ?? '',
@@ -73,7 +71,7 @@ export class MyProfilePageComponent implements OnInit {
           };
         },
         error: (err) => {
-          console.log(err.error);
+          this.notification.setNotification(false, 'Unable to find you detail');
         },
       });
     this.getMyShortBlogs();
@@ -82,12 +80,8 @@ export class MyProfilePageComponent implements OnInit {
     this.blogService.get3Blog().subscribe({
       next: (response: universalResponseDataType<shortBlogResponseType>) => {
         this.ownerShortBlogData = response.data;
-        console.log('recent blog');
-        console.log(response.data);
-        console.log(Array.isArray(response.data));
       },
       error: (err) => {
-        console.log(err.error);
         this.notification.setNotification(false, 'we unable to find you blog');
       },
     });
@@ -104,14 +98,12 @@ export class MyProfilePageComponent implements OnInit {
       )
       .subscribe({
         next: (response) => {
-          console.log(response);
           this.notification.setNotification(
             true,
             'You blog is successfully deleted'
           );
         },
         error: (err) => {
-          console.log(err);
           this.notification.setNotification(
             false,
             'We are not able to delete your blog right now!'
@@ -128,7 +120,6 @@ export class MyProfilePageComponent implements OnInit {
   deleteAccount() {
     this.userService.deleteAccount().subscribe({
       next: (response: any) => {
-        console.log(response);
         this.notification.setNotification(response.status, response.message);
         this.nav.navigate(['/login']);
       },

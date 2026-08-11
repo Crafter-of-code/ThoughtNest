@@ -58,12 +58,10 @@ export class LoginPageComponent {
         )
         .subscribe({
           next: (response) => {
-            console.log(response);
             this.notification.setNotification(
               response.status,
               response.message
             );
-            console.log(response.publicId);
             if (response.token && response.publicId && response.status) {
               localStorage.setItem('token', response.token);
               localStorage.setItem('publicId', response.publicId);
@@ -71,7 +69,6 @@ export class LoginPageComponent {
             }
           },
           error: (error) => {
-            console.log(error);
             if (error.status == 401) {
               this.notification.setNotification(
                 false,
@@ -84,7 +81,6 @@ export class LoginPageComponent {
                 error.error.message
               );
             } else {
-              console.log(error);
               this.notification.setNotification(
                 false,
                 'Unable to communicate to backend'

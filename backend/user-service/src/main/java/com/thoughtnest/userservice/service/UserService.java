@@ -39,7 +39,7 @@ public class UserService {
             response.setStatus(true);
             response.setMessage("user found");
             users.get().stream().forEach(items->{
-                ShortUserDataDto shortUserDataDto = new ShortUserDataDto();
+                ShortUserDataDto shortUserDataDto = new ShortUserDataDto(null,null,null);
                 shortUserDataDto.setPublicId(items.getPublicId());
                 shortUserDataDto.setUserName(items.getUserName());
                 if(items.getUserProfile() != null){

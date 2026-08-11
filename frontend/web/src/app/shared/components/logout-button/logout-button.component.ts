@@ -16,7 +16,6 @@ export class LogoutButtonComponent {
     private nav: Router
   ) {}
   logout() {
-    console.log('button clicked');
     this.auth.logout().subscribe({
       next: (Response) => {
         this.notification.setNotification(true, 'You successfully logged out');
@@ -24,7 +23,6 @@ export class LogoutButtonComponent {
         this.nav.navigate(['/']);
       },
       error: (err) => {
-        console.log(err);
         this.notification.setNotification(
           true,
           'We are unable to close your account right now'

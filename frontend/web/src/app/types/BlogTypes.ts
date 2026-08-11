@@ -33,7 +33,14 @@ export type singleBlogResponseType = {
   blogViews: number;
   blogLikes: number;
   blogComments: number;
-
+  blogLiked: boolean;
   // Publish Date
   createdAt: Date;
 } | null;
+
+export type getFollowingTopThreeBlogResponseData = {
+  userName: string;
+  userPublicId: string;
+  userPublicImageUrl: string | null;
+  shortBlogList: shortBlogResponseType;
+}[];
