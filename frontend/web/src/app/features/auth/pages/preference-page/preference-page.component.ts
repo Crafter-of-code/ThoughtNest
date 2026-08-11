@@ -27,16 +27,16 @@ export class PreferencePageComponent implements OnInit {
   userSelectedGenre: genreDataType = [];
   constructor(private userService: UserService) {}
   ngOnInit(): void {
-    this.userService.getGenre().subscribe({
-      next: (response: genreDataType) => {
-        console.log(response[1].genreId.toString());
-        this.genreData = response;
-        this.loadingStatus = false;
-      },
-      error: (err) => {
-        console.log(err);
-      },
-    });
+    // this.userService.getGenre().subscribe({
+    //   next: (response: genreDataType) => {
+    //     console.log(response[1].genreId.toString());
+    //     this.genreData = response;
+    //     this.loadingStatus = false;
+    //   },
+    //   error: (err) => {
+    //     console.log(err);
+    //   },
+    // });
   }
   onClickedOnChoice(event: Event) {
     const htmlTag = (event.target as HTMLElement).tagName;
@@ -54,7 +54,5 @@ export class PreferencePageComponent implements OnInit {
       }
     }
   }
-  sendUserChoice(event: Event) {
-    console.log('Hello world');
-  }
+  sendUserChoice(event: Event) {}
 }

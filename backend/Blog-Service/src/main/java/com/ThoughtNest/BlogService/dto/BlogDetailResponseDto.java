@@ -23,7 +23,7 @@ public class BlogDetailResponseDto {
     private long blogViews;
     private long blogLikes;
     private long blogComments;
-
+    private boolean blogLiked;
     // Publish Date
     private LocalDateTime createdAt;
 }

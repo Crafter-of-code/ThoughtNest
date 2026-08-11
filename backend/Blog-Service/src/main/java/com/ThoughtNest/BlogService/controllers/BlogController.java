@@ -39,10 +39,6 @@ public class BlogController {
             return ResponseEntity.status(HttpStatus.SERVICE_UNAVAILABLE).body(responseDto);
         }
     }
-    @PostMapping("/blog/like")
-    public ResponseEntity<ResponseDto> blogLikeController(){
-        return  null;
-    }
     /*get single blog*/
     @DeleteMapping("/blog/{id}")
     public ResponseEntity<ResponseDto> blogDeleteControler(@RequestHeader("Authorization") String token,
@@ -69,4 +65,5 @@ public class BlogController {
             return  ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(responseDto);
         }
     }
+
 }

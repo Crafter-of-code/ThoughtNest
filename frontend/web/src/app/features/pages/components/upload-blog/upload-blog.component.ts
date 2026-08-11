@@ -91,7 +91,6 @@ export class UploadBlogComponent {
         }
       },
       error: (err) => {
-        console.log(err);
         this.notification.setNotification(
           false,
           'We are facing some error while uploading you blog'

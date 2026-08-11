@@ -44,10 +44,40 @@
         </div>
 
         <div class="flex gap-6 text-sm text-slate-500">
-          <span>👁 {{ singleBlogData?.blogViews }}</span>
+          <div class="flex gap-1 items-center">
+            <img
+              src="icons/eye.png"
+              class="h-4 w-4"
+              alt="eye image"
+              aria-label="total views on this blog"
+              title="views"
+              loading="eager"
+            />
+            <span> {{ singleBlogData?.blogViews }}</span>
+          </div>
 
-          <button (click)="sendLikesToBlog(singleBlogData?.blogId ?? '')">
-            ❤️ {{ singleBlogData?.blogLikes }}
+          <button
+            (click)="sendLikesToBlog(singleBlogData?.blogId ?? '')"
+            class="bg-white border-solid border-2 p-1 px-2 rounded-4xl"
+            [ngClass]="isLiked ? 'border-[#F44336]' : 'border-[#A9A9A9]'"
+          >
+            <div class="flex gap-1 items-center">
+              <div>
+                <img
+                  [src]="
+                    isLiked
+                      ? 'icons/liked-heart.png'
+                      : 'icons/unliked-heart.png'
+                  "
+                  class="h-4 w-4"
+                  alt="heart image"
+                  aria-label="total likes on this blog"
+                  title="likes"
+                  loading="eager"
+                />
+              </div>
+              <div>{{ singleBlogData?.blogLikes }}</div>
+            </div>
           </button>
 
           <button>💬 {{ singleBlogData?.blogComments }}</button>

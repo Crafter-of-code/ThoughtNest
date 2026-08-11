@@ -6,7 +6,10 @@ import {
   shortBlogResponseType,
   universalResponseDataType,
   singleBlogResponseType,
+  getFollowingTopThreeBlogResponseData,
 } from '../../../types/BlogTypes';
+import { SolidButtonComponent } from '../../../shared/components/solid-button/solid-button.component';
+import { ShortBlogContainerComponent } from '../../../features/pages/components/short-blog-container/short-blog-container.component';
 @Injectable({
   providedIn: 'root',
 })
@@ -26,10 +29,16 @@ export class BlogService {
       `${ServerUrl}blog/latest`
     );
   }
+  getFollowingBlog(): Observable<
+    universalResponseDataType<getFollowingTopThreeBlogResponseData>
+  > {
+    return this.http.get<
+      universalResponseDataType<getFollowingTopThreeBlogResponseData>
+    >(`${ServerUrl}blog/following`);
+  }
   getSingleBlog(
     blogId: string
   ): Observable<universalResponseDataType<singleBlogResponseType>> {
-    console.log(blogId);
     // const params = new HttpParams().set('blogId', blogId);
     return this.http.get<universalResponseDataType<singleBlogResponseType>>(
       `${ServerUrl}blog/${blogId}`,
@@ -51,6 +60,17 @@ export class BlogService {
   deleteBlog(id: string | number): Observable<universalResponseDataType<null>> {
     return this.http.delete<universalResponseDataType<null>>(
       `${ServerUrl}blog/${id}`
+    );
+  }
+  likeBlog(blogId: string): Observable<universalResponseDataType<null>> {
+    const publicId = localStorage.getItem('publicId');
+    const postData = {
+      publicId: publicId,
+      blogId: blogId,
+    };
+    return this.http.post<universalResponseDataType<null>>(
+      `${ServerUrl}blog/like`,
+      postData
     );
   }
 }

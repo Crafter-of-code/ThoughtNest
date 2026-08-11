@@ -19,9 +19,32 @@ export const routes: Routes = [
       {
         path: 'home',
         loadComponent: () =>
-          import('./features/pages/home-page/home-page.component').then(
-            (page) => page.HomePageComponent
-          ),
+          import(
+            './features/pages/home/home-layout-page/home-layout-page.component'
+          ).then((page) => page.HomeLayoutPageComponent),
+        children: [
+          {
+            path: '',
+            loadComponent: () =>
+              import(
+                './features/pages/home/pages/home-page/home-page.component'
+              ).then((page) => page.HomePageComponent),
+          },
+          {
+            path: 'trending',
+            loadComponent: () =>
+              import(
+                './features/pages/home/pages/trending-page/trending-page.component'
+              ).then((page) => page.TrendingPageComponent),
+          },
+          {
+            path: 'following',
+            loadComponent: () =>
+              import(
+                './features/pages/home/pages/following-page/following-page.component'
+              ).then((page) => page.FollowingPageComponent),
+          },
+        ],
       },
       {
         path: 'members',

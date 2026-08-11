@@ -38,10 +38,7 @@ export class ShortBlogContainerComponent implements OnInit, OnChanges {
   @Output() blogIdSender = new EventEmitter<string>();
   constructor() {}
   ngOnInit(): void {}
-  ngOnChanges(changes: SimpleChanges): void {
-    console.log(this.blogData);
-    console.log(this.blogData?.[0] ?? 'not present');
-  }
+  ngOnChanges(changes: SimpleChanges): void {}
   sendBlogId(blogId: string) {
     this.blogIdSender.emit(blogId);
   }

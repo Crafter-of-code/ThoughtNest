@@ -121,16 +121,12 @@ export class ProfileSettingComponent implements OnInit {
     this.userTopics.forEach((topic) => {
       formData.append('userTopic', topic);
     });
-
-    // Debug
-    console.log('----- FormData -----');
     for (const pair of formData.entries()) {
       console.log(pair[0], pair[1]);
     }
 
     this.userService.patchUpdatedDetail(formData).subscribe({
       next: (response) => {
-        console.log('Profile updated successfully', response);
         this.notification.setNotification(response.status, response.message);
         this.closeSettingComponent();
       },

@@ -48,7 +48,6 @@ export class MembersPageComponent implements OnInit, OnChanges {
     if (userName != '' && userName != null) {
       this.userService.getUserName(userName).subscribe({
         next: (response) => {
-          console.log(response);
           this.userDetail = response.data;
           this.userInputData.getRawValue().userName = '';
         },
@@ -60,12 +59,9 @@ export class MembersPageComponent implements OnInit, OnChanges {
     }
   }
   ngOnChanges(changes: SimpleChanges): void {
-    console.log('changes happen');
-    console.log(changes);
     this.location.back();
   }
   searchCompeletDetailOfUser(id: string) {
     this.nav.navigate(['/members', id]);
-    console.log(id);
   }
 }

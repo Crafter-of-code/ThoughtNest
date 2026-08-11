@@ -1,20 +1,28 @@
 package com.ThoughtNest.UserService.service;
 
 import com.ThoughtNest.UserService.Utility.JwtUtil;
+import com.ThoughtNest.UserService.dto.ShortUserDataDto;
 import com.ThoughtNest.UserService.dto.UserAskDto;
 import com.ThoughtNest.UserService.entity.UserEntity;
+import com.ThoughtNest.UserService.entity.UserFollow;
+import com.ThoughtNest.UserService.exceptions.user.UserNotFoundException;
+import com.ThoughtNest.UserService.repository.UserFollowRepository;
 import com.ThoughtNest.UserService.repository.UserRepository;
 import io.jsonwebtoken.Claims;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import javax.swing.text.html.Option;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 @AllArgsConstructor
 public class UserAskService {
     private UserRepository userRepository;
+    private UserFollowRepository userFollowRepository;
     private JwtUtil jwtUtil;
     public UserAskDto getOwnerInfo(String token){
         UserAskDto userAskDto = new UserAskDto();
@@ -43,5 +51,12 @@ public class UserAskService {
         }
         return  userAskDto;
     }
+    public List<ShortUserDataDto> getUserFollowingList(String token) {
+        UserEntity userDetail = userRepository.findByUserEmail(jwtUtil.getClaims(token.substring(7)).getSubject())
+                .orElseThrow(() ->new UserNotFoundException("We unable to find the user"));
+        System.out.println(userDetail.getUserName() + " " + userDetail.getUserId());
+        List<ShortUserDataDto> usersData =userFollowRepository.findAllFollowingByFollowerId(userDetail.getUserId());
+        System.out.println(usersData.getFirst().getPublicId());
+        return (usersData);
+    }
 }
-//eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1emFpckBnbWFpbC5jb20iLCJpYXQiOjE3ODUzOTYzNjF9.orREDTG04Fu9H6BcItZZT0kNMjcfIa8XsGdLd82N_Qo

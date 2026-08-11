@@ -1,0 +1,43 @@
+<div class="fixed top-23 left-1/2 -translate-x-1/2 z-99">
+  <app-glass-background [padding]="'p-2! flex gap-2 flex-col z-99'">
+    <nav class="flex gap-2">
+      <a
+        routerLink="/home"
+        routerLinkActive="bg-(--accent-color) text-white"
+        [routerLinkActiveOptions]="{ exact: true }"
+        class="p-2 px-3 rounded-3xl"
+      >
+        Latest
+      </a>
+
+      <a
+        routerLink="following"
+        routerLinkActive="bg-(--accent-color) text-white"
+        class="p-2 px-3 rounded-3xl"
+      >
+        Following
+      </a>
+
+      <a
+        routerLink="trending"
+        routerLinkActive="bg-(--accent-color) text-white"
+        class="p-2 px-3 rounded-3xl"
+      >
+        Trending
+      </a>
+    </nav>
+  </app-glass-background>
+</div>
+<router-outlet />
+<!--additional features-->
+<div class="fixed bottom-5 right-5" *ngIf="showUploadBlogContainer == false">
+  <app-add-blog-button (clicked)="UploadBlogContainerShower($event)" />
+</div>
+<div
+  *ngIf="showUploadBlogContainer"
+  class="p-15 h-full w-screen bg-(--text-color)/70 fixed lg:top-10! top-11! left-0 max-sm:p-3 max-sm:py-20 max-h-screen overflow-scroll"
+>
+  <app-upload-blog
+    (showMainContainerOnScreen)="UploadBlogContainerShower($event)"
+  />
+</div>

@@ -4,6 +4,8 @@ package com.ThoughtNest.BlogService.service;
 import com.ThoughtNest.BlogService.client.UserFeignClient;
 import com.ThoughtNest.BlogService.dto.*;
 import com.ThoughtNest.BlogService.entity.BlogEntity;
+import com.ThoughtNest.BlogService.exceptions.blog.BlogNotFoundException;
+import com.ThoughtNest.BlogService.exceptions.user.UserNotFoundException;
 import com.ThoughtNest.BlogService.repository.BlogRepository;
 import com.ThoughtNest.BlogService.utility.CloudinaryUtility;
 import com.ThoughtNest.BlogService.utility.JwtUtil;
@@ -26,7 +28,6 @@ public class BlogService {
     private JwtUtil jwtUtil;
     private final CloudinaryUtility cloudinaryUtility;
     public ResponseDto uploadUserBlog(BlogRequestDto userBlog, String token){
-        System.out.println("Request reaches at upload userBlog");
         BlogEntity blogEntity = new BlogEntity();
         ResponseDto responseDto = new ResponseDto();
         UserDto userDto = userFeignClient.getOwnerDetail(token);
@@ -44,7 +45,6 @@ public class BlogService {
                 if(userBlog.getCoverImage() != null){
                     BlogCoverImageDto blogImageUploadedData = cloudinaryUtility.uploadCoverImage(
                             new BlogCoverImageDto(userBlog.getCoverImage(),null,null));
-                    System.out.println(blogImageUploadedData.getPublicUrl());
                     blogEntity.setCoverImage(blogImageUploadedData.getSecureUrl());
                     blogEntity.setCoverImagePublicUrl(blogImageUploadedData.getPublicUrl());
                 }
@@ -64,44 +64,48 @@ public class BlogService {
     }
     @SuppressWarnings("rawtype")
     /* get single blog*/
-    public ResponseDto<BlogDetailResponseDto> getSingleBlogService(String token,String blogId){
-        ResponseDto<BlogDetailResponseDto> responseDto = new ResponseDto<BlogDetailResponseDto>();
+    public ResponseDto<BlogDetailResponseDto> getSingleBlogService(String token, String blogId) {
         BlogEntity blogEntity = blogRepository.findById(blogId)
-                .orElseThrow(() ->new RuntimeException("blog not found"));
-        BlogDetailResponseDto blogDetailResponseDto = new BlogDetailResponseDto();
-        blogDetailResponseDto.setBlogId(blogEntity.getBlogId());
-        blogDetailResponseDto.setBlogTitle(blogEntity.getBlogTitle());
-        blogDetailResponseDto.setBlogContent(blogEntity.getBlogContent());
-        blogDetailResponseDto.setBlogSummary(blogEntity.getBlogContent());
-        blogDetailResponseDto.setCoverImage(blogEntity.getCoverImage());
-        blogDetailResponseDto.setCreatedAt(blogEntity.getCreatedAt());
-        blogDetailResponseDto.setBlogViews(blogEntity.getBlogViews().size());
-        blogDetailResponseDto.setBlogLikes(blogEntity.getBlogLikes().size());
-        blogDetailResponseDto.setBlogComments(blogEntity.getBlogComment().size());
-        responseDto.setStatus(true);
-        try{
-            UserDto user = userFeignClient.getUserDetailByUserId(token,blogEntity.getUserId());
-            if(user.getUserName() != null && blogEntity.getBlogId() != null){
-                boolean isBlogViewed = blogIntractionService.recordView(user,blogEntity);
-                blogDetailResponseDto.setUserPublicId(user.getPublicId());
-                blogDetailResponseDto.setUserName(user.getUserName());
-                System.out.println(blogDetailResponseDto.getUserImageUrl());
-                blogDetailResponseDto.setUserImageUrl(user.getUserImageUrl());
-                responseDto.setMessage("We find you requested data successfully");
-            }else{
-                responseDto.setStatus(true);
-                responseDto.setMessage("We are unable to find the requested blog");
-                responseDto.setData(null);
-            }
+                .orElseThrow(() ->
+                        new BlogNotFoundException("Unable to find the requested blog"));
+        BlogDetailResponseDto dto = new BlogDetailResponseDto();
+        dto.setBlogId(blogEntity.getBlogId());
+        dto.setBlogTitle(blogEntity.getBlogTitle());
+        dto.setBlogSummary(blogEntity.getBlogSummary());
+        dto.setBlogContent(blogEntity.getBlogContent());
+        dto.setCoverImage(blogEntity.getCoverImage());
+        dto.setCreatedAt(blogEntity.getCreatedAt());
+        dto.setBlogViews(blogEntity.getBlogViews().size());
+        dto.setBlogLikes(blogEntity.getBlogLikes().size());
+        dto.setBlogComments(blogEntity.getBlogComment().size());
+        try {
+            UserDto author = userFeignClient.getUserDetailByUserId(
+                    token,
+                    blogEntity.getUserId()
+            );
+            dto.setUserName(author.getUserName());
+            dto.setUserPublicId(author.getPublicId());
+            dto.setUserImageUrl(author.getUserImageUrl());
+            blogIntractionService.recordView(author, blogEntity);
+        } catch (UserNotFoundException ex) {
+            dto.setUserName("Deleted User");
+            dto.setUserPublicId(null);
+            dto.setUserImageUrl("https://placehold.co/100x100?text=N/A");
         }
-        catch (Exception e){
-            System.out.println(e.getMessage());
-            blogDetailResponseDto.setUserName("Delete user");
-            blogDetailResponseDto.setUserPublicId(null);
-            blogDetailResponseDto.setUserImageUrl("https://placehold.co/100x100?text=N/A");
+        try {
+            UserDto currentUser = userFeignClient.getOwnerDetail(token);
+            dto.setBlogLiked(
+                    blogEntity.getBlogLikes()
+                    .contains(currentUser.getPublicId()));
+            blogIntractionService.recordView(currentUser,blogEntity);
+        } catch (UserNotFoundException ex) {
+            dto.setBlogLiked(false);
         }
-        responseDto.setData(blogDetailResponseDto);
-        return responseDto;
+        ResponseDto<BlogDetailResponseDto> response = new ResponseDto<>();
+        response.setStatus(true);
+        response.setMessage("Blog fetched successfully.");
+        response.setData(dto);
+        return response;
     }
     public ResponseDto blogLikeService(){
         return null;
@@ -127,7 +131,6 @@ public class BlogService {
         }
         return  responseDto;
     }
-    ///////
     public ResponseDto getTop3Blogs(String token, UUID publicId) {
         String userEmail = jwtUtil.extractUsername(token);
         List<BlogEntity> blogs;
@@ -158,4 +161,5 @@ public class BlogService {
         }
         return response;
     }
+
 }

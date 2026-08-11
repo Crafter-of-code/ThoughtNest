@@ -1,5 +1,6 @@
 package com.ThoughtNest.UserService.controllers;
 import com.ThoughtNest.UserService.dto.BlogAskDto;
+import com.ThoughtNest.UserService.dto.ShortUserDataDto;
 import com.ThoughtNest.UserService.service.UserAskService;
 import com.ThoughtNest.UserService.dto.UserAskDto;
 import com.ThoughtNest.UserService.service.UserInteractionService;
@@ -9,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -42,5 +44,10 @@ public class UserAskController {
         boolean data = userInteractionService.userPublishedBlog(token,blogAskDto);
         if(data) return  ResponseEntity.status(HttpStatus.OK).body(true);
         return  ResponseEntity.status(HttpStatus.NOT_FOUND).body(false);
+    }
+    @GetMapping("/user/follower")
+    public ResponseEntity<List<ShortUserDataDto>> getUserFollowerList(@RequestHeader("Authorization") String token){
+        System.out.println("user follower has been called");
+        return  ResponseEntity.status(HttpStatus.OK).body(userAskService.getUserFollowingList(token));
     }
 }

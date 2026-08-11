@@ -51,7 +51,6 @@ export class SigninPageComponent {
     }),
   });
   signinHandler() {
-    console.log('signin handler is running');
     this.loadingSpinner = true;
     this.disabled = true;
     const payload = {
@@ -78,7 +77,6 @@ export class SigninPageComponent {
           this.disabled = false;
         },
         error: (err) => {
-          console.log(err);
           if ((err.status = 400)) {
             this.notification.status.set(false);
             this.notification.message.set(

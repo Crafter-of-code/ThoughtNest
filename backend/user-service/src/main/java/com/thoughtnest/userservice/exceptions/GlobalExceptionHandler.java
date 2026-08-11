@@ -13,6 +13,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+import java.util.NoSuchElementException;
+
 @RestControllerAdvice
 public class GlobalExceptionHandler {
     private static final Logger log =
@@ -89,5 +91,12 @@ public class GlobalExceptionHandler {
         response.setMessage("An unexpected error occurred. Please try again later.");
 
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
+    }
+    @ExceptionHandler(NoSuchElementException.class)
+    public ResponseEntity<ResponseDto> NoSuchElementExceptionHandler(NoSuchElementException ex){
+        ResponseDto responseDto = new ResponseDto();
+        responseDto.setStatus(false);
+        responseDto.setMessage(ex.getMessage());
+        return  ResponseEntity.status(HttpStatus.NOT_FOUND).body(responseDto);
     }
 }
