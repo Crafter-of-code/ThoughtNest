@@ -53,7 +53,7 @@ public class UserFollowerService {
         return response;
     }
     @Transactional
-    public ResponseDto removeFollowerService(String token, UUID userId){
+    public ResponseDto<Void> removeFollowingService(String token, UUID userId){
       UserEntity follower =  userRepository.findByUserEmail(jwtUtil.getClaims(token.substring(7)).getSubject())
               .orElseThrow(()->new UserNotFoundException("You are not a valid user"));
       UserEntity following =  userRepository.findByPublicId(userId)
@@ -61,10 +61,19 @@ public class UserFollowerService {
       UserFollow follow = userFollowRepository.findByFollowerAndFollowing(follower,following)
               .orElseThrow(()->new RequestedResourceNotFound("Unable to find the relationship"));
         userFollowRepository.delete(follow);
-        ResponseDto response = new ResponseDto();
+        ResponseDto<Void> response = new ResponseDto();
         response.setStatus(true);
         response.setMessage("User unfollowed successfully.");
         System.out.println("successfully Unfollowed");
         return response;
+    }
+    @Transactional
+    public ResponseDto<Void> removeFollowerService(String token, UUID followerPublicId,UUID followingPublicId){
+
+       userFollowRepository.removeFollower(followerPublicId,followingPublicId).orElseThrow( () -> new UserNotFoundException("Unable to find the follower"));
+       ResponseDto<Void> responseDto = new ResponseDto<>();
+       responseDto.setStatus(true);
+       responseDto.setMessage("Follower removed successfully");
+       return  responseDto;
     }
 }

@@ -23,7 +23,6 @@ public class FollowingBlogService {
         System.out.println("user following blog service has been called");
         List<ShortUserDetailDto> shortUserDetailList = userFeignClient.getUserFollowings(token);
         List<FollowingTopThreeBlogDto> followingTopThreeBlogDtos = new ArrayList<>();
-        System.out.println(shortUserDetailList);
         shortUserDetailList.forEach(user->{
             Pageable pageable = PageRequest.of(0,3);
             List<ShortBlogResponseDto> shortBlogResponseDtos = blogRepository

@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Map;
 import java.util.UUID;
 
 @RestController
@@ -24,9 +25,22 @@ public class UserFollowController {
         return  ResponseEntity.status(HttpStatus.OK).body(responseDto);
     }
     @DeleteMapping("/user/unfollow/{publicId}")
-    public ResponseEntity<ResponseDto> removeFollowerController(@RequestHeader("Authorization")String token
+    public ResponseEntity<ResponseDto> removeFollowingController(@RequestHeader("Authorization")String token
             , @PathVariable UUID publicId){
-        ResponseDto responseDto = userFollowerService.removeFollowerService(token,publicId);
+        ResponseDto responseDto = userFollowerService.removeFollowingService(token,publicId);
         return  ResponseEntity.status(HttpStatus.OK).body(responseDto);
+    }
+    @DeleteMapping("/user/follower/{publicId}")
+    public ResponseEntity<ResponseDto<Void>> removeFollowerController(
+            @RequestHeader("Authorization") String token,
+            @PathVariable UUID publicId,
+            @RequestParam UUID ownerPublicId) {
+        ResponseDto<Void> responseDto =
+                userFollowerService.removeFollowerService(
+                        token,
+                        publicId,
+                        ownerPublicId
+                );
+        return ResponseEntity.ok(responseDto);
     }
 }

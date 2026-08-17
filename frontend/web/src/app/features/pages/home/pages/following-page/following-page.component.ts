@@ -33,20 +33,17 @@ export class FollowingPageComponent implements OnInit {
   loadingSpinner: boolean = true;
   ngOnInit(): void {
     this.blogService
-      .getFollowingBlog()
+      .getFollowingBlogs()
       .pipe(
         finalize(() => {
           this.loadingSpinner = false;
           this.skeletonLoading = false;
-          console.log(this.followingUserDataWithBlog);
         })
       )
       .subscribe({
         next: (response) => {
           this.notificaiotn.setNotification(response.status, response.message);
-          console.log(response.data);
           if (response.data) {
-            console.log(response.data[0].userPublicImageUrl);
             this.followingUserDataWithBlog = response.data;
           }
         },

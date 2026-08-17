@@ -23,7 +23,7 @@ public class BlogEntity {
     private UUID userPublicId;
     private String userName;
     private String userEmail;
-
+    private String userImageUrl;
     // blog
     private String blogTitle;
     private String blogSummary;

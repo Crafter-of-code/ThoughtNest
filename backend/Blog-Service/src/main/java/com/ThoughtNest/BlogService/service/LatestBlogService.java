@@ -31,27 +31,15 @@ public class LatestBlogService {
                 List<BlogEntity> allBlogEntity = blogEntities.get();
                 allBlogEntity.stream().forEach(item->{
                     ShortBlogResponseDto shortBlogResponseDto = new ShortBlogResponseDto();
-                    UserDto userDto = null;
-                    try{
-                        userDto = userFeignClient.getUserDetailByUserId(token,item.getUserId());
-                        shortBlogResponseDto.setPublicId(userDto.getPublicId());
-                        shortBlogResponseDto.setUserName(userDto.getUserName());
-                        shortBlogResponseDto.setUserImageUrl(
-                                userDto.getUserImageUrl() != null
-                                        ? userDto.getUserImageUrl()
-                                        : "https://placehold.co/100x100?text=" + userDto.getUserName().substring(0, 1)
-                        );
-                    }catch (Exception e){
-                        System.out.println(e.getMessage());
-                        shortBlogResponseDto.setPublicId(null);
-                        shortBlogResponseDto.setUserName("User Not Found");
-                        shortBlogResponseDto.setUserImageUrl("https://placehold.co/100x100?text=N/A");
-                    }
                     shortBlogResponseDto.setBlogTitle(item.getBlogTitle());
                     shortBlogResponseDto.setBlogContent(item.getBlogContent().substring(0
                             ,Math.min(item.getBlogContent().length(),lengthOfString))+"...");
                     shortBlogResponseDto.setBlogId(item.getBlogId());
                     shortBlogResponseDto.setCreatedAt(item.getCreatedAt());
+                    shortBlogResponseDto.setUserName(item.getUserName());
+                    String userImageUrl = item.getUserImageUrl() != "" && item.getUserImageUrl() != null ? item.getUserImageUrl() :
+                            "https://placehold.co/100x100?text=" + item.getUserName().charAt(0);
+                    shortBlogResponseDto.setUserImageUrl(userImageUrl);
                     shortBlogResponseDtos.add(shortBlogResponseDto);
                 });
                 responseDto.setStatus(true);

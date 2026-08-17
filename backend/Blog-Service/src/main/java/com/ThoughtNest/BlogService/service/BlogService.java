@@ -42,6 +42,8 @@ public class BlogService {
                 blogEntity.setBlogViews(new ArrayList<>());
                 blogEntity.setBlogLikes(new ArrayList<>());
                 blogEntity.setBlogComment(new ArrayList<Map<String,String>>());
+                blogEntity.setUserImageUrl(userDto.getUserImageUrl());
+                System.out.println(blogEntity.getUserImageUrl());
                 if(userBlog.getCoverImage() != null){
                     BlogCoverImageDto blogImageUploadedData = cloudinaryUtility.uploadCoverImage(
                             new BlogCoverImageDto(userBlog.getCoverImage(),null,null));

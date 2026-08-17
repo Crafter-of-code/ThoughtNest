@@ -9,7 +9,6 @@ import {
   getFollowingTopThreeBlogResponseData,
 } from '../../../types/BlogTypes';
 import { SolidButtonComponent } from '../../../shared/components/solid-button/solid-button.component';
-import { ShortBlogContainerComponent } from '../../../features/pages/components/short-blog-container/short-blog-container.component';
 @Injectable({
   providedIn: 'root',
 })
@@ -22,19 +21,26 @@ export class BlogService {
       blogData
     );
   }
-  getLatestBlog(): Observable<
+  getLatestBlogs(): Observable<
     universalResponseDataType<shortBlogResponseType>
   > {
     return this.http.get<universalResponseDataType<shortBlogResponseType>>(
-      `${ServerUrl}blog/latest`
+      `${ServerUrl}blogs/latest`
     );
   }
-  getFollowingBlog(): Observable<
+  getFollowingBlogs(): Observable<
     universalResponseDataType<getFollowingTopThreeBlogResponseData>
   > {
     return this.http.get<
       universalResponseDataType<getFollowingTopThreeBlogResponseData>
-    >(`${ServerUrl}blog/following`);
+    >(`${ServerUrl}blogs/following`);
+  }
+  getTrendingBlogs(): Observable<
+    universalResponseDataType<shortBlogResponseType>
+  > {
+    return this.http.get<universalResponseDataType<shortBlogResponseType>>(
+      `${ServerUrl}blogs/trending`
+    );
   }
   getSingleBlog(
     blogId: string

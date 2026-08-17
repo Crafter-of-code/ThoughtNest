@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.Objects;
 
 @RestController
-@RequestMapping("/api/blog")
+@RequestMapping("/api/blogs")
 @AllArgsConstructor
 public class LatestBlogController {
     private final LatestBlogService latestBlogService;

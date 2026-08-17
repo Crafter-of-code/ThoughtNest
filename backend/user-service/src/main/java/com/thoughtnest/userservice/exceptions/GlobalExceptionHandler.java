@@ -12,6 +12,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 
 import java.util.NoSuchElementException;
 
@@ -42,7 +43,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(AlreadyFollowingException.class)
     public ResponseEntity<ResponseDto> handleAlreadyFollowing(AlreadyFollowingException ex) {
 
-        ResponseDto response = new ResponseDto();
+        ResponseDto<Void> response = new ResponseDto<Void>();
         response.setStatus(false);
         response.setMessage(ex.getMessage());
 
@@ -50,9 +51,9 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(EmailAlreadyExistsException.class)
-    public ResponseEntity<ResponseDto> handleEmailAlreadyExists(EmailAlreadyExistsException ex) {
+    public ResponseEntity<ResponseDto<Void>> handleEmailAlreadyExists(EmailAlreadyExistsException ex) {
 
-        ResponseDto response = new ResponseDto();
+        ResponseDto<Void> response = new ResponseDto<Void>();
         response.setStatus(false);
         response.setMessage(ex.getMessage());
 
@@ -60,9 +61,9 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(IllegalArgumentException.class)
-    public ResponseEntity<ResponseDto> handleIllegalArgument(IllegalArgumentException ex) {
+    public ResponseEntity<ResponseDto<Void>> handleIllegalArgument(IllegalArgumentException ex) {
 
-        ResponseDto response = new ResponseDto();
+        ResponseDto<Void> response = new ResponseDto<Void>();
         response.setStatus(false);
         response.setMessage(ex.getMessage());
 
@@ -70,11 +71,11 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(DataAccessException.class)
-    public ResponseEntity<ResponseDto> handleDatabaseException(DataAccessException ex) {
+    public ResponseEntity<ResponseDto<Void>> handleDatabaseException(DataAccessException ex) {
 
         log.error("Database exception occurred", ex);
 
-        ResponseDto response = new ResponseDto();
+        ResponseDto<Void> response = new ResponseDto<Void>();
         response.setStatus(false);
         response.setMessage("A database error occurred. Please try again later.");
 
@@ -82,21 +83,29 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(Exception.class)
-    public ResponseEntity<ResponseDto> handleGlobalException(Exception ex) {
+    public ResponseEntity<ResponseDto<Void>> handleGlobalException(Exception ex) {
 
         log.error("Unexpected exception occurred", ex);
 
-        ResponseDto response = new ResponseDto();
+        ResponseDto<Void> response = new ResponseDto<Void>();
         response.setStatus(false);
         response.setMessage("An unexpected error occurred. Please try again later.");
 
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
     }
     @ExceptionHandler(NoSuchElementException.class)
-    public ResponseEntity<ResponseDto> NoSuchElementExceptionHandler(NoSuchElementException ex){
-        ResponseDto responseDto = new ResponseDto();
+    public ResponseEntity<ResponseDto<Void>> NoSuchElementExceptionHandler(NoSuchElementException ex){
+        ResponseDto<Void> responseDto = new ResponseDto<Void>();
         responseDto.setStatus(false);
         responseDto.setMessage(ex.getMessage());
         return  ResponseEntity.status(HttpStatus.NOT_FOUND).body(responseDto);
+    }
+    @ExceptionHandler(MethodArgumentTypeMismatchException.class)
+    public ResponseEntity<ResponseDto<Void>> methodArgumentTypeMismatchHandler(MethodArgumentTypeMismatchException ex){
+        ResponseDto<Void> responseDto = new ResponseDto<Void>();
+        responseDto.setStatus(false);
+        responseDto.setMessage("You are sending the wrong variable type");
+        System.out.println(ex.getMessage());
+        return  ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(responseDto);
     }
 }

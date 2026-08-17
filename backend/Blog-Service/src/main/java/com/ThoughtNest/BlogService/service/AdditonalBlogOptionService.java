@@ -26,8 +26,6 @@ public class AdditonalBlogOptionService {
     @Transactional
     public ResponseDto blogLikeService(String token,BlogLikeRequestDto requestData){
         if(requestData.getBlogId() == null || requestData.getPublicId() == null){
-            System.out.println(requestData.getBlogId());
-            System.out.println(requestData.getPublicId());
             throw  new IllegalArgumentException("unable to find public id or blog id in your request");
         }
         UserDto userDto;

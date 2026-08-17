@@ -95,41 +95,154 @@ public class UserService {
         }
         return responseDto;
     }
-    public ResponseDto<OwnerDataDto> getOwnDetailsService(String token){
-        ResponseDto<OwnerDataDto> responseDto = new ResponseDto<OwnerDataDto>();
-        String userEmail = jwtUtil.getClaims(token.substring(7)).getSubject();
-        OwnerDataDto ownerDataDto = new OwnerDataDto();
-        OwnerDataDto.UserProfileDto userProfileDto = new OwnerDataDto.UserProfileDto();
-        Optional<UserEntity> userOwnerDetail = userRepository.findByUserEmail(userEmail);
-        long countOfUserOwnerBlog = blogFiegnClient.CountByUserId(token,userOwnerDetail.get().getUserId());
-        long noOfUserblog = blogFiegnClient.CountByUserId(token,userOwnerDetail.get().getUserId());
-        if(userOwnerDetail.isPresent()){
-            ownerDataDto.setUserId(userOwnerDetail.get().getUserId());
-            ownerDataDto.setPublicId(userOwnerDetail.get().getPublicId());
-            ownerDataDto.setUserName(userOwnerDetail.get().getUserName());
-            ownerDataDto.setUserEmail(userOwnerDetail.get().getUserEmail());
-            ownerDataDto.setNoOfFollower((long)userOwnerDetail.get().getFollowers().size());
-            ownerDataDto.setNoOfFollowing((long)userOwnerDetail.get().getFollowing().size());
-            ownerDataDto.setCreatedAt(userOwnerDetail.get().getCreatedAt());
-            if(userOwnerDetail.get().getUserProfile() != null){
-                userProfileDto.setUserLocation(userOwnerDetail.get().getUserProfile().getUserLocation());
-                userProfileDto.setUserBio(userOwnerDetail.get().getUserProfile().getUserBio());
-                userProfileDto.setUserPublished(noOfUserblog);
-                userProfileDto.setUserProfileView((long)userOwnerDetail.get().getUserProfile().getUserProfileView().size());
-                userProfileDto.setUserTotalLikes(userOwnerDetail.get().getUserProfile().getUserTotalLikes());
-                userProfileDto.setUserImageUrl(userOwnerDetail.get().getUserProfile().getUserImageUrl());
-                userProfileDto.setUserPublished(countOfUserOwnerBlog);
-                userProfileDto.setUserTopics(userOwnerDetail.get().getUserProfile().getUserTopic());
-            }
-            ownerDataDto.setUserProfile(userProfileDto);
-            responseDto.setStatus(true);
-            responseDto.setMessage("We found your detail");
-            responseDto.setData(ownerDataDto);
-        }else{
+    public ResponseDto<OwnerDataDto> getOwnDetailsService(String token) {
+
+        ResponseDto<OwnerDataDto> responseDto = new ResponseDto<>();
+
+        String userEmail = jwtUtil
+                .getClaims(token.substring(7))
+                .getSubject();
+
+        Optional<UserEntity> userOwnerDetail =
+                userRepository.findByUserEmail(userEmail);
+        if (userOwnerDetail.isEmpty()) {
             responseDto.setStatus(false);
             responseDto.setMessage("We are unable to fetch the user detail");
+            return responseDto;
         }
-        return  responseDto;
+
+        UserEntity user = userOwnerDetail.get();
+        long noOfUserBlog =
+                blogFiegnClient.CountByUserId(token, user.getUserId());
+        OwnerDataDto ownerDataDto = new OwnerDataDto();
+
+        ownerDataDto.setUserId(user.getUserId());
+        ownerDataDto.setPublicId(user.getPublicId());
+        ownerDataDto.setUserName(user.getUserName());
+        ownerDataDto.setUserEmail(user.getUserEmail());
+
+        ownerDataDto.setNoOfFollower(
+                user.getFollowers() != null
+                        ? (long) user.getFollowers().size()
+                        : 0L
+        );
+
+        ownerDataDto.setNoOfFollowing(
+                user.getFollowing() != null
+                        ? (long) user.getFollowing().size()
+                        : 0L
+        );
+
+        ownerDataDto.setCreatedAt(user.getCreatedAt());
+        System.out.println(user.getFollowing());
+        OwnerDataDto.UserProfileDto userProfileDto =
+                new OwnerDataDto.UserProfileDto();
+
+        if (user.getUserProfile() != null) {
+
+            userProfileDto.setUserLocation(
+                    user.getUserProfile().getUserLocation()
+            );
+
+            userProfileDto.setUserBio(
+                    user.getUserProfile().getUserBio()
+            );
+
+            userProfileDto.setUserPublished(
+                    noOfUserBlog
+            );
+
+            userProfileDto.setUserProfileView(
+                    user.getUserProfile().getUserProfileView() != null
+                            ? (long) user.getUserProfile()
+                            .getUserProfileView()
+                            .size()
+                            : 0L
+            );
+
+            userProfileDto.setUserTotalLikes(
+                    user.getUserProfile().getUserTotalLikes()
+            );
+
+            userProfileDto.setUserImageUrl(
+                    user.getUserProfile().getUserImageUrl()
+            );
+
+            userProfileDto.setUserTopics(
+                    user.getUserProfile().getUserTopic()
+            );
+        }
+
+        ownerDataDto.setUserProfile(userProfileDto);
+        OwnerDataDto.UserFollow userFollow =
+                new OwnerDataDto.UserFollow();
+        if (user.getFollowers() != null &&
+                !user.getFollowers().isEmpty()) {
+
+            List<ShortUserDataDto> followers =
+                    user.getFollowers()
+                            .stream()
+                            .map(item -> {
+
+                                String userImageUrl = null;
+
+                                if (item.getFollower() != null &&
+                                        item.getFollower().getUserProfile() != null) {
+
+                                    userImageUrl = item.getFollower()
+                                            .getUserProfile()
+                                            .getUserImageUrl();
+                                }
+
+                                return new ShortUserDataDto(
+                                        item.getFollower().getUserName(),
+                                        item.getFollower().getPublicId(),
+                                        userImageUrl
+                                );
+                            })
+                            .toList();
+
+            userFollow.setUserFollower(followers);
+        }
+        if (user.getFollowing() != null &&
+                !user.getFollowing().isEmpty()) {
+
+            List<ShortUserDataDto> following =
+                    user.getFollowing()
+                            .stream()
+                            .map(item -> {
+
+                                String userImageUrl = null;
+
+                                if (item.getFollowing() != null &&
+                                        item.getFollowing().getUserProfile() != null) {
+
+                                    userImageUrl = item.getFollowing()
+                                            .getUserProfile()
+                                            .getUserImageUrl();
+                                }
+
+                                return new ShortUserDataDto(
+                                        item.getFollowing().getUserName(),
+
+                                        // IMPORTANT:
+                                        // Following user's publicId
+                                        item.getFollowing().getPublicId(),
+
+                                        userImageUrl
+                                );
+                            })
+                            .toList();
+
+            userFollow.setUserFollowing(following);
+        }
+
+        ownerDataDto.setUserFollow(userFollow);
+        responseDto.setStatus(true);
+        responseDto.setMessage("We found your detail");
+        responseDto.setData(ownerDataDto);
+
+        return responseDto;
     }
     public ResponseDto updateOwnerDetail(String token, PatchUserDetailRequestDto updatedUserDetail) throws IOException {
         ResponseDto responseDto = new ResponseDto();

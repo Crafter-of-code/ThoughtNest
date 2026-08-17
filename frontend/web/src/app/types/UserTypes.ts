@@ -16,6 +16,15 @@ export type getOwnerDetailResponseType = {
     userTopics: string[];
     userJoinedOn: Date;
   };
+  userFollow: {
+    userFollowing: shortUserDetailResponseType[];
+    userFollower: shortUserDetailResponseType[];
+  };
+};
+export type shortUserDetailResponseType = {
+  userName: string;
+  publicId: string;
+  userProfileImage: string;
 };
 export type getUserDetailResponseType = {
   publicId: string;

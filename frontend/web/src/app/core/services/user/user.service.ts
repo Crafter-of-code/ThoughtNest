@@ -1,6 +1,6 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import ServerUrl from '../DefaultUrl';
 import { genreDataType } from './type';
 import { universalResponseType } from '../../../types/UniversalTypes';
@@ -72,5 +72,24 @@ export class UserService {
     return this.http.delete<universalResponseType<null>>(
       `${ServerUrl}user/unfollow/${id}`
     );
+  }
+  removeFollower(publicId: string): Observable<universalResponseType<null>> {
+    const token = localStorage.getItem('publicId');
+    if (token) {
+      const param = new HttpParams().set('ownerPublicId', token);
+      return this.http.delete<universalResponseType<null>>(
+        `${ServerUrl}user/follower/${publicId}`,
+        {
+          params: param,
+        }
+      );
+    } else {
+      const data: universalResponseType<null> = {
+        data: null,
+        message: 'Token required',
+        status: false,
+      };
+      return of(data);
+    }
   }
 }

@@ -16,6 +16,7 @@ import {
 import { getOwnerDetailResponseType } from '../../../types/UserTypes';
 import { Router } from '@angular/router';
 import { LoadingSpinnerComponent } from '../../../shared/components/loading-spinner/loading-spinner.component';
+import { SolidButtonComponent } from '../../../shared/components/solid-button/solid-button.component';
 
 @Component({
   selector: 'app-my-profile-page',
@@ -27,6 +28,7 @@ import { LoadingSpinnerComponent } from '../../../shared/components/loading-spin
     ProfileSettingComponent,
     CommonModule,
     LoadingSpinnerComponent,
+    SolidButtonComponent,
   ],
   templateUrl: './my-profile-page.component.html',
   styleUrl: './my-profile-page.component.css',
@@ -38,6 +40,7 @@ export class MyProfilePageComponent implements OnInit {
     private notification: NotificationService,
     private nav: Router
   ) {}
+  unfollowingId: string = '';
   loadingSpinner: boolean = true;
   deletingBlogId: string | number | null = null;
   showProfileContainer: boolean = false;
@@ -61,6 +64,7 @@ export class MyProfilePageComponent implements OnInit {
       )
       .subscribe({
         next: (response) => {
+          console.log(response);
           this.ownerDetail = response.data;
           this.profileSettingDetail = {
             userName: response.data?.userName ?? '',
@@ -131,5 +135,51 @@ export class MyProfilePageComponent implements OnInit {
         );
       },
     });
+  }
+  unFollowHandler(event: string) {
+    console.log(event);
+    this.unfollowingId = event;
+    this.userService
+      .unfollowUser(event)
+      .pipe(
+        finalize(() => {
+          this.unfollowingId = '';
+        })
+      )
+      .subscribe({
+        next: (response) => {
+          console.log(response);
+        },
+        error: (err) => {
+          console.log(err);
+          this.notification.setNotification(
+            err.error.status,
+            err.error.message
+          );
+        },
+      });
+  }
+  removeFollower(event: string) {
+    console.log(event);
+    this.unfollowingId = event;
+    this.userService
+      .removeFollower(event)
+      .pipe(
+        finalize(() => {
+          this.unfollowingId = '';
+        })
+      )
+      .subscribe({
+        next: (response) => {
+          console.log(response);
+        },
+        error: (err) => {
+          console.log(err);
+          this.notification.setNotification(
+            err.error.status,
+            err.error.message
+          );
+        },
+      });
   }
 }

@@ -173,13 +173,69 @@
           class="p-6 bg-white rounded-2xl shadow-sm border border-gray-200 py-5 px-3 my-5"
         >
           <h2 class="font-semibold mb-3">Followers</h2>
-          <p>No followers yet.</p>
+          @if(ownerDetail.userFollow.userFollower){ @for(user of
+          ownerDetail.userFollow.userFollower; track $index){
+          <div
+            class="p-1 bg-white rounded-2xl shadow-sm border border-gray-200 py-5 px-3 my-5 flex items-center"
+          >
+            <div class="flex flex-1 items-center gap-3">
+              <img
+                [src]="user.userProfileImage"
+                alt="user profile image"
+                class="h-8 w-8 rounded-full"
+              />
+              <h3>{{ user.userName }}</h3>
+            </div>
+            <div>
+              <app-solid-button
+                [loadingSpinner]="user.publicId == unfollowingId"
+                [disabled]="user.publicId == unfollowingId"
+                (clicked)="removeFollower(user.publicId)"
+                [type]="'button'"
+                [label]="'remove follower'"
+                ><p>Remove</p></app-solid-button
+              >
+            </div>
+          </div>
+          } }@else{
+          <p>Currently you have no follower</p>
+          }
         </div>
         <div
           class="p-6 bg-white rounded-2xl shadow-sm border border-gray-200 py-5 px-3 my-5"
         >
           <h2 class="font-semibold mb-3">Following</h2>
+          @if(ownerDetail.userFollow.userFollowing){ @for(user of
+          ownerDetail.userFollow.userFollowing; track $index){
+          <div
+            class="p-1 bg-white rounded-2xl shadow-sm border border-gray-200 py-5 px-3 my-5 flex items-center"
+          >
+            <div class="flex flex-1 items-center gap-3">
+              <img
+                [src]="
+                  user.userProfileImage ? user.userProfileImage : 'user.png'
+                "
+                alt="user profile image"
+                class="h-8 w-8 rounded-full"
+              />
+              <div class="">
+                <h3>{{ user.userName }}</h3>
+              </div>
+            </div>
+            <div>
+              <app-outline-button
+                [loadingSpinner]="user.publicId == unfollowingId"
+                [disabled]="user.publicId == unfollowingId"
+                (clicked)="unFollowHandler(user.publicId)"
+                [type]="'button'"
+                [label]="'unfollow'"
+                ><p>unfollow</p></app-outline-button
+              >
+            </div>
+          </div>
+          } }@else{
           <p>Not following anyone.</p>
+          }
         </div>
       </app-glass-background>
     </div>

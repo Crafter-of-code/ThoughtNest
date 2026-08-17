@@ -9,17 +9,18 @@
         : 'overflow-auto'
     "
   -->
-  <div class="lg:mx-10! my-5! flex max-lg:mx-4 flex-col gap-5 max-w-360 flex-1">
-    <ng-container *ngFor="let sectionData of completePageData; let i = index">
-      <app-short-blog-container
-        [containerHeading]="''"
-        [skeletonRendering]="sectionData.numberOfSkeletonRender"
-        [blogData]="sectionData.blogData"
-        [skeletonLoading]="sectionData.skeletonLoading"
-        (blogIdSender)="getBlogById($event)"
-      />
-    </ng-container>
-  </div>
+  <section
+    class="lg:mx-10! my-5! flex max-lg:mx-4 flex-col gap-5 max-w-360 flex-1 mt-20!"
+  >
+    <!-- <ng-container *ngFor="let sectionData of completePageData; let i = index"> -->
+    <app-short-blog-container
+      [blogData]="blogData"
+      [skeletonLoading]="skeletonLoading"
+      (blogIdSender)="getBlogById($event)"
+    >
+    </app-short-blog-container>
+    <!-- </ng-container> -->
+  </section>
 </main>
 <!---->
 <div

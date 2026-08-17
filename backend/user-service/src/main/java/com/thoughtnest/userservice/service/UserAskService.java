@@ -34,7 +34,7 @@ public class UserAskService {
             userAskDto.setUserName(userDetail.get().getUserName());
             userAskDto.setUserEmail(userDetail.get().getUserEmail());
             userAskDto.setPublicId(userDetail.get().getPublicId());
-            userAskDto.setUserImageUrl(null);
+            userAskDto.setUserImageUrl(userDetail.get().getUserProfile().getUserImageUrl());
         }catch (Exception e){
             System.out.println(e.getMessage());
         }

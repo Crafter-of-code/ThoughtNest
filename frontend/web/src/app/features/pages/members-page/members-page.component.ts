@@ -38,7 +38,7 @@ export class MembersPageComponent implements OnInit, OnChanges {
   defaultProfileImageUrl = '/user.png';
   ngOnInit(): void {}
   userInputData = new FormGroup({
-    userName: new FormControl<string>('uzair khan', {
+    userName: new FormControl<string>('', {
       validators: [Validators.required],
     }),
   });
