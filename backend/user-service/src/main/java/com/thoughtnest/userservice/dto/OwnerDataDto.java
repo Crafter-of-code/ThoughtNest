@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 @Getter
@@ -19,6 +20,7 @@ public class OwnerDataDto {
     private Long noOfFollowing;
     private LocalDateTime createdAt;
     private UserProfileDto userProfile;
+    private UserFollow userFollow;
     @Data
     @Getter
     @Setter
@@ -30,5 +32,12 @@ public class OwnerDataDto {
         private Long userTotalLikes = 0L;
         private String userImageUrl;
         private Set<String> userTopics;
+    }
+    @Data
+    @Getter
+    @Setter
+    public static class UserFollow{
+        private List<ShortUserDataDto> userFollower;
+        private List<ShortUserDataDto> userFollowing;
     }
 }

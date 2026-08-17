@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/blog")
+@RequestMapping("/api/blogs")
 @RequiredArgsConstructor
 public class FollowingBlogController {
     private final FollowingBlogService followingBlogService;

@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { HomeSkeletonUiComponent } from '../../../components/home-skeleton-ui/home-skeleton-ui.component';
 import { RouterLink } from '@angular/router';
 import { CommonModule, DatePipe } from '@angular/common';
@@ -15,8 +15,9 @@ import {
 export class ShortBlogContainerComponent implements OnInit {
   @Input() blogData: shortBlogResponseType = [];
   @Input() skeletonLoading: boolean = true;
-  sendBlogId(blogId: string) {}
-  ngOnInit(): void {
-    console.log(this.blogData);
+  @Output() blogIdSender = new EventEmitter<string>();
+  sendBlogId(blogId: string) {
+    this.blogIdSender.emit(blogId);
   }
+  ngOnInit(): void {}
 }

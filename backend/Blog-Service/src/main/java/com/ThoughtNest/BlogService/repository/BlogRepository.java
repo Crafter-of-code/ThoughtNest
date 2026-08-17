@@ -38,4 +38,5 @@ public interface BlogRepository extends MongoRepository<BlogEntity,String> {
             ORDER BY Be.createAt DESC
             """)
     List<ShortBlogResponseDto> find3BlogByuserPublicId(@Param("userPublicId") UUID userPublicId, Pageable pageable);
+    List<BlogEntity> findTop20ByOrderByBlogInteractionScoreDesc();
 }
