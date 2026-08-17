@@ -1,57 +1,57 @@
 <header
   class="lg:px-10! py-5! flex max-lg:px-4 justify-center sticky top-0 bg-gray-100 z-100"
->
+  >
   <div class="max-w-360 flex justify-between flex-1">
     <div>
       <a routerLink="/home"
         ><h1 class="select-none text-(--accent-color) text-4xl!">
-          ThoughtNest
-        </h1></a
+        ThoughtNest
+      </h1></a
       >
     </div>
     <!--bit screen notification-->
     <div class="max-lg:hidden flex gap-5 w-fit">
-      <ng-container *ngFor="let navData of navigationData; let i = index">
+      @for (navData of navigationData; track navData; let i = $index) {
         <a
           [routerLink]="navData.pageUrl"
           routerLinkActive="border-b border-solid border-(--accent-color)! text-(--accent-color)"
           class="text-sm flex items-center justify-center font-bold capitalize px-1 py-1 rounded-none text-center border-b-2 border-solid border-transparent hover:border-(--accent-color)! p-0! flex-1 text-nowrap"
           >{{ navData.pageName }}</a
-        >
-      </ng-container>
-      <app-logout-button style="display: flex" />
-    </div>
-    <div class="flex-1 justify-end flex lg:hidden items-center">
-      <div class="w-8 h-8">
-        <app-hamburger (hamburgerClicked)="hamburgerClicked($event)" />
+          >
+        }
+        <app-logout-button style="display: flex" />
+      </div>
+      <div class="flex-1 justify-end flex lg:hidden items-center">
+        <div class="w-8 h-8">
+          <app-hamburger (hamburgerClicked)="hamburgerClicked($event)" />
+        </div>
       </div>
     </div>
-  </div>
-</header>
-<!--Mobile screen notification
-top-15
--->
-<!-- *ngIf="showMobileMenue" -->
+  </header>
+  <!--Mobile screen notification
+  top-15
+  -->
+  <!-- *ngIf="showMobileMenue" -->
 
-<div
-  class="lg:hidden absolute right-0 my-5! flex max-lg:mx-4 mobile_menue flex-col gap-2 top-21"
-  [class.mobile_menue_active]="showMobileMenue"
-  style="position: fixed !important; z-index: 99"
->
-  <app-glass-background
-    [padding]="'p-2! flex gap-2 flex-col z-99 '"
-    [rounded]="'rounded-xl'"
-    class="flex gap-2"
-  >
-    @for(navData of navigationData; track navData.pageUrl){
-    <app-glass-background [padding]="'p-1! flex-1'" [rounded]="'rounded-xl'">
-      <a
-        [routerLink]="navData.pageUrl"
-        class="hover:bg-(--accent-color)/70 rounded-lg p-1 px-2! max-w-full block"
-        >{{ navData.pageName }}</a
+  <div
+    class="lg:hidden absolute right-0 my-5! flex max-lg:mx-4 mobile_menue flex-col gap-2 top-21"
+    [class.mobile_menue_active]="showMobileMenue"
+    style="position: fixed !important; z-index: 99"
+    >
+    <app-glass-background
+      [padding]="'p-2! flex gap-2 flex-col z-99 '"
+      [rounded]="'rounded-xl'"
+      class="flex gap-2"
       >
-    </app-glass-background>
-    }
-    <app-logout-button class="flex items-center w-full" />
-  </app-glass-background>
-</div>
+      @for(navData of navigationData; track navData.pageUrl){
+        <app-glass-background [padding]="'p-1! flex-1'" [rounded]="'rounded-xl'">
+          <a
+            [routerLink]="navData.pageUrl"
+            class="hover:bg-(--accent-color)/70 rounded-lg p-1 px-2! max-w-full block"
+            >{{ navData.pageName }}</a
+            >
+          </app-glass-background>
+        }
+        <app-logout-button class="flex items-center w-full" />
+      </app-glass-background>
+    </div>

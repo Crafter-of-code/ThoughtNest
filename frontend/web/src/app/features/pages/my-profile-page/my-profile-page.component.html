@@ -1,257 +1,258 @@
 @if(loadingSpinner){
-<div
-  class="p-15 h-full w-screen bg-(--text-color)/70 fixed lg:top-10! top-11! left-0 max-sm:p-3 max-sm:py-20 max-h-screen overflow-scroll flex justify-center items-center"
->
-  <div class="h-20 w-20">
-    <app-loading-spinner class="h-full w-full" />
-  </div>
-</div>
-
-}@else{ @if(ownerDetail){
-<main class="min-h-screen max-w-7xl mx-auto p-6">
-  <header class="bg-white rounded-2xl shadow-sm border border-gray-200 p-8">
-    <div
-      class="flex flex-col md:flex-row gap-6 items-start max-lg:gap-3 max-lg:items-start"
+  <div
+    class="p-15 h-full w-screen bg-(--text-color)/70 fixed lg:top-10! top-11! left-0 max-sm:p-3 max-sm:py-20 max-h-screen overflow-scroll flex justify-center items-center"
     >
-      <img
+    <div class="h-20 w-20">
+      <app-loading-spinner class="h-full w-full" />
+    </div>
+  </div>
+
+  }@else{ @if(ownerDetail){
+  <main class="min-h-screen max-w-7xl mx-auto p-6">
+    <header class="bg-white rounded-2xl shadow-sm border border-gray-200 p-8">
+      <div
+        class="flex flex-col md:flex-row gap-6 items-start max-lg:gap-3 max-lg:items-start"
+        >
+        <img
         [src]="
           ownerDetail.userProfile.userImageUrl ||
           'https://placehold.co/160x160?text=Profile'
         "
-        class="w-40 h-40 rounded-full border-4 border-(--accent-color) object-cover"
-      />
-      <div class="flex-1">
-        <h1 class="text-4xl font-bold">{{ ownerDetail.userName }}</h1>
-        <p class="text-gray-500">{{ ownerDetail.userName }}</p>
-        <p class="mt-3 text-gray-600">
-          Passionate developer sharing knowledge on ThoughtNest.
-        </p>
-        <div class="mt-4 flex gap-2 text-sm max-lg:flex-col">
-          <span
-            class="bg-white rounded-2xl shadow-sm border border-gray-200 p-3"
-            >{{ ownerDetail.userEmail }}</span
-          >
-          <span
-            class="bg-white rounded-2xl shadow-sm border border-gray-200 p-3"
-            >{{ ownerDetail.publicId }}</span
-          >
-          <span
-            class="bg-white rounded-2xl shadow-sm border border-gray-200 p-3"
-          >
-            Joined {{ ownerDetail.createdAt | date : "MMMM yyyy" }}</span
-          >
-        </div>
-      </div>
-    </div>
-  </header>
-  <!--grid grid-cols-2 md:grid-cols-3 max-xs:grid-col-1-->
-  <section class="gap-4 mt-6 flex flex-wrap">
-    <!--bg-white rounded-2xl border p-6-->
-    <app-glass-background class="flex-1">
-      <div class="text-3xl font-bold">
-        {{ ownerDetail.userProfile.userPublished }}
-      </div>
-      <div>Blogs</div>
-    </app-glass-background>
-    <app-glass-background class="flex-1">
-      <div class="text-3xl font-bold">
-        {{ ownerDetail.noOfFollower }}
-      </div>
-      <div>Followers</div>
-    </app-glass-background>
-    <app-glass-background class="flex-1">
-      <div class="text-3xl font-bold">
-        {{ ownerDetail.noOfFollowing }}
-      </div>
-      <div>Following</div>
-    </app-glass-background>
-    <!--
-    <div class="bg-white rounded-2xl border p-6">
-      <div class="text-3xl font-bold">Active</div>
-      <div>Status</div>
-    </div>
-    -->
-  </section>
-  <!--grid lg:grid-cols-3-->
-  <section class="flex flex-nowrap lg:gap-6 mt-3 max-lg:flex-col">
-    <aside class="space-y-6 flex- flex-1 flex-col max-lg:order-2">
-      <app-glass-background class="p-6 grow">
-        <h2 class="font-semibold text-xl mb-4">Account Information</h2>
-        <ul class="space-y-2">
-          <li><b>User ID:</b> {{ ownerDetail.userId }}</li>
-          <li><b>Username:</b> {{ ownerDetail.userName }}</li>
-          <li><b>Email:</b> {{ ownerDetail.userEmail }}</li>
-          <li><b>Public ID:</b><br />{{ ownerDetail.publicId }}</li>
-        </ul>
-      </app-glass-background>
-      <app-glass-background class="p-6 flex-1 grow">
-        <h2 class="font-semibold text-xl mb-4">Quick Actions</h2>
-        <div class="grid gap-3">
-          <!--border rounded-xl py-2-->
-          <app-outline-button
-            [disabled]="false"
-            [loadingSpinner]="false"
-            label="click to addit profile"
-            (clicked)="showProfileSetting(true)"
-          >
-            <p class="p-1 w-full text-center">Edit Profile</p>
-          </app-outline-button>
-          <app-outline-button [disabled]="false" [loadingSpinner]="false">
-            <p class="p-1 w-full text-center">Change Password</p>
-          </app-outline-button>
-          <app-outline-button
-            [disabled]="false"
-            [loadingSpinner]="false"
-            (clicked)="deleteAccount()"
-          >
-            <p class="p-1 w-full text-center">Delete My Account</p>
-          </app-outline-button>
-        </div>
-      </app-glass-background>
-    </aside>
-
-    <div class="lg:col-span-2 space-y-6 flex-1">
-      <!--bg-white rounded-2xl border -->
-      <app-glass-background class="p-6">
-        <h2 class="font-semibold text-xl mb-3">About</h2>
-        <p>{{ ownerDetail.userProfile.userBio || "No bio added yet." }}</p>
-      </app-glass-background>
-      <app-glass-background class="p-6">
-        <h2 class="font-semibold text-xl mb-3">Recent Blogs</h2>
-        @if(ownerShortBlogData){
-        <div class="space-y-3">
-          @for(shortBlogData of ownerShortBlogData; track shortBlogData.blogId){
-          <div
-            class="group flex items-center justify-between gap-6 rounded-2xl border border-gray-200 bg-white px-5 py-4 transition-all duration-300 hover:-translate-y-0.5 hover:border-(--accent-color) hover:shadow-lg"
-          >
-            <!-- Blog Info -->
-            <div class="min-w-0 flex-1">
-              <h3
-                class="truncate text-base font-semibold text-gray-900 group-hover:text-(--accent-color) transition-colors"
+          class="w-40 h-40 rounded-full border-4 border-(--accent-color) object-cover"
+          />
+        <div class="flex-1">
+          <h1 class="text-4xl font-bold">{{ ownerDetail.userName }}</h1>
+          <p class="text-gray-500">{{ ownerDetail.userName }}</p>
+          <p class="mt-3 text-gray-600">
+            Passionate developer sharing knowledge on ThoughtNest.
+          </p>
+          <div class="mt-4 flex gap-2 text-sm max-lg:flex-col">
+            <span
+              class="bg-white rounded-2xl shadow-sm border border-gray-200 p-3"
+              >{{ ownerDetail.userEmail }}</span
               >
-                {{ shortBlogData.blogTitle }}
-              </h3>
+              <span
+                class="bg-white rounded-2xl shadow-sm border border-gray-200 p-3"
+                >{{ ownerDetail.publicId }}</span
+                >
+                <span
+                  class="bg-white rounded-2xl shadow-sm border border-gray-200 p-3"
+                  >
+                  Joined {{ ownerDetail.createdAt | date : "MMMM yyyy" }}</span
+                  >
+                </div>
+              </div>
+            </div>
+          </header>
+          <!--grid grid-cols-2 md:grid-cols-3 max-xs:grid-col-1-->
+          <section class="gap-4 mt-6 flex flex-wrap">
+            <!--bg-white rounded-2xl border p-6-->
+            <app-glass-background class="flex-1">
+              <div class="text-3xl font-bold">
+                {{ ownerDetail.userProfile.userPublished }}
+              </div>
+              <div>Blogs</div>
+            </app-glass-background>
+            <app-glass-background class="flex-1">
+              <div class="text-3xl font-bold">
+                {{ ownerDetail.noOfFollower }}
+              </div>
+              <div>Followers</div>
+            </app-glass-background>
+            <app-glass-background class="flex-1">
+              <div class="text-3xl font-bold">
+                {{ ownerDetail.noOfFollowing }}
+              </div>
+              <div>Following</div>
+            </app-glass-background>
+            <!--
+            <div class="bg-white rounded-2xl border p-6">
+              <div class="text-3xl font-bold">Active</div>
+              <div>Status</div>
+            </div>
+            -->
+          </section>
+          <!--grid lg:grid-cols-3-->
+          <section class="flex flex-nowrap lg:gap-6 mt-3 max-lg:flex-col">
+            <aside class="space-y-6 flex- flex-1 flex-col max-lg:order-2">
+              <app-glass-background class="p-6 grow">
+                <h2 class="font-semibold text-xl mb-4">Account Information</h2>
+                <ul class="space-y-2">
+                  <li><b>User ID:</b> {{ ownerDetail.userId }}</li>
+                  <li><b>Username:</b> {{ ownerDetail.userName }}</li>
+                  <li><b>Email:</b> {{ ownerDetail.userEmail }}</li>
+                  <li><b>Public ID:</b><br />{{ ownerDetail.publicId }}</li>
+                </ul>
+              </app-glass-background>
+              <app-glass-background class="p-6 flex-1 grow">
+                <h2 class="font-semibold text-xl mb-4">Quick Actions</h2>
+                <div class="grid gap-3">
+                  <!--border rounded-xl py-2-->
+                  <app-outline-button
+                    [disabled]="false"
+                    [loadingSpinner]="false"
+                    label="click to addit profile"
+                    (clicked)="showProfileSetting(true)"
+                    >
+                    <p class="p-1 w-full text-center">Edit Profile</p>
+                  </app-outline-button>
+                  <app-outline-button [disabled]="false" [loadingSpinner]="false">
+                    <p class="p-1 w-full text-center">Change Password</p>
+                  </app-outline-button>
+                  <app-outline-button
+                    [disabled]="false"
+                    [loadingSpinner]="false"
+                    (clicked)="deleteAccount()"
+                    >
+                    <p class="p-1 w-full text-center">Delete My Account</p>
+                  </app-outline-button>
+                </div>
+              </app-glass-background>
+            </aside>
 
-              <p class="mt-1 line-clamp-2 text-sm leading-6 text-gray-500">
-                {{ shortBlogData.blogContent }}
-              </p>
-            </div>
+            <div class="lg:col-span-2 space-y-6 flex-1">
+              <!--bg-white rounded-2xl border -->
+              <app-glass-background class="p-6">
+                <h2 class="font-semibold text-xl mb-3">About</h2>
+                <p>{{ ownerDetail.userProfile.userBio || "No bio added yet." }}</p>
+              </app-glass-background>
+              <app-glass-background class="p-6">
+                <h2 class="font-semibold text-xl mb-3">Recent Blogs</h2>
+                @if(ownerShortBlogData){
+                  <div class="space-y-3">
+                    @for(shortBlogData of ownerShortBlogData; track shortBlogData.blogId){
+                      <div
+                        class="group flex items-center justify-between gap-6 rounded-2xl border border-gray-200 bg-white px-5 py-4 transition-all duration-300 hover:-translate-y-0.5 hover:border-(--accent-color) hover:shadow-lg"
+                        >
+                        <!-- Blog Info -->
+                        <div class="min-w-0 flex-1">
+                          <h3
+                            class="truncate text-base font-semibold text-gray-900 group-hover:text-(--accent-color) transition-colors"
+                            >
+                            {{ shortBlogData.blogTitle }}
+                          </h3>
 
-            <!-- Actions -->
-            <div class="flex items-center gap-2 shrink-0">
-              <app-small-button-one
-                [id]="shortBlogData.blogId"
-                (getId)="ReadyById($event)"
-                [label]="'click to read'"
-                [disabled]="deletingBlogId !== null"
-                [loadingSpinner]="deletingBlogId === shortBlogData.blogId"
-              >
-                <p class="px-2 capitalize font-medium">Read</p>
-              </app-small-button-one>
+                          <p class="mt-1 line-clamp-2 text-sm leading-6 text-gray-500">
+                            {{ shortBlogData.blogContent }}
+                          </p>
+                        </div>
 
-              <app-small-button-one
-                [id]="shortBlogData.blogId"
-                (getId)="myBlogDeleteHandler($event)"
-                [label]="'click to delete the blog'"
-                [disabled]="deletingBlogId !== null"
-                [loadingSpinner]="deletingBlogId === shortBlogData.blogId"
-              >
-                <p class="px-2 capitalize font-medium text-red-500">Delete</p>
-              </app-small-button-one>
-            </div>
-          </div>
-          }
-        </div>
-        }@else{
-        <p class="text-gray/10">
-          You don't have any blog yet! please add some blog
-        </p>
-        }
-      </app-glass-background>
-      <app-glass-background class="p-6">
-        <div
-          class="p-6 bg-white rounded-2xl shadow-sm border border-gray-200 py-5 px-3 my-5"
-        >
-          <h2 class="font-semibold mb-3">Followers</h2>
-          @if(ownerDetail.userFollow.userFollower){ @for(user of
-          ownerDetail.userFollow.userFollower; track $index){
-          <div
-            class="p-1 bg-white rounded-2xl shadow-sm border border-gray-200 py-5 px-3 my-5 flex items-center"
-          >
-            <div class="flex flex-1 items-center gap-3">
-              <img
-                [src]="user.userProfileImage"
-                alt="user profile image"
-                class="h-8 w-8 rounded-full"
-              />
-              <h3>{{ user.userName }}</h3>
-            </div>
-            <div>
-              <app-solid-button
-                [loadingSpinner]="user.publicId == unfollowingId"
-                [disabled]="user.publicId == unfollowingId"
-                (clicked)="removeFollower(user.publicId)"
-                [type]="'button'"
-                [label]="'remove follower'"
-                ><p>Remove</p></app-solid-button
-              >
-            </div>
-          </div>
-          } }@else{
-          <p>Currently you have no follower</p>
-          }
-        </div>
-        <div
-          class="p-6 bg-white rounded-2xl shadow-sm border border-gray-200 py-5 px-3 my-5"
-        >
-          <h2 class="font-semibold mb-3">Following</h2>
-          @if(ownerDetail.userFollow.userFollowing){ @for(user of
-          ownerDetail.userFollow.userFollowing; track $index){
-          <div
-            class="p-1 bg-white rounded-2xl shadow-sm border border-gray-200 py-5 px-3 my-5 flex items-center"
-          >
-            <div class="flex flex-1 items-center gap-3">
-              <img
+                        <!-- Actions -->
+                        <div class="flex items-center gap-2 shrink-0">
+                          <app-small-button-one
+                            [id]="shortBlogData.blogId"
+                            (getId)="ReadyById($event)"
+                            [label]="'click to read'"
+                            [disabled]="deletingBlogId !== null"
+                            [loadingSpinner]="deletingBlogId === shortBlogData.blogId"
+                            >
+                            <p class="px-2 capitalize font-medium">Read</p>
+                          </app-small-button-one>
+
+                          <app-small-button-one
+                            [id]="shortBlogData.blogId"
+                            (getId)="myBlogDeleteHandler($event)"
+                            [label]="'click to delete the blog'"
+                            [disabled]="deletingBlogId !== null"
+                            [loadingSpinner]="deletingBlogId === shortBlogData.blogId"
+                            >
+                            <p class="px-2 capitalize font-medium text-red-500">Delete</p>
+                          </app-small-button-one>
+                        </div>
+                      </div>
+                    }
+                  </div>
+                  }@else{
+                  <p class="text-gray/10">
+                    You don't have any blog yet! please add some blog
+                  </p>
+                }
+              </app-glass-background>
+              <app-glass-background class="p-6">
+                <div
+                  class="p-6 bg-white rounded-2xl shadow-sm border border-gray-200 py-5 px-3 my-5"
+                  >
+                  <h2 class="font-semibold mb-3">Followers</h2>
+                  @if(ownerDetail.userFollow.userFollower){ @for(user of
+                    ownerDetail.userFollow.userFollower; track $index){
+                    <div
+                      class="p-1 bg-white rounded-2xl shadow-sm border border-gray-200 py-5 px-3 my-5 flex items-center"
+                      >
+                      <div class="flex flex-1 items-center gap-3">
+                        <img
+                          [src]="user.userProfileImage"
+                          alt="user profile image"
+                          class="h-8 w-8 rounded-full"
+                          />
+                        <h3>{{ user.userName }}</h3>
+                      </div>
+                      <div>
+                        <app-solid-button
+                          [loadingSpinner]="user.publicId == unfollowingId"
+                          [disabled]="user.publicId == unfollowingId"
+                          (clicked)="removeFollower(user.publicId)"
+                          [type]="'button'"
+                          [label]="'remove follower'"
+                          ><p>Remove</p></app-solid-button
+                          >
+                        </div>
+                      </div>
+                      } }@else{
+                      <p>Currently you have no follower</p>
+                    }
+                  </div>
+                  <div
+                    class="p-6 bg-white rounded-2xl shadow-sm border border-gray-200 py-5 px-3 my-5"
+                    >
+                    <h2 class="font-semibold mb-3">Following</h2>
+                    @if(ownerDetail.userFollow.userFollowing){ @for(user of
+                      ownerDetail.userFollow.userFollowing; track $index){
+                      <div
+                        class="p-1 bg-white rounded-2xl shadow-sm border border-gray-200 py-5 px-3 my-5 flex items-center"
+                        >
+                        <div class="flex flex-1 items-center gap-3">
+                          <img
                 [src]="
                   user.userProfileImage ? user.userProfileImage : 'user.png'
                 "
-                alt="user profile image"
-                class="h-8 w-8 rounded-full"
-              />
-              <div class="">
-                <h3>{{ user.userName }}</h3>
-              </div>
-            </div>
+                            alt="user profile image"
+                            class="h-8 w-8 rounded-full"
+                            />
+                          <div class="">
+                            <h3>{{ user.userName }}</h3>
+                          </div>
+                        </div>
+                        <div>
+                          <app-outline-button
+                            [loadingSpinner]="user.publicId == unfollowingId"
+                            [disabled]="user.publicId == unfollowingId"
+                            (clicked)="unFollowHandler(user.publicId)"
+                            [type]="'button'"
+                            [label]="'unfollow'"
+                            ><p>unfollow</p></app-outline-button
+                            >
+                          </div>
+                        </div>
+                        } }@else{
+                        <p>Not following anyone.</p>
+                      }
+                    </div>
+                  </app-glass-background>
+                </div>
+              </section>
+              @if (showProfileContainer) {
+                <section
+                  class="p-15 h-full w-screen bg-(--text-color)/70 fixed lg:top-10! top-11! left-0 max-sm:p-3 max-sm:py-20 max-h-screen overflow-scroll"
+                  >
+                  <app-profile-setting
+                    (showSettingComponent)="showProfileSetting(false)"
+                    [ownerData]="profileSettingDetail"
+                    />
+                </section>
+              }
+            </main>
+            }@else{
             <div>
-              <app-outline-button
-                [loadingSpinner]="user.publicId == unfollowingId"
-                [disabled]="user.publicId == unfollowingId"
-                (clicked)="unFollowHandler(user.publicId)"
-                [type]="'button'"
-                [label]="'unfollow'"
-                ><p>unfollow</p></app-outline-button
-              >
+              <h1>We are unable to get your detail</h1>
             </div>
-          </div>
-          } }@else{
-          <p>Not following anyone.</p>
-          }
-        </div>
-      </app-glass-background>
-    </div>
-  </section>
-  <section
-    *ngIf="showProfileContainer"
-    class="p-15 h-full w-screen bg-(--text-color)/70 fixed lg:top-10! top-11! left-0 max-sm:p-3 max-sm:py-20 max-h-screen overflow-scroll"
-  >
-    <app-profile-setting
-      (showSettingComponent)="showProfileSetting(false)"
-      [ownerData]="profileSettingDetail"
-    />
-  </section>
-</main>
-}@else{
-<div>
-  <h1>We are unable to get your detail</h1>
-</div>
-} }
+            } }

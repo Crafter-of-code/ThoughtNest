@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { BlogService } from '../../../../../core/services/blog/blog.service';
 import { finalize } from 'rxjs';
-import { CommonModule } from '@angular/common';
+
 import {
   shortBlogDataType,
   shortBlogResponseDataType,
@@ -16,10 +16,9 @@ import { GlassBackgroundComponent } from '../../../../../shared/components/glass
 @Component({
   selector: 'app-following-page',
   imports: [
-    CommonModule,
     ShortBlogContainerComponent,
-    GlassBackgroundComponent,
-  ],
+    GlassBackgroundComponent
+],
   templateUrl: './following-page.component.html',
   styleUrl: './following-page.component.css',
 })

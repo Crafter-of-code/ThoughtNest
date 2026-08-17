@@ -8,7 +8,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { GlobalInputComponent } from '../../../../shared/components/global-input/global-input.component';
-import { CommonModule } from '@angular/common';
+
 import { AuthService } from '../../../../core/services/auth/auth.service';
 import { NotificationService } from '../../../../core/services/notification/notification.service';
 import { Router, RouterOutlet } from '@angular/router';
@@ -18,9 +18,8 @@ import { Router, RouterOutlet } from '@angular/router';
     SolidButtonComponent,
     ReactiveFormsModule,
     GlobalInputComponent,
-    CommonModule,
-    RouterOutlet,
-  ],
+    RouterOutlet
+],
   templateUrl: './signin-page.component.html',
   styleUrl: './signin-page.component.css',
 })

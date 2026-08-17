@@ -9,7 +9,7 @@ import {
 import { NotificationService } from '../../../core/services/notification/notification.service';
 import { UserService } from '../../../core/services/user/user.service';
 import { Router, RouterOutlet } from '@angular/router';
-import { CommonModule, Location } from '@angular/common';
+import { Location } from '@angular/common';
 type userDetailType = {
   publicId: string;
   userName: string;
@@ -20,9 +20,8 @@ type userDetailType = {
   imports: [
     GlobalInputComponent,
     ReactiveFormsModule,
-    RouterOutlet,
-    CommonModule,
-  ],
+    RouterOutlet
+],
   templateUrl: './members-page.component.html',
   styleUrl: './members-page.component.css',
 })

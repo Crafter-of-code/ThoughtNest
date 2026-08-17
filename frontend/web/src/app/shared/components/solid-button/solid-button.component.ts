@@ -7,14 +7,14 @@ import {
   SimpleChanges,
 } from '@angular/core';
 import { LoadingSpinnerComponent } from '../loading-spinner/loading-spinner.component';
-import { CommonModule } from '@angular/common';
+
 enum buttonType {
   button = 'button',
   submit = 'submit',
 }
 @Component({
   selector: 'app-solid-button',
-  imports: [LoadingSpinnerComponent, CommonModule],
+  imports: [LoadingSpinnerComponent],
   templateUrl: './solid-button.component.html',
   styleUrl: './solid-button.component.css',
 })

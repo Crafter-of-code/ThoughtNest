@@ -8,39 +8,41 @@
             According to your mood
           </h2>
         </section>
-        <section *ngIf="loadingStatus; else contentLoaded" class="py-4">
-          <div class="h-6 w-full flex justify-center">
-            <app-loading-spinner
-              class="w-full h-full flex justify-center items-center"
-            />
-          </div>
-        </section>
-        <ng-template #contentLoaded>
+        @if (loadingStatus) {
+          <section class="py-4">
+            <div class="h-6 w-full flex justify-center">
+              <app-loading-spinner
+                class="w-full h-full flex justify-center items-center"
+                />
+            </div>
+          </section>
+        } @else {
           <section class="mt-5">
-            <div
-              *ngIf="userSelectedGenre.length != 0"
-              class="flex flex-row flex-wrap justify-center mb-2"
+            @if (userSelectedGenre.length != 0) {
+              <div
+                class="flex flex-row flex-wrap justify-center mb-2"
               [ngClass]="{
                 'justify-start': userSelectedGenre.length < 10,
                 'justify-center': userSelectedGenre.length >= 10
               }"
-            >
-              @for(userGenre of userSelectedGenre; track userGenre.genreId){
-              <app-genre-container>
-                {{ userGenre.genreName }}
-              </app-genre-container>
-              }
-            </div>
+                >
+                @for(userGenre of userSelectedGenre; track userGenre.genreId){
+                  <app-genre-container>
+                    {{ userGenre.genreName }}
+                  </app-genre-container>
+                }
+              </div>
+            }
             <div
               class="flex justify-center flex-wrap"
               (click)="onClickedOnChoice($event)"
-            >
+              >
               @for(genre of genreData; track genre.genreId){
-              <app-genre-container>
-                <button class="text-xs text-white" value="{{ genre.genreId }}">
-                  {{ genre.genreName }}
-                </button>
-              </app-genre-container>
+                <app-genre-container>
+                  <button class="text-xs text-white" value="{{ genre.genreId }}">
+                    {{ genre.genreName }}
+                  </button>
+                </app-genre-container>
               }
             </div>
             <div class="flex justify-center mt-4">
@@ -49,7 +51,7 @@
               </app-solid-button>
             </div>
           </section>
-        </ng-template>
+        }
       </div>
     </app-glass-background>
   </div>

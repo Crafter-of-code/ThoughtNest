@@ -7,55 +7,56 @@
             inputPlaceHolder="Search user name"
             class="flex-1"
             formControlName="userName"
-          />
+            />
           @if(userInputData.valid){<button
             type="submit"
             class="w-max rounded-full border p-3 border-slate-200 bg-slate-50/80 text-slate-800 transition-all duration-200 outline-none hover:border-slate-300 hover:bg-white focus:border-slate-400 focus:bg-white focus:shadow-md focus:ring-4 focus:ring-slate-200/70"
-          >
+            >
             <img
               src="search-interface-symbol.png"
               class="w-5 h-5 object-contain"
               style="-webkit-user-drag: none"
-            />
-          </button>
-          }
-        </div>
-      </form>
-      <div
-        class="my-3 px-1 flex gap-0 flex-col max-h-50 max-sm:max-h-34 overflow-y-scroll py-1"
-        *ngIf="userDetail.length > 0"
-      >
-        @for(usrDetail of userDetail; track $index ){
-        <button
-          class="group flex w-full flex-wrap items-center justify-between gap-3 rounded-2xl border border-gray-200/80 bg-white/90 backdrop-blur-sm px-4 py-3 shadow-sm transition-all duration-300 ease-out hover:-translate-y-1 hover:border-(--accent-color) hover:shadow-xl cursor-pointer"
-          (click)="searchCompeletDetailOfUser(usrDetail.publicId)"
-        >
-          <div class="flex gap-2 items-center">
-            <!--infor container-->
-            <div>
-              <img
-                [src]="usrDetail?.userProfileImage || defaultProfileImageUrl"
-                class="h-7 w-7 rounded-full"
               />
-            </div>
-            <!--Name container-->
-            <div>
-              <p class="select-none">{{ usrDetail?.userName }}</p>
-            </div>
-          </div>
-          <div>
-            <p class="select-none text-xs text-start">
-              {{
-                usrDetail?.publicId == myPublicId ? "You" : usrDetail?.publicId
-              }}
-            </p>
-          </div>
-        </button>
+          </button>
         }
       </div>
-    </section>
-    <div class="flex-1 max-w-360! w-full">
-      <router-outlet />
-    </div>
+    </form>
+    @if (userDetail.length > 0) {
+      <div
+        class="my-3 px-1 flex gap-0 flex-col max-h-50 max-sm:max-h-34 overflow-y-scroll py-1"
+        >
+        @for(usrDetail of userDetail; track $index ){
+          <button
+            class="group flex w-full flex-wrap items-center justify-between gap-3 rounded-2xl border border-gray-200/80 bg-white/90 backdrop-blur-sm px-4 py-3 shadow-sm transition-all duration-300 ease-out hover:-translate-y-1 hover:border-(--accent-color) hover:shadow-xl cursor-pointer"
+            (click)="searchCompeletDetailOfUser(usrDetail.publicId)"
+            >
+            <div class="flex gap-2 items-center">
+              <!--infor container-->
+              <div>
+                <img
+                  [src]="usrDetail?.userProfileImage || defaultProfileImageUrl"
+                  class="h-7 w-7 rounded-full"
+                  />
+              </div>
+              <!--Name container-->
+              <div>
+                <p class="select-none">{{ usrDetail?.userName }}</p>
+              </div>
+            </div>
+            <div>
+              <p class="select-none text-xs text-start">
+                {{
+                usrDetail?.publicId == myPublicId ? "You" : usrDetail?.publicId
+                }}
+              </p>
+            </div>
+          </button>
+        }
+      </div>
+    }
+  </section>
+  <div class="flex-1 max-w-360! w-full">
+    <router-outlet />
   </div>
+</div>
 </main>
