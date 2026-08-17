@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { AddBlogButtonComponent } from '../../../components/add-blog-button/add-blog-button.component';
 import { UploadBlogComponent } from '../../../components/upload-blog/upload-blog.component';
 import { BlogService } from '../../../../../core/services/blog/blog.service';
@@ -14,7 +14,7 @@ import { ShortBlogContainerComponent } from '../../components/short-blog-contain
 import { finalize } from 'rxjs';
 @Component({
   selector: 'app-home-page',
-  imports: [CommonModule, ShortBlogContainerComponent, BlogContainerComponent],
+  imports: [ShortBlogContainerComponent, BlogContainerComponent],
   templateUrl: './home-page.component.html',
   styleUrl: './home-page.component.css',
 })

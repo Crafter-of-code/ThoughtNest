@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { HamburgerComponent } from '../components/hamburger/hamburger.component';
 import { RouterLink, RouterLinkActive } from '@angular/router';
-import { CommonModule } from '@angular/common';
+
 import { GlassBackgroundComponent } from '../../components/glass-background/glass-background.component';
 import { LogoutButtonComponent } from '../../components/logout-button/logout-button.component';
 type navigationDataType = {
@@ -13,12 +13,11 @@ type navigationDataType = {
   imports: [
     HamburgerComponent,
     RouterLink,
-    CommonModule,
     GlassBackgroundComponent,
     RouterLinkActive,
     LogoutButtonComponent,
-    LogoutButtonComponent,
-  ],
+    LogoutButtonComponent
+],
   templateUrl: './main-header.component.html',
   styleUrl: './main-header.component.css',
 })

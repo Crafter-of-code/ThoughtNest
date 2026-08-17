@@ -8,7 +8,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
-import { CommonModule } from '@angular/common';
+
 import { AuthService } from '../../../../core/services/auth/auth.service';
 import { NotificationService } from '../../../../core/services/notification/notification.service';
 import { finalize } from 'rxjs';
@@ -20,9 +20,8 @@ import { finalize } from 'rxjs';
     SolidButtonComponent,
     GlobalInputComponent,
     ReactiveFormsModule,
-    RouterLink,
-    CommonModule,
-  ],
+    RouterLink
+],
   templateUrl: './login-page.component.html',
   styleUrl: './login-page.component.css',
 })
